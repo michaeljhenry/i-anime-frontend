@@ -7,7 +7,7 @@ const AddToWatchPage = (props) => {
     const [animeList, setAnimeList] = useState([]);
     let array = [];
     useEffect(() => {
-        console.log(animeList);
+        //console.log(animeList);
     }, [animeList]);
 
     const getInfo = (animeInfo) => {
@@ -32,7 +32,7 @@ const AddToWatchPage = (props) => {
         <div>
             TO WATCH
             <AnimeSearch getInfo = {getInfo}/>
-            <AnimeForm animeList = {animeList} />
+            <AnimeForm type = 'toWatch' animeList = {animeList} />
         </div>
     )
 }

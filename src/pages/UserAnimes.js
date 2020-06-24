@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {useParams, useLocation} from 'react-router-dom';
 import AnimeCard from '../components/AnimeCard';
 
 const UserAnimes = (props) => {
+    const [animes, setAnimes] = useState([]);
+    const id = useParams().id.substring(1);
     const DUMMY_ANIME = [
         {
             title: 'Naruto',
@@ -38,29 +40,39 @@ const UserAnimes = (props) => {
             aid: 'a4'
         }
     ];
+
+    useEffect(() => {
+        const getAnimes = async () => {
+            const animeResponse = await fetch(`http://localhost:5000/api/animes/user/${id}`, {method: 'GET', body: null, methods: {}})
+            const animeList = await animeResponse.json();
+            setAnimes(animeList.animes);
+        }
+        getAnimes();
+    }, [id])
     let location = useLocation();
     let userAnimes;
-    console.log(location.pathname);
     let path = location.pathname.split('/')[3];
-    console.log(path);
     const userId = useParams().id.substring(1);
     
-    
-    if(path === 'watched') {
-        userAnimes = DUMMY_ANIME.filter((el) => (el.creator === userId && el.type === 'watched'));
-    }
-    else if(path === 'toWatch') {
-        userAnimes = DUMMY_ANIME.filter((el) => el.creator === userId && el.type === 'toWatch');
+    console.log(animes);
+    if(animes.length > 0) {
+        if(path === 'watched') {
+            userAnimes = animes.filter((el) => (el.creator === userId && el.type === 'watched'));
+        }
+        else if(path === 'toWatch') {
+            userAnimes = animes.filter((el) => el.creator === userId && el.type === 'toWatch');
+        }
     }
     
     return(
 
         <div>
-        {path === 'watched' ? userAnimes.map((anime) => (
-            <AnimeCard key = {anime.title} title = {anime.title} synopsis = {anime.synopsis} image_url = {anime.image_url} />
+        {animes.length > 0 ? (path === 'watched' ? userAnimes.map((anime) => (
+            <AnimeCard key = {anime.title} aid = {anime._id} title = {anime.title} synopsis = {anime.synopsis} image_url = {anime.image_url} />
         )) : userAnimes.map((anime) => (
-            <AnimeCard key = {anime.title} title = {anime.title} synopsis = {anime.synopsis} image_url = {anime.image_url} />
-        ))
+            <AnimeCard key = {anime.title} aid = {anime._id} title = {anime.title} synopsis = {anime.synopsis} image_url = {anime.image_url} />
+        )))
+        : null
         }
         </div>
     )

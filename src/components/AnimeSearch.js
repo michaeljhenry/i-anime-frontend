@@ -12,7 +12,7 @@ const AnimeSearch = (props) => {
     }
     const request = async () => {
       
-      const response = await fetch(`${baseUrl}/search/anime?q=${anime}&page=1&order_by=start_date&type=tv`)
+      const response = await fetch(`${baseUrl}/search/anime?q=${anime}&page=1&type=tv`)
       .then(res => res.json())
       
       props.getInfo(response);

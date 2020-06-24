@@ -1,33 +1,49 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
+import AuthContext from '../context/auth-context';
 
 import '../pages/Anime.css'
 
 const AnimeForm = (props) => {
+    const auth = useContext(AuthContext);
     const [chosenAnimeIndex, setChosenAnimeIndex] = useState('');
     const [chosenAnime, setChosenAnime] = useState('');
     const [description, setDescription] = useState('');
     const [state, setState] = useState({});
    
-    const clickedEvent = (e) => {
+    const clickedEvent = async (e) => {
         e.preventDefault();
-        console.log(chosenAnime);
-        console.log(description);
-        setState({
-            name: chosenAnime,
+        const data = {
+            title: chosenAnime,
             description: description,
             image_url: props.animeList[chosenAnimeIndex].image_url,
-            synopsis: props.animeList[chosenAnimeIndex].synopsis
+            synopsis: props.animeList[chosenAnimeIndex].synopsis,
+            creator: auth.userId,
+            type: props.type
+        }
+
+        setState({
+            title: chosenAnime,
+            description: description,
+            image_url: props.animeList[chosenAnimeIndex].image_url,
+            synopsis: props.animeList[chosenAnimeIndex].synopsis,
+            creator: auth.userId,
+            type: props.type
+        });
+        console.log(data);
+        await fetch(`http://localhost:5000/api/animes/add/${props.type}`, {
+            method: 'POST',
+            body: JSON.stringify(data),
+            headers: {  
+                'Content-Type': 'application/json',
+                Authorization: 'Bearer ' + auth.token
+            }
+        });
         
-        })
     }
     useEffect(() => {
         
         if(chosenAnimeIndex !== '') {
             setChosenAnime(props.animeList[chosenAnimeIndex].title);
-            console.log(props.animeList[chosenAnimeIndex].title)
-            localStorage.setItem('anime',JSON.stringify(state));
-            console.log(state);
-
         }
 
     }, [chosenAnimeIndex, props.animeList, state])

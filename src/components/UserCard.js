@@ -1,12 +1,11 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 
-const UserCard = () => {
+const UserCard = (props) => {
 
     return(
         <div>
-            <Link to={`/u1/animes`}>User One</Link>
-            <Link to={`/u2/animes`}>User Two</Link>
+                <Link to={`/${props.id}/animes`}>{props.name}<img src = {`http://localhost:5000/${props.image}`} alt = {`not working`}/></Link>
         </div>
     )
 };
