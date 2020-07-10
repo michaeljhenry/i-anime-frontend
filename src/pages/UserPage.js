@@ -5,10 +5,22 @@ const UserPage = () => {
     const userId = useParams().id;
    
     return(
-        <div>
-            <Link to = {`/:${userId}/animes/watched`}>Watched Anime</Link>
-            <Link to = {`/:${userId}/animes/toWatch`}>To Watch</Link>
-        </div>
+        <ul className = 'list-options__container'>
+            <li className = 'list-options__item'>
+            <Link className = 'list-options__fill'to = {`/:${userId}/animes/watched`}>
+                <div>
+                    <h3>Anime Watched List</h3>
+                </div>
+            </Link>
+            </li>
+            <li className = 'list-options__item'>
+                <Link className = 'list-options__fill' to = {`/:${userId}/animes/toWatch`}>
+                    <div>
+                        <h3>Anime To Watch List</h3>
+                    </div>
+                </Link>
+            </li>
+        </ul>
     )
 }
 

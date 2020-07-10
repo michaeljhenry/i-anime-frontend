@@ -1,6 +1,6 @@
 import React, {useRef, useState, useEffect} from 'react';
 
-import '../styles/components/ImageUpload.css';
+// import '../styles/components/ImageUpload.scss';
 
 const ImageUpload = (props) => {
     const [file, setFile] = useState();
@@ -32,7 +32,7 @@ const ImageUpload = (props) => {
             setIsValid(false);
             fileIsValid = false;
         }
-        props.onImageUpload(pickedFile);
+        props.onImageUpload(pickedFile, fileIsValid);
         //props.onInput(props.id, pickedFile, fileIsValid);
     }
 

@@ -1,0 +1,94 @@
+* {
+    box-sizing: border-box;
+}
+.box-container {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+   
+
+}
+
+.login-box {
+    background-color: white;
+    opacity: 0.9;
+}
+
+.box-container__inputs {
+  text-align: center;
+}
+
+.list-options__container {
+    display: flex;
+    justify-content: space-evenly;
+    margin-top: 25vh;
+    padding: 0;
+    
+}
+
+.users-container {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    flex-wrap: wrap;
+    padding: $xs-size;
+}
+
+.user-animes__container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    position: relative;
+}
+
+.backdrop-dark {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.75);
+    z-index: 10;
+}
+
+.backdrop-light {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: $off-white;
+    z-index: 10;
+    opacity: 0.8;
+}
+
+.side-drawer {
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 100;
+    height: 100vh;
+    width: 70%;
+    background: white;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
+    display: flex;
+}
+
+
+@media (max-width: $desktop-breakpoint) {
+    .list-options__container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin: auto auto;
+        padding: 0;
+    }
+}

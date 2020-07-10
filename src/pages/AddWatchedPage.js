@@ -29,8 +29,7 @@ const AddWatchedPage = (props) => {
     
     }
     return(
-        <div>
-            WATCHED
+        <div className = 'anime-form__container'>
             <AnimeSearch getInfo = {getInfo}/>
             <AnimeForm type = 'watched' animeList = {animeList} />
         </div>

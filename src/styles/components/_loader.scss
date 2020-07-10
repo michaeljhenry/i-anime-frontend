@@ -1,0 +1,25 @@
+.loader {
+    align-items: center;
+    display: flex;
+    height: 100vh;
+    justify-content: center;
+    width: 100%;
+    position: fixed; /* fixing its position at the top left makes sure it isnt shifted */
+    top: 0;
+    left: 0;
+    z-index: 100;
+}
+
+.loader__image {
+    height: 150px;
+    width: 150px;
+    z-index: 100;
+}
+
+@media (max-width: $desktop-breakpoint) {
+    .loader__image {
+        height: 100px;
+        width: 100px;
+        z-index: 100;
+    }
+}

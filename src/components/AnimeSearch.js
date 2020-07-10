@@ -1,8 +1,11 @@
 import React, {useState} from 'react';
+import {useHttpClient} from '../hooks/http-hook';
+import LoadingSpinner from './Loader';
+import ErrorModal from './ErrorModal';
 
 const AnimeSearch = (props) => {
     const baseUrl = 'https://api.jikan.moe/v3';
-
+    const { isLoading, error, sendRequest, clearError } = useHttpClient();
     const [anime, setAnime] = useState('')
     const getValue = (e) => {
       e.preventDefault();
@@ -12,8 +15,9 @@ const AnimeSearch = (props) => {
     }
     const request = async () => {
       
-      const response = await fetch(`${baseUrl}/search/anime?q=${anime}&page=1&type=tv`)
-      .then(res => res.json())
+      const response = await sendRequest(`${baseUrl}/search/anime?q=${anime}&page=1&type=tv`);
+      // await fetch(`${baseUrl}/search/anime?q=${anime}&page=1&type=tv`)
+      // .then(res => res.json())
       
       props.getInfo(response);
       //console.log(response.results[0]);
@@ -23,10 +27,16 @@ const AnimeSearch = (props) => {
       }
 
     return (
-        <form onSubmit = {getValue}>
-        <input type = 'text' onChange = {e => setAnime(e.target.value)}></input>
-        <button disabled = {!anime}type = 'submit'>Submit</button>
-        </form>
+      <React.Fragment>
+        {error && <ErrorModal error={error.message} show = {!!error} onCancel = {clearError} />}
+          {isLoading && <LoadingSpinner/>}
+          {!isLoading &&
+          <form className = 'anime-form__query' onSubmit = {getValue}>
+            <input type = 'text' onChange = {e => setAnime(e.target.value)} placeholder = 'Enter an anime title' />
+            <button disabled = {!anime}type = 'submit'><h3>Search Anime</h3></button>
+          </form>
+          }
+        </React.Fragment>
     );
 }
 

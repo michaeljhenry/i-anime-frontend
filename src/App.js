@@ -1,11 +1,12 @@
+
 import React, {useCallback, useState, useEffect} from 'react';
 import {
   BrowserRouter as Router,
   Route, 
-  NavLink,
   Switch,
   Redirect
 } from "react-router-dom";
+import './styles/styles.scss';
 import AddWatchedPage from './pages/AddWatchedPage';
 import AddToWatchPage from './pages/AddToWatchPage';
 import AuthContext from './context/auth-context';
@@ -30,7 +31,7 @@ const App = () => {
     setUserId(uid);
     const tokenExpirationDate = expirationDate || new Date((new Date().getTime() + 1000 * 60 * 60)); // current date + one hour
     setTokenExpirationDate(tokenExpirationDate);
-    localStorage.setItem('userData', JSON.stringify({userId: userId, token: token, expiration: tokenExpirationDate.toISOString()}));
+    localStorage.setItem('userData', JSON.stringify({userId: uid, token: token, expiration: tokenExpirationDate.toISOString()}));
   }, []);
 
   const logout = useCallback(() => {
@@ -47,7 +48,7 @@ const App = () => {
     } else {
       clearTimeout(logoutTimer);
     }
-  }, [token, logout], tokenExpirationDate)
+  }, [token, logout, tokenExpirationDate], tokenExpirationDate)
 
   useEffect(() => {
     const storedData = JSON.parse(localStorage.getItem('userData'));
@@ -60,7 +61,7 @@ const App = () => {
   if(token) {
     routes = (
       <Router>
-        <NavLinks/>
+        <NavLinks tokenValid = {true}/>
         <Switch> 
             <Route exact path = '/'><DashboardPage/></Route>
             <Route path='/anime/add/watched'><AddWatchedPage/></Route>
@@ -78,10 +79,7 @@ const App = () => {
   else {
     routes =
     <Router>
-      <nav>
-      <NavLink to='/'>Home</NavLink>
-      <NavLink to='/auth'>Authenticate</NavLink>
-      </nav>
+    <NavLinks tokenValid = {false}/>
     <Switch> 
 
 
@@ -106,8 +104,6 @@ const App = () => {
         logout: logout
       }}
     >
-    {token ? <button onClick = {logout}>Logout</button> : ''}
-
       {routes}
   </AuthContext.Provider>
    

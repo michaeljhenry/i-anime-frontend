@@ -1,0 +1,77 @@
+button {
+    outline: none;
+    border: none;
+    border-radius: 10px;
+    background-color: $baby-blue;
+    margin: $xs-size auto;
+    padding: $s-size;
+    font-weight: bold;
+    box-shadow: 4px 5px 0px 0px rgba(0,0,0,0.75);
+}
+
+button:active {
+    box-shadow: inset 4px 5px 0px 0px rgba(0,0,0,0.75)
+}
+.logout-btn {
+    margin-left: $m-size;
+}
+.logout-btn__main {
+    margin-left: $m-size;
+}
+
+.user-search__btn {
+    padding: 2px;
+    text-align: center;
+}
+
+.edit-buttons {
+    display: flex;
+    min-height: 60px;
+    flex-shrink: 0;
+    width: 100%;
+    align-self: flex-end;
+    justify-content: center;
+    
+}
+
+.edit-buttons a {
+    text-decoration: none;
+}
+
+.delete-btn {
+    margin: auto $xs-size;
+}
+
+.btn-line {
+    display: block;
+    width: 25px;
+    height: 2px;
+    background-color: red;
+}
+
+.side-drawer__btn {
+    display: none;
+}
+
+.move-button {
+    display: flex;
+    flex-direction: column;
+    align-self: flex-end;
+}
+
+@media (max-width: $desktop-breakpoint) {
+    .side-drawer__btn {
+        margin: auto $xs-size;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        height: 40px;
+        padding: 10px;
+    }
+    .logout-btn__main {
+        display: none;
+    }
+
+}
+
+
