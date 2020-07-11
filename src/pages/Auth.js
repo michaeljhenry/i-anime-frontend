@@ -122,7 +122,7 @@ const Auth = (props) => {
 
     return(
         <div>
-        {error && <ErrorModal error={error.message} show = {!!error} onCancel = {clearError} />}
+        {error && <ErrorModal error={error} show = {!!error} onCancel = {clearError} />}
         {isLoading && <LoaderSpinner/>}
         {!isLoading && 
         <LoginBox size = {authMode === true ? 'small' : 'large'}>
@@ -139,7 +139,8 @@ const Auth = (props) => {
                     <p>Password</p>
                     <input 
                         className = 'auth-input' 
-                        onBlur = {onPasswordBlurHandler} onChange = {passwordChangeHandler} type = 'text'
+                        onBlur = {onPasswordBlurHandler} onChange = {passwordChangeHandler}
+                        type = 'password'
                         value = {password}
                     />
                     {isPasswordActive ? '' : (state.isPasswordValid ? '' : <p className = 'error-text'>Minimum of 6 characters</p>)}
@@ -177,7 +178,7 @@ const Auth = (props) => {
                 className = {isPasswordActive ? '' : (state.isPasswordValid ? '' : 'error')}
                 onBlur = {onPasswordBlurHandler} 
                 onChange = {passwordChangeHandler} 
-                type = 'text'
+                type = 'password'
                 value = {password}
             />
             {isPasswordActive ? '' : (state.isPasswordValid ? '' : <p className = 'error-text'>Minimum of 6 characters</p>)}

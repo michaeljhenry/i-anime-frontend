@@ -10,7 +10,7 @@ const AnimeForm = (props) => {
     const auth = useContext(AuthContext);
     const [chosenAnimeIndex, setChosenAnimeIndex] = useState('');
     const [chosenAnime, setChosenAnime] = useState('');
-    const [description, setDescription] = useState('');
+    const [description, setDescription] = useState(''); 
     const [state, setState] = useState({});
     const [charactersRemaining, setCharactersRemaining] = useState(100);
     const [score, setScore] = useState('');
@@ -75,9 +75,20 @@ const AnimeForm = (props) => {
         {!isLoading && 
             <form onSubmit = {clickedEvent}>
                 <div className = 'anime-form__info'> 
-                    {props.animeList.length > 0 ? 
-                        props.animeList.map((anime, index) => (
-                            <div key = {anime.title} className = 'anime-search__card'>
+                    {props.animeList.length > 0 ?
+                        <React.Fragment>
+                        <div className = 'no-users__card'>
+                            * Select an anime
+                            <br></br>
+                            {props.type === 'watched' && <div>* Provide a score<br></br></div>}
+                            Thoughts are optional
+                            <br></br>
+                        </div>
+                        <div className = 'ordering-things-two'>
+                            {props.animeList.map((anime, index) => (
+                            <React.Fragment key = {anime.title}>
+
+                            <div  className = 'anime-search__card'>
                                 <input 
                                     onChange = {(e) => setChosenAnimeIndex(e.target.id.split('-')[1])} 
                                     name = 'anime-select' type = 'radio' id = {`cb-${index}`}
@@ -87,16 +98,20 @@ const AnimeForm = (props) => {
                                     <div className = 'anime-search__label'>
                                         <img className = 'anime-form__image' src = {anime.image_url} alt = 'Anime'/>   
                                         <p>{anime.title}</p>
-                                        {anime.synopsis}
+                                        <div className = 'anime-search__synopsis'>{anime.synopsis}</div>
                                         <p>Score: {anime.score}</p>
                                     </div>
                                     </label>
                                 </div>
                             </div>
-                    )) 
+                            </React.Fragment>
+                            
+                    ))} 
+                    </div>
+                    </React.Fragment> 
                     : null}
                 </div>
-                <div className = 'anime-form__score' onChange = {scoreChangeHandler}>
+                {props.type === 'watched' && <div className = 'anime-form__score' onChange = {scoreChangeHandler}>
                     <p>Anime Score: </p><select name = 'scores' id = 'scores'>
                         <option value="0.0">0.0</option>
                         <option value="0.5">0.5</option>
@@ -121,10 +136,11 @@ const AnimeForm = (props) => {
                         <option value = "10.0">10.0</option>
                     </select> 
                 </div>
-                <textarea onChange = {textareaChangeHandler} placeholder = 'Description in 100 characters' value = {description}></textarea>
+                }
+                <textarea onChange = {textareaChangeHandler} placeholder = '100 characters to express thoughts or feelings about the anime you watched or why you want to watch it...' value = {description}></textarea>
                 <div className = 'text-background'><p>Characters Remaining: {charactersRemaining}</p></div>
    
-                <button onClick = {clickedEvent} disabled = {!chosenAnimeIndex}type = 'submit'><h3>Add Anime</h3></button>
+                <button onClick = {clickedEvent} disabled = {!(chosenAnimeIndex && score)}type = 'submit'><h3>Add Anime</h3></button>
             </form>
                         }
             </React.Fragment>

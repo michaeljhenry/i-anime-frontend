@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect} from 'react';
 import {useParams, useLocation} from 'react-router-dom';
 import AnimeCard from '../components/AnimeCard';
 import {useHttpClient} from '../hooks/http-hook';
@@ -56,19 +56,28 @@ const UserAnimes = (props) => {
             } catch(err) {}
         }
         getAnimes();
-    }, [id, sendRequest])
+    }, [id, sendRequest]);
+    
     let location = useLocation();
     let userAnimes;
+    let watchedCount;
+    let toWatchCount;
     let path = location.pathname.split('/')[3];
     const userId = useParams().id.substring(1);
     
-    console.log(animes);
+    //console.log(animes);
     if(animes.length > 0) {
         if(path === 'watched') {
             userAnimes = animes.filter((el) => (el.creator === userId && el.type === 'watched'));
+            console.log('hi');
+            console.log(userAnimes);
+            watchedCount = userAnimes.length;
+            console.log(watchedCount);
         }
         else if(path === 'toWatch') {
             userAnimes = animes.filter((el) => el.creator === userId && el.type === 'toWatch');
+            toWatchCount = userAnimes.length;
+            console.log(toWatchCount);
         }
     }
     
@@ -79,12 +88,24 @@ const UserAnimes = (props) => {
             {!isLoading && 
                 <div className = 'user-animes__container'>
                 
-                {animes.length > 0 ? (path === 'watched' ? userAnimes.map((anime) => (
-                    <AnimeCard key = {anime.title} score = {anime.score} description = {anime.description} aid = {anime._id} title = {anime.title} synopsis = {anime.synopsis} image_url = {anime.image_url} type = {anime.type} creator = {anime.creator}/>
-                )) : userAnimes.map((anime) => (
-                    <AnimeCard key = {anime.title} score = {anime.score} description = {anime.description} aid = {anime._id} title = {anime.title} synopsis = {anime.synopsis} image_url = {anime.image_url} type = {anime.type} creator = {anime.creator} />
-                )))
-                : null
+                {animes.length > 0 ? 
+                    (path === 'watched' ? 
+                        (watchedCount > 0 ? (userAnimes.map((anime) => (
+                            <AnimeCard key = {anime.title} score = {anime.score} description = {anime.description} aid = {anime._id} title = {anime.title} synopsis = {anime.synopsis} image_url = {anime.image_url} type = {anime.type} creator = {anime.creator}/>
+                        ))) : <div className = 'no-users__card'>
+                                <h3>No <br></br>"Watched Animes" Registered</h3>
+                            </div>) 
+                    : 
+                    toWatchCount > 0 ? 
+                        userAnimes.map((anime) => (
+                            <AnimeCard key = {anime.title} score = {anime.score} description = {anime.description} aid = {anime._id} title = {anime.title} synopsis = {anime.synopsis} image_url = {anime.image_url} type = {anime.type} creator = {anime.creator} />
+                        ))
+                        : 
+                        <div className = 'no-users__card'>
+                            <h3>No <br></br>"To Watch" Animes Registered</h3>
+                        </div>)
+                : 
+                <div className = 'no-users__card'><h3>No Animes Listed</h3></div>
                 }
                 </div>
             }

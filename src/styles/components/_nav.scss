@@ -18,24 +18,27 @@
 
 .nav-links li {
     position: relative;
-    margin-left: $m-size;
+    margin-left: $xs-size;
+    margin-top: auto;
+    margin-bottom:  auto;
 }
 
 .nav-links a {
     text-decoration: none;
     font-weight: bold;
-    font-size: $l-size;
+    font-size: 22px;
     color: white;
     box-shadow: 4px 5px 0px 0px rgba(0,0,0,0.75);
     background-color: rgb(5, 5, 54);
     border-radius: 10px;
     position: relative;
+    padding: 5px;
 }
 
 .nav-links a:active {
     text-decoration: none;
     font-weight: bold;
-    font-size: $l-size;
+    font-size: 22px;
     color: black;
     box-shadow: inset 4px 5px 0px 0px rgba(0,0,0,0.75)
 }
@@ -48,8 +51,14 @@
     display: none;
 }
 
-.small-home {
+.mobile-main__links {
     display: none;
+};
+
+.search-logout {
+    display: flex;
+    margin-left: auto;
+    align-items: center;
 }
 
 @media (max-width: $desktop-breakpoint) {
@@ -109,20 +118,36 @@
         font-weight: bold;
         font-size: $l-size;
         color: black;
-        box-shadow: inset 4px 5px 0px 0px rgba(0,0,0,0.75)
+        box-shadow: inset 4px 5px 0px 0px rgba(0,0,0,0.75);
     }
 
-    .small-home {
+    .mobile-main__links {
         display: flex;
+        list-style: none;
+        margin: 0;
+        position: relative;
+        margin-top: auto;
+        margin-bottom: auto;
+    };
+    
+    .mmobile-main__links li {
+        position: relative;
+        margin-left: $xs-size;
+        margin-top: auto;
+        margin-bottom:  auto;
+    };
+    
+    .mobile-main__links a {
         text-decoration: none;
         font-weight: bold;
-        font-size: 22px;
+        font-size: 18px;
         color: white;
         box-shadow: 4px 5px 0px 0px rgba(0,0,0,0.75);
         background-color: rgb(5, 5, 54);
         border-radius: 10px;
         position: relative;
-        margin-top: $m-size;
-    }
+        padding: 5px;
 
-}
+    };
+
+};

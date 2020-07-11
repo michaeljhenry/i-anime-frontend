@@ -1,5 +1,6 @@
 import React, {useContext, useState} from 'react';
 import AuthContext from '../context/auth-context';
+import NameContext from '../context/name-context';
 import {NavLink} from 'react-router-dom';
 import SideDrawer from './SideDrawer';
 import Backdrop from './Backdrop';
@@ -7,6 +8,7 @@ import Backdrop from './Backdrop';
 
 const NavLinks = (props) => {
     const auth = useContext(AuthContext);
+    const nameContext = useContext(NameContext);
     const [sideDrawer, setSideDrawer] = useState(false);
 
     let navs;
@@ -17,15 +19,18 @@ const NavLinks = (props) => {
 
         setSideDrawer(true);
     };
-    const closeDrawer = () => {
+    const closeDrawer = (e) => {
+        //e.preventDefault();
+        nameContext.setNameFunction('');
         setSideDrawer(false);
+        
     };
 
-    if(props.tokenValid) {
+    if(auth.isLoggedIn) {
         navs = (
             <React.Fragment>
                 <ul className = 'nav-links'>
-                    <li><NavLink activeClassName = 'is-active' exact = {true} to='/'>I-Anime</NavLink></li>
+                    <li><NavLink onClick = {(e) => {nameContext.setNameFunction('');}} activeClassName = 'is-active' exact = {true} to='/'>I-Anime</NavLink></li>
                     <li><NavLink activeClassName = 'is-active' to='/anime/add/watched'>Add Watched</NavLink></li>
                     <li><NavLink activeClassName = 'is-active' to='/anime/add/toWatch'>Add To-Watch</NavLink></li>
                     <li><NavLink activeClassName = 'is-active' to={`/${auth.userId}/animes`}>My Anime</NavLink></li>
@@ -34,7 +39,9 @@ const NavLinks = (props) => {
         </React.Fragment>
         )
         sideDrawerMainNavs = (
-            <li><NavLink className = 'small-home' onClick = {closeDrawer} activeClassName = 'is-active' exact = {true} to={`/`}>I-Anime</NavLink></li>
+            <ul className = 'mobile-main__links'>
+                <li><NavLink onClick = {closeDrawer} activeClassName = 'is-active' exact = {true} to={`/`}>I-Anime</NavLink></li>
+            </ul>
         )
         sideDrawerInnerNavs = (
             <ul className = 'nav-links__sidebar'>
@@ -51,21 +58,21 @@ const NavLinks = (props) => {
         navs = (
             <React.Fragment>
                 <ul className = 'nav-links'>
-                    <li><NavLink activeClassName = 'is-active' exact = {true} to={`/`}>I-Anime</NavLink></li>
+                    <li><NavLink onClick = {(e) => {nameContext.setNameFunction('');}} activeClassName = 'is-active' exact = {true} to={`/`}>I-Anime</NavLink></li>
                     <li><NavLink activeClassName = 'is-active' to={`/auth`}>Authenticate</NavLink></li>
 
                 </ul>
             </React.Fragment>
         )
         sideDrawerMainNavs = (
-            <ul>
-                <li><NavLink className = 'small-home' onClick = {closeDrawer} activeClassName = 'is-active' exact = {true} to={`/`}>I-Anime</NavLink></li>
+            <ul className = 'mobile-main__links'>
+                <li><NavLink onClick = {closeDrawer} activeClassName = 'is-active' exact = {true} to={`/`}>I-Anime</NavLink></li>
             </ul>
         )
         sideDrawerInnerNavs = (
             <ul className = 'nav-links__sidebar'>
-                <li><NavLink className = 'small-home' onClick = {closeDrawer} activeClassName = 'is-active' exact = {true} to={`/`}>I-Anime</NavLink></li>
-                <li><NavLink className = 'small-home' onClick = {closeDrawer} activeClassName = 'is-active'to={`/auth`}>Authenticate</NavLink></li>
+                <li><NavLink onClick = {closeDrawer} activeClassName = 'is-active' exact = {true} to={`/`}>I-Anime</NavLink></li>
+                <li><NavLink onClick = {closeDrawer} activeClassName = 'is-active'to={`/auth`}>Authenticate</NavLink></li>
                 <div className = 'move-button'>{auth.token ? <button className = 'logout-btn' onClick = {auth.logout}>Logout</button> : ''}</div>
 
             </ul>
@@ -81,7 +88,7 @@ const NavLinks = (props) => {
                 </SideDrawer>
                 </React.Fragment>
             }
-            {!sideDrawer && <nav className ='nav-header'>
+            {!sideDrawer && <React.Fragment>
                 <button className = 'side-drawer__btn' onClick = {openDrawer}>
                     <div className = 'btn-line'></div>
                     <div className = 'btn-line'></div>
@@ -91,7 +98,7 @@ const NavLinks = (props) => {
                     {sideDrawerMainNavs}
                     {navs}
                     {sideDrawer && <SideDrawer show = {sideDrawer}>{navs}</SideDrawer>}
-            </nav>
+            </React.Fragment>
             }
             
             

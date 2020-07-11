@@ -1,29 +1,26 @@
 import React, { useState, useEffect, useContext } from 'react';
-import AuthContext from '../context/auth-context';
 import UserCard from '../components/UserCard';
 import {useHttpClient} from '../hooks/http-hook';
 import LoadingSpinner from '../components/Loader';
 import ErrorModal from '../components/ErrorModal';
+import NameContext from '../context/name-context';
 const DashboardPage = () => {
-    const auth = useContext(AuthContext);
+    const nameContext = useContext(NameContext);
     const [activeUsers, setActiveUsers] = useState([]);
-    const [name, setName] = useState('');
-    const [finalName, setFinalName] = useState('');
 
     const { isLoading, error, sendRequest, clearError } = useHttpClient();
-    const searchUsersHandler = async () => {
-        try {
-            const usersList = await sendRequest(`http://localhost:5000/api/animes/search/${name}`);
-        } catch(err) {}
+    useEffect(() => {
+     
+            return () => {
+                nameContext.setNameFunction('');
+            }
+        
+    }, []) // if we swap pages and come back to this page, we don't still want old search results. when we unmount, reset the search to all users.
 
-    }
-    const nameChangeHandler = (e) => {
-        setName(e.target.value)
-    }
     useEffect(() => {
         const getUsers = async () => {
             try {
-                const responseData = await sendRequest(`http://localhost:5000/api/users/${name}`);
+                const responseData = await sendRequest(`http://localhost:5000/api/users/${nameContext.name}`);
                 // await fetch(`http://localhost:5000/api/users`,
                 // {
                 //     method: 'GET',
@@ -34,16 +31,12 @@ const DashboardPage = () => {
             } catch(err) {}
         }
         getUsers();
-    }, [sendRequest, finalName]);
+    }, [sendRequest, nameContext.name]);
 
     return (
         <React.Fragment>
             {error && <ErrorModal error={error.message} show = {!!error} onCancel = {clearError} />}
             {isLoading && <LoadingSpinner/>}
-            <form className = 'testing-something' onSubmit = {(e) => {e.preventDefault(); setFinalName(name)}}>
-                <input className = 'hi' onChange = {nameChangeHandler} style = {{fontWeight: "bold"}} type = 'text' placeholder = 'Search user by name'></input>
-                {auth.token ? <button className = 'logout-btn__main' onClick = {auth.logout}>Logout</button> : ''} 
-             </form>
             {!isLoading && <ul className = 'users-container'>
                 {activeUsers.length > 0 ? 
                 activeUsers.map((user) => (
@@ -51,7 +44,7 @@ const DashboardPage = () => {
                         <UserCard key = {user.email} name = {user.name} id = {user.id} image = {user.image} animes = {user.animes}/>
                     </li>
                 ))
-                : 'No Users'}
+                : <div className = 'no-users__card'><h3>No Users Registered</h3></div>}
             </ul>
             }
         </React.Fragment>

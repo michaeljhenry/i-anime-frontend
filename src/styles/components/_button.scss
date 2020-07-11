@@ -16,7 +16,7 @@ button:active {
     margin-left: $m-size;
 }
 .logout-btn__main {
-    margin-left: $m-size;
+    margin-right: 10px;
 }
 
 .user-search__btn {
@@ -27,10 +27,10 @@ button:active {
 .edit-buttons {
     display: flex;
     min-height: 60px;
-    flex-shrink: 0;
     width: 100%;
     align-self: flex-end;
     justify-content: center;
+    margin-top: auto;
     
 }
 
@@ -70,6 +70,10 @@ button:active {
     }
     .logout-btn__main {
         display: none;
+    }
+
+    .logout-btn {
+        font-size: 20px;
     }
 
 }

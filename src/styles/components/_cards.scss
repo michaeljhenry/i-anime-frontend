@@ -102,7 +102,12 @@
     opacity: 0.99;
 }
 
-.anime-search__label:hover {
+.anime-search__card-mobile {
+    display: none;
+
+}
+
+.anime-search__card:hover {
     cursor: pointer;
     -webkit-box-shadow:0 0 30px red; 
     -moz-box-shadow: 0 0 30px red; 
@@ -139,6 +144,8 @@
 
 .user-list__item-description {
     flex: 1;
+    width: 100%;
+    padding: 2px;
 }
 
 .user-list__item-description p {
@@ -147,10 +154,21 @@
     white-space: -pre-wrap;     /* Opera <7 */   
     white-space: -o-pre-wrap;   /* Opera 7 */ 
     word-wrap: break-word;      /* IE */ 
-    word-break: break-all;
     font-weight: normal;
-    text-align: left;
+    text-align: center;
+    width: 100%;
+    padding: 2px;
 
+}
+
+.no-users__card {
+    display: block;
+    background-color: white;
+    margin: $l-size auto;
+    width: 220px;
+    text-align: center;
+    opacity: 0.9;
+    border-radius: 10px;
 }
 
 .user-list__item img {
@@ -160,9 +178,26 @@
 }
 
 @media (max-width: $desktop-breakpoint) {
+    .user-item {
+        margin-right: 0;
+    }
     .list-options__item {
         margin-top: $l-size;
     }
+    .no-users__card {
+        width: 180px;
+    }
+    .no-users__card h3 {
+        font-size: 20px;
+        width: 180px;
+    }
+    .anime-search__synopsis {
+        display: none;
+    }
+    .anime-search__card--mobile {
+        display: none;
+    }
+
 }
 
 // #list-options__watched {

@@ -15,7 +15,8 @@ import EditAnimePage from './pages/EditAnimePage';
 import UserAnimes from './pages/UserAnimes';
 import UserPage from './pages/UserPage';
 import Auth from './pages/Auth';
-import NavLinks from './components/NavLinks';
+import NameContext from './context/name-context';
+import MainNav from './components/MainNav';
 
 let logoutTimer;
 
@@ -24,8 +25,11 @@ const App = () => {
   const [token, setToken] = useState(false);
   const [tokenExpirationDate, setTokenExpirationDate] = useState();
   const [userId, setUserId] = useState(null);
+  const [name, setName] = useState('');
 
-
+  const setNameFunction = useCallback((searchedName) => {
+    setName(searchedName); 
+  }, []);
   const login = useCallback((uid, token, expirationDate) => {
     setToken(token);
     setUserId(uid);
@@ -60,8 +64,6 @@ const App = () => {
   let routes;
   if(token) {
     routes = (
-      <Router>
-        <NavLinks tokenValid = {true}/>
         <Switch> 
             <Route exact path = '/'><DashboardPage/></Route>
             <Route path='/anime/add/watched'><AddWatchedPage/></Route>
@@ -73,16 +75,11 @@ const App = () => {
             <Route path='/:id/animes/toWatch'><UserAnimes/></Route>
             <Redirect to="/" />
       </Switch>
-    </Router>
     )
   }
   else {
     routes =
-    <Router>
-    <NavLinks tokenValid = {false}/>
     <Switch> 
-
-
       <Route exact path = '/'><DashboardPage/></Route>
       <Route path = '/auth'><Auth/></Route>
       <Route exact path='/:id/animes'><UserPage/></Route>
@@ -91,7 +88,6 @@ const App = () => {
       <Redirect to="/" />
 
   </Switch>
-  </Router>
   }
   
   return(
@@ -104,7 +100,19 @@ const App = () => {
         logout: logout
       }}
     >
-      {routes}
+      <NameContext.Provider
+        value = {{
+          name: name,
+          setNameFunction: setNameFunction 
+        }}
+      >
+      <Router>
+      <MainNav/>
+
+        {routes}
+      </Router>
+
+      </NameContext.Provider>
   </AuthContext.Provider>
    
   )
