@@ -1,5 +1,5 @@
 
-import React, {useCallback, useState, useEffect} from 'react';
+import React, {Suspense, useCallback, useState, useEffect} from 'react';
 import {
   BrowserRouter as Router,
   Route, 
@@ -7,18 +7,26 @@ import {
   Redirect
 } from "react-router-dom";
 import './styles/styles.scss';
-import AddWatchedPage from './pages/AddWatchedPage';
-import AddToWatchPage from './pages/AddToWatchPage';
+// import AddWatchedPage from './pages/AddWatchedPage';
+// import AddToWatchPage from './pages/AddToWatchPage';
 import AuthContext from './context/auth-context';
 import DashboardPage from './pages/DashboardPage';
-import EditAnimePage from './pages/EditAnimePage';
-import UserAnimes from './pages/UserAnimes';
-import UserPage from './pages/UserPage';
-import Auth from './pages/Auth';
+import LoadingSpinner from './components/Loader';
+// import EditAnimePage from './pages/EditAnimePage';
+// import UserAnimes from './pages/UserAnimes';
+// import UserPage from './pages/UserPage';
+// import Auth from './pages/Auth';
 import NameContext from './context/name-context';
 import MainNav from './components/MainNav';
 
 let logoutTimer;
+
+const Auth = React.lazy(() => import('./pages/Auth')); // code splitting. don't upload this code until required
+const AddWatchedPage = React.lazy(() => import('./pages/AddWatchedPage'));
+const AddToWatchPage = React.lazy(() => import('./pages/AddToWatchPage'));
+const EditAnimePage = React.lazy(() => import('./pages/EditAnimePage'));
+const UserAnimes = React.lazy(() => import('./pages/UserAnimes'));
+const UserPage = React.lazy(() => import('./pages/UserPage'));
 
 const App = () => {
 
@@ -109,7 +117,7 @@ const App = () => {
       <Router>
       <MainNav/>
 
-        {routes}
+        <Suspense fallback = {<div><LoadingSpinner/></div>}>{routes}</Suspense>
       </Router>
 
       </NameContext.Provider>

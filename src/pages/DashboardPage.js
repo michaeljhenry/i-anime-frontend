@@ -20,7 +20,7 @@ const DashboardPage = () => {
     useEffect(() => {
         const getUsers = async () => {
             try {
-                const responseData = await sendRequest(`http://localhost:5000/api/users/${nameContext.name}`);
+                const responseData = await sendRequest(process.env.REACT_APP_BACKEND_URL + `/users/${nameContext.name}`);
                 // await fetch(`http://localhost:5000/api/users`,
                 // {
                 //     method: 'GET',

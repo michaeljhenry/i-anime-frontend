@@ -18,7 +18,7 @@ const EditAnimePage = () => {
 
     useEffect(() => {
         const getAnime = async () => {
-            const animeData = await sendRequest(`http://localhost:5000/api/animes/${aid}`, 'GET', null, {Authorization: 'Bearer ' + auth.token})
+            const animeData = await sendRequest(process.env.REACT_APP_BACKEND_URL + `/animes/${aid}`, 'GET', null, {Authorization: 'Bearer ' + auth.token})
             // await fetch(`http://localhost:5000/api/animes/${aid}`, {
             //     method: 'GET',
             //     body: null,
@@ -47,7 +47,7 @@ const EditAnimePage = () => {
             score: score
         }
         try {
-            await sendRequest(`http://localhost:5000/api/animes/patch/${aid}`, 'PATCH', JSON.stringify(newAnime), {'Content-Type': 'application/json', Authorization: 'Bearer ' + auth.token});
+            await sendRequest(process.env.REACT_APP_BACKEND_URL + `/animes/patch/${aid}`, 'PATCH', JSON.stringify(newAnime), {'Content-Type': 'application/json', Authorization: 'Bearer ' + auth.token});
             history.push('/');
         } catch(err) {}
         // await fetch(`http://localhost:5000/api/animes/patch/${aid}`, 

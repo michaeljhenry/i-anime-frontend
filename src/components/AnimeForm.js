@@ -49,7 +49,7 @@ const AnimeForm = (props) => {
         });
         console.log(data);
         try {
-            await sendRequest(`http://localhost:5000/api/animes/add/${props.type}`, 'POST', JSON.stringify(data), {'Content-Type': 'application/json', Authorization: 'Bearer ' + auth.token});
+            await sendRequest(process.env.REACT_APP_BACKEND_URL + `/animes/add/${props.type}`, 'POST', JSON.stringify(data), {'Content-Type': 'application/json', Authorization: 'Bearer ' + auth.token});
             // await fetch(`http://localhost:5000/api/animes/add/${props.type}`, {
             //     method: 'POST',
             //     body: JSON.stringify(data),
@@ -139,8 +139,11 @@ const AnimeForm = (props) => {
                 }
                 <textarea onChange = {textareaChangeHandler} placeholder = '100 characters to express thoughts or feelings about the anime you watched or why you want to watch it...' value = {description}></textarea>
                 <div className = 'text-background'><p>Characters Remaining: {charactersRemaining}</p></div>
-   
-                <button onClick = {clickedEvent} disabled = {!(chosenAnimeIndex && score)}type = 'submit'><h3>Add Anime</h3></button>
+                
+                {props.type === 'watched' ? <button onClick = {clickedEvent} disabled = {!(chosenAnimeIndex && score)} type = 'submit'><h3>Add Anime</h3></button>
+                :
+                <button onClick = {clickedEvent} disabled = {!(chosenAnimeIndex)} type = 'submit'><h3>Add Anime</h3></button>
+                }
             </form>
                         }
             </React.Fragment>

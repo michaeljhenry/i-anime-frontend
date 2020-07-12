@@ -49,7 +49,7 @@ const UserAnimes = (props) => {
     useEffect(() => {
         const getAnimes = async () => {
             try {
-                const animeList = await sendRequest(`http://localhost:5000/api/animes/user/${id}`);
+                const animeList = await sendRequest(process.env.REACT_APP_BACKEND_URL + `/animes/user/${id}`);
                 // await fetch(`http://localhost:5000/api/animes/user/${id}`, {method: 'GET', body: null, methods: {}})
                 // const animeList = await animeResponse.json();
                 setAnimes(animeList.animes);

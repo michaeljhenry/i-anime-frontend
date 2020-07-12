@@ -13,7 +13,7 @@ const AnimeCard = (props) => {
 
     const onDeleteHandler = async () => {
         try {
-            await sendRequest(`http://localhost:5000/api/animes/delete/${props.aid}`, 'DELETE', null, {'Authorization': 'Bearer ' + auth.token});
+            await sendRequest(process.env.REACT_APP_BACKEND_URL + `/animes/delete/${props.aid}`, 'DELETE', null, {'Authorization': 'Bearer ' + auth.token});
             // await fetch(`http://localhost:5000/api/animes/delete/${props.aid}`, {
             //     method: 'DELETE',
             //     body: null,
@@ -24,7 +24,7 @@ const AnimeCard = (props) => {
     }
     const onSwitchTypeHandler = async () => {
         try {
-        await sendRequest(`http://localhost:5000/api/animes/patch/type/${props.aid}`, 'PATCH', {creator: props.creator, type: props.type}, {'Authorization': 'Bearer ' + auth.token});
+        await sendRequest(process.env.REACT_APP_BACKEND_URL + `/animes/patch/type/${props.aid}`, 'PATCH', {creator: props.creator, type: props.type}, {'Authorization': 'Bearer ' + auth.token});
         history.push('/');
         } catch(err) {}
     }

@@ -52,7 +52,7 @@ const Auth = (props) => {
             userInfo.append('password', password);
             console.log(userInfo);
             try {
-            const response = await sendRequest(`http://localhost:5000/api/users/signup`, 'POST', userInfo)
+            const response = await sendRequest(process.env.REACT_APP_BACKEND_URL + `/users/signup`, 'POST', userInfo)
             
             // await fetch(`http://localhost:5000/api/users/signup`, {
             //     method: 'POST',
@@ -69,7 +69,7 @@ const Auth = (props) => {
                 password
             }
             try {
-            const responseData = await sendRequest(`http://localhost:5000/api/users/login`, 'POST', JSON.stringify(userData), {'Content-Type': 'application/json'})
+            const responseData = await sendRequest(process.env.REACT_APP_BACKEND_URL + `/users/login`, 'POST', JSON.stringify(userData), {'Content-Type': 'application/json'})
             // await fetch(`http://localhost:5000/api/users/login`, {
             //     method: 'POST',
             //     body: JSON.stringify(userData),
