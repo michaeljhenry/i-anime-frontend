@@ -11,9 +11,9 @@ const EditAnimePage = () => {
     const history = useHistory();
     const aid = useParams().aid;
     const [animeInfo, setAnimeInfo] = useState({});
-    const [description, setDescription] = useState('');
+    const [description, setDescription] = useState(animeInfo.description);
     const [score, setScore] = useState('');
-    const [charactersRemaining, setCharactersRemaining] = useState(100);
+    const [charactersRemaining, setCharactersRemaining] = useState(200);
 
     const { isLoading, error, sendRequest, clearError } = useHttpClient();
 
@@ -42,9 +42,9 @@ const EditAnimePage = () => {
     const textareaChangeHandler = (e) => {
         e.preventDefault();
         e.persist();
-        if (e.target.value.length <= 100 ) {
+        if (e.target.value.length <= 200 ) {
             setDescription(e.target.value);
-            setCharactersRemaining(100 - e.target.value.length);
+            setCharactersRemaining(200 - e.target.value.length);
         }
     };
     const onSubmitHandler = async (e) => {
@@ -118,8 +118,9 @@ const EditAnimePage = () => {
         }
             <textarea 
                 onChange = {textareaChangeHandler} 
-                defaultValue = {animeInfo.description} 
-                placeholder = '100 characters to express thoughts or feelings about the anime you watched or why you want to watch it...'
+                placeholder = '200 characters to express thoughts or feelings about the anime you watched or why you want to watch it...'
+                value = {description}
+                defaultValue = {animeInfo.description}
             >
             </textarea>
             <div className = 'text-background'><p>Characters Remaining: {charactersRemaining}</p></div>

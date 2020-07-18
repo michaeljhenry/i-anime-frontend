@@ -13,7 +13,7 @@ const AnimeForm = (props) => {
     const [chosenAnime, setChosenAnime] = useState('');
     const [description, setDescription] = useState(''); 
     const [state, setState] = useState({});
-    const [charactersRemaining, setCharactersRemaining] = useState(100);
+    const [charactersRemaining, setCharactersRemaining] = useState(200);
     const [score, setScore] = useState('');
     const { isLoading, error, sendRequest, clearError } = useHttpClient();
     const history = useHistory();
@@ -22,9 +22,9 @@ const AnimeForm = (props) => {
         setScore(e.target.value);
     }
     const textareaChangeHandler = (e) => {
-        if (e.target.value.length <= 100 ) {
+        if (e.target.value.length <= 200 ) {
             setDescription(e.target.value);
-            setCharactersRemaining(100 - e.target.value.length);
+            setCharactersRemaining(200 - e.target.value.length);
         }
     };
     const clickedEvent = async (e) => {
@@ -143,7 +143,7 @@ const AnimeForm = (props) => {
                 }
                 <textarea 
                     onChange = {textareaChangeHandler} 
-                    placeholder = '100 characters to express thoughts or feelings about the anime you watched or why you want to watch it...' 
+                    placeholder = '200 characters to express thoughts or feelings about the anime you watched or why you want to watch it...' 
                     value = {description}>
                 </textarea>
                 <div className = 'text-background'><p>Characters Remaining: {charactersRemaining}</p></div>
