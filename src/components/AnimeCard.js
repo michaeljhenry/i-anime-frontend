@@ -19,13 +19,14 @@ const AnimeCard = (props) => {
             //     body: null,
             //     headers: {'Authorization': 'Bearer ' + auth.token}
             // });
-                history.push('/');
+            history.push(`/${auth.userId}/animes`);
+
         } catch(err) {}
     }
     const onSwitchTypeHandler = async () => {
         try {
         await sendRequest(process.env.REACT_APP_BACKEND_URL + `/animes/patch/type/${props.aid}`, 'PATCH', {creator: props.creator, type: props.type}, {'Authorization': 'Bearer ' + auth.token});
-        history.push('/');
+            history.push(`/${auth.userId}/animes`);
         } catch(err) {}
     }
     return(
@@ -40,7 +41,7 @@ const AnimeCard = (props) => {
                     <p>{props.description}</p>
                 </div>
                 <div>
-                {props.type === 'watched' && <p style = {{fontWeight: 'bold'}}>User Rating: {props.score}</p>}
+                {props.type === 'watched' && <p style = {{fontWeight: 'bold'}}>{props.score ? `User Rating: ${props.score}` : `No User Rating`}</p>}
 
                 </div>
                 {user === auth.userId ? (

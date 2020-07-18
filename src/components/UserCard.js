@@ -8,7 +8,7 @@ const UserCard = (props) => {
             <div className = 'card-container'>
                 <div className = 'card-header'>
                     <div>
-                        <img className = 'image-upload__icon' src = {`${process.env.REACT_APP_ASSET_URL}/${props.image}`} alt = {`not working`}/>
+                        <img className = 'image-upload__icon' src = {`${process.env.REACT_APP_IMAGE_URL}/${props.image}`} alt = {`not working`}/>
                     </div>
                     <h3>{props.name}</h3>
                 </div>

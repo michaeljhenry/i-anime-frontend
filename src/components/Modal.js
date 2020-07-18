@@ -21,7 +21,7 @@ const ModalCard = (props) => {
 };
 
 const Modal = props => {
-    console.log(props.show);
+    //console.log(props.show);
     return (
       <React.Fragment>
         {props.show && <Backdrop colour = 'dark' onClick={props.onCancel} />}

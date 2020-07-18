@@ -65,19 +65,19 @@ const UserAnimes = (props) => {
     let path = location.pathname.split('/')[3];
     const userId = useParams().id.substring(1);
     
-    //console.log(animes);
+    ////console.log(animes);
     if(animes.length > 0) {
         if(path === 'watched') {
             userAnimes = animes.filter((el) => (el.creator === userId && el.type === 'watched'));
-            console.log('hi');
-            console.log(userAnimes);
+            //console.log('hi');
+            //console.log(userAnimes);
             watchedCount = userAnimes.length;
-            console.log(watchedCount);
+            //console.log(watchedCount);
         }
         else if(path === 'toWatch') {
             userAnimes = animes.filter((el) => el.creator === userId && el.type === 'toWatch');
             toWatchCount = userAnimes.length;
-            console.log(toWatchCount);
+            //console.log(toWatchCount);
         }
     }
     

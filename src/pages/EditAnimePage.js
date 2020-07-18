@@ -13,6 +13,7 @@ const EditAnimePage = () => {
     const [animeInfo, setAnimeInfo] = useState({});
     const [description, setDescription] = useState('');
     const [score, setScore] = useState('');
+    const [charactersRemaining, setCharactersRemaining] = useState(100);
 
     const { isLoading, error, sendRequest, clearError } = useHttpClient();
 
@@ -24,31 +25,43 @@ const EditAnimePage = () => {
             //     body: null,
             //     headers: {Authorization: 'Bearer ' + auth.token}
             // });
-            console.log(animeData.anime);
+            // console.log(animeData.anime);
             setAnimeInfo(animeData.anime);
+            setDescription(animeInfo.description); // description does weird things in the textarea without this line. if i change the score, the description disappears. i don't want that.
         };
         getAnime();
     }, [aid, auth.token, sendRequest]);
 
     
     const scoreChangeHandler = (e) => {
+        e.preventDefault();
+        e.persist();
         setScore(e.target.value);
     }
 
-
-    const onSubmitHandler = async () => {
+    const textareaChangeHandler = (e) => {
+        e.preventDefault();
+        e.persist();
+        if (e.target.value.length <= 100 ) {
+            setDescription(e.target.value);
+            setCharactersRemaining(100 - e.target.value.length);
+        }
+    };
+    const onSubmitHandler = async (e) => {
+        e.preventDefault();
         const newAnime = {
             title: animeInfo.title,
-            description,
+            description: description || animeInfo.description,
             synopsis: animeInfo.synopsis,
             image_url: animeInfo.image_url,
             creator: animeInfo.creator,
             type: animeInfo.type,
-            score: score
+            score: score || animeInfo.score
         }
         try {
             await sendRequest(process.env.REACT_APP_BACKEND_URL + `/animes/patch/${aid}`, 'PATCH', JSON.stringify(newAnime), {'Content-Type': 'application/json', Authorization: 'Bearer ' + auth.token});
-            history.push('/');
+            history.push(`/:${auth.userId}/animes/${animeInfo.type}`);
+
         } catch(err) {}
         // await fetch(`http://localhost:5000/api/animes/patch/${aid}`, 
         // {
@@ -63,15 +76,20 @@ const EditAnimePage = () => {
 
     return(
         <React.Fragment>
-        {error && <ErrorModal error={error.message} show = {!!error} onCancel = {clearError} />}
+        {error && <ErrorModal error={error} show = {!!error} onCancel = {clearError} />}
         {isLoading && <LoadingSpinner/>}
         {!isLoading && 
             <div className = 'anime-form__container'>
                 <div className = 'user-list__item-edit'>
                     <img src = {animeInfo.image_url} alt = 'Anime'/>   
-                    {animeInfo.title}
+                   <p>{animeInfo.title}</p> 
                 </div>
-        ]<div className = 'anime-form__score' onChange = {scoreChangeHandler}>
+                <div className = 'no-users__card'>
+                            {animeInfo.type === 'watched' && <div>* Provide a score<br></br></div>}
+                            Thoughts are optional
+                            <br></br>
+                </div>
+        {animeInfo.type === 'watched' && <div className = 'anime-form__score' onChange = {scoreChangeHandler}>
                 <p>Anime Score: </p><select defaultValue = {animeInfo.score} name = 'scores' id = 'scores'>
                     <option value = {animeInfo.score}>{animeInfo.score}</option>
                     <option value="0.0">0.0</option>
@@ -97,8 +115,15 @@ const EditAnimePage = () => {
                     <option value = "10.0">10.0</option>
                 </select> 
             </div>
-            <textarea onChange = {(e) => setDescription(e.target.value)} defaultValue = {animeInfo.description}></textarea>
-            <button onClick = {onSubmitHandler}>Update</button>
+        }
+            <textarea 
+                onChange = {textareaChangeHandler} 
+                defaultValue = {animeInfo.description} 
+                placeholder = '100 characters to express thoughts or feelings about the anime you watched or why you want to watch it...'
+            >
+            </textarea>
+            <div className = 'text-background'><p>Characters Remaining: {charactersRemaining}</p></div>
+            <button disabled = {(animeInfo.type === 'watched' && !(score || animeInfo.score))} onClick = {onSubmitHandler}>Update</button>
             </div>
         }
         </React.Fragment>

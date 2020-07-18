@@ -7,7 +7,7 @@ const AddWatchedPage = (props) => {
     const [animeList, setAnimeList] = useState([]);
     let array = [];
     useEffect(() => {
-        //console.log(animeList);
+        ////console.log(animeList);
     }, [animeList]);
 
     const getInfo = (animeInfo) => {
@@ -23,7 +23,7 @@ const AddWatchedPage = (props) => {
                 array.push(animeInfo.results[j]);
                 }
         }
-        console.log(array);
+        //console.log(array);
         //setAnimeList([animeInfo.results[0], animeInfo.results[1], animeInfo.results[2]]);
         setAnimeList(array);
     

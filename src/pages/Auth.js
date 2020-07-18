@@ -1,4 +1,4 @@
-import React, {useContext, useState, useReducer} from 'react';
+import React, {useContext, useState, useReducer, useRef} from 'react';
 import validate from '../reducers/validate';
 import {withRouter} from 'react-router-dom';
 import AuthContext from '../context/auth-context';
@@ -18,12 +18,16 @@ const Auth = (props) => {
     const { isLoading, error, sendRequest, clearError } = useHttpClient();
 
     const auth = useContext(AuthContext);
+    const [charactersRemaining, setCharactersRemaining] = useState(20);
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [image, setImage] = useState('');
     const [password, setPassword] = useState('');
     //const [submitAttempt, setSubmitAttempt] = useState(false);
     const [authMode, setAuthMode] = useState(true);
+    const [checkbox, setCheckbox] = useState(false);
+    const signupPassVisible = useRef();
+    const loginPassVisible = useRef();
     
     const [isNameActive, setIsNameActive] = useState(true);
     const [isEmailActive, setIsEmailActive] = useState(true);
@@ -43,6 +47,7 @@ const Auth = (props) => {
     const authHandler = async (e) => {
         e.persist();
         e.preventDefault();
+        //console.log('hi');
         let userData;
         if(!authMode) {
             const userInfo = new FormData();
@@ -50,10 +55,10 @@ const Auth = (props) => {
             userInfo.append('image', image);
             userInfo.append('email', email); // this is the key fileUpload.single('image') is looking for in our backend
             userInfo.append('password', password);
-            console.log(userInfo);
+            //console.log(userInfo);
             try {
             const response = await sendRequest(process.env.REACT_APP_BACKEND_URL + `/users/signup`, 'POST', userInfo)
-            
+            //console.log(response);
             // await fetch(`http://localhost:5000/api/users/signup`, {
             //     method: 'POST',
             //     body: userInfo,
@@ -61,7 +66,8 @@ const Auth = (props) => {
             //const responseData = await response.json();
             auth.login(response.userId, response.token);
             } catch(err) {}
-            //console.log(`Submit attempt? ${submitAttempt}`);
+            setImage('');
+            ////console.log(`Submit attempt? ${submitAttempt}`);
         }
         else {
             userData = {
@@ -83,9 +89,12 @@ const Auth = (props) => {
     }
     const nameChangeHandler = (e) => {
         e.preventDefault();
-        setName(e.target.value);
-        dispatch({type: 'CHANGE_NAME', val: e.target.value})
-    }
+        if (e.target.value.length <= 20 ) {
+            setName(e.target.value);
+            setCharactersRemaining(20 - e.target.value.length);
+            dispatch({type: 'CHANGE_NAME', val: e.target.value});
+        }
+    };
     const emailChangeHandler = (e) => {
         e.preventDefault();
         setEmail(e.target.value);
@@ -118,7 +127,28 @@ const Auth = (props) => {
         setIsNameActive(true);
         setIsEmailActive(true);
         setIsPasswordActive(true);
+        setImage('');
     }
+
+    const checkboxChangeHandler = () => {
+        let checkboxState = !checkbox;
+        setCheckbox((prevState) => !prevState);
+        if(checkboxState === true) { // if it's true rigiht now it's about to turn false
+            if(authMode === true) {
+                loginPassVisible.current.type = "text"
+                console.log(loginPassVisible.current);
+            } else {
+                signupPassVisible.current.type = "text"
+            }
+        }
+        else {
+            if(authMode === true) {
+                loginPassVisible.current.type = "password"
+            } else {
+                signupPassVisible.current.type = "password"
+            }
+        }
+    };
 
     return(
         <div>
@@ -140,9 +170,12 @@ const Auth = (props) => {
                     <input 
                         className = 'auth-input' 
                         onBlur = {onPasswordBlurHandler} onChange = {passwordChangeHandler}
-                        type = 'password'
                         value = {password}
+                        ref = {loginPassVisible}
+                        type = "password"
                     />
+                    <br></br>
+                    <input type="checkbox" style = {{marginLeft: "0px", marginRight: "10px"}} checked = {checkbox} onChange = {checkboxChangeHandler}/>Show Password
                     {isPasswordActive ? '' : (state.isPasswordValid ? '' : <p className = 'error-text'>Minimum of 6 characters</p>)}
                     <button 
                         disabled = {!(state.isEmailValid && state.isPasswordValid)}
@@ -154,7 +187,7 @@ const Auth = (props) => {
         :
         <div>
         <form className = 'login-box' onSubmit = {authHandler}>
-            <p>Name</p>
+            <p>Name</p> 
              <input 
                 className = {isNameActive ? '' : (state.isNameValid ? '' : 'error')}
                 onBlur = {onNameBlurHandler} 
@@ -162,6 +195,7 @@ const Auth = (props) => {
                 type = 'text'
                 value = {name}
              />
+             <div style = {{fontSize: "14px"}}>Characters Remaining: {charactersRemaining}</div>
              {isNameActive ? '' : (state.isNameValid ? '' : <p className = 'error-text'>Please enter a name</p>)}
             <ImageUpload className = 'image' onImageUpload = {onImageUpload} />
             <p>Email</p>
@@ -178,9 +212,13 @@ const Auth = (props) => {
                 className = {isPasswordActive ? '' : (state.isPasswordValid ? '' : 'error')}
                 onBlur = {onPasswordBlurHandler} 
                 onChange = {passwordChangeHandler} 
-                type = 'password'
                 value = {password}
+                ref = {signupPassVisible}
+                type = "password"
             />
+            <br></br>
+            <input type="checkbox" style = {{marginLeft: "0px", marginRight: "10px"}} checked = {checkbox} onChange = {checkboxChangeHandler}/>Show Password
+
             {isPasswordActive ? '' : (state.isPasswordValid ? '' : <p className = 'error-text'>Minimum of 6 characters</p>)}
             <button 
             disabled = {!(state.isNameValid && state.isEmailValid && state.isPasswordValid && image)} 

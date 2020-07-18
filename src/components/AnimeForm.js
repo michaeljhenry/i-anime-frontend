@@ -1,4 +1,5 @@
 import React, {useState, useEffect, useContext} from 'react';
+import {Redirect} from 'react-router-dom';
 import AuthContext from '../context/auth-context';
 import {useHttpClient} from '../hooks/http-hook';
 import LoadingSpinner from '../components/Loader';
@@ -28,6 +29,7 @@ const AnimeForm = (props) => {
     };
     const clickedEvent = async (e) => {
         e.preventDefault();
+        
         const data = {
             title: chosenAnime,
             description: description,
@@ -47,7 +49,7 @@ const AnimeForm = (props) => {
             creator: auth.userId,
             type: props.type
         });
-        console.log(data);
+        //console.log(data);
         try {
             await sendRequest(process.env.REACT_APP_BACKEND_URL + `/animes/add/${props.type}`, 'POST', JSON.stringify(data), {'Content-Type': 'application/json', Authorization: 'Bearer ' + auth.token});
             // await fetch(`http://localhost:5000/api/animes/add/${props.type}`, {
@@ -58,11 +60,13 @@ const AnimeForm = (props) => {
             //         Authorization: 'Bearer ' + auth.token
             //     }
             // });
-            history.push('/');
+            history.push(`/anime/add/${props.type}`);
+            setDescription('');
         } catch(err) {}
+
     }
     useEffect(() => {
-        console.log(chosenAnimeIndex);
+        //console.log(chosenAnimeIndex);
         if(chosenAnimeIndex !== '') {
             setChosenAnime(props.animeList[chosenAnimeIndex].title);
         }
@@ -137,12 +141,16 @@ const AnimeForm = (props) => {
                     </select> 
                 </div>
                 }
-                <textarea onChange = {textareaChangeHandler} placeholder = '100 characters to express thoughts or feelings about the anime you watched or why you want to watch it...' value = {description}></textarea>
+                <textarea 
+                    onChange = {textareaChangeHandler} 
+                    placeholder = '100 characters to express thoughts or feelings about the anime you watched or why you want to watch it...' 
+                    value = {description}>
+                </textarea>
                 <div className = 'text-background'><p>Characters Remaining: {charactersRemaining}</p></div>
                 
-                {props.type === 'watched' ? <button onClick = {clickedEvent} disabled = {!(chosenAnimeIndex && score)} type = 'submit'><h3>Add Anime</h3></button>
+                {props.type === 'watched' ? <button disabled = {!(chosenAnimeIndex && score)} type = 'submit'><h3>Add Anime</h3></button>
                 :
-                <button onClick = {clickedEvent} disabled = {!(chosenAnimeIndex)} type = 'submit'><h3>Add Anime</h3></button>
+                <button disabled = {!(chosenAnimeIndex)} type = 'submit'><h3>Add Anime </h3></button>
                 }
             </form>
                         }

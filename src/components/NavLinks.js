@@ -59,7 +59,7 @@ const NavLinks = (props) => {
             <React.Fragment>
                 <ul className = 'nav-links'>
                     <li><NavLink onClick = {(e) => {nameContext.setNameFunction('');}} activeClassName = 'is-active' exact = {true} to={`/`}>I-Anime</NavLink></li>
-                    <li><NavLink activeClassName = 'is-active' to={`/auth`}>Authenticate</NavLink></li>
+                    <li><NavLink activeClassName = 'is-active' to={`/auth`}>Login/Signup</NavLink></li>
 
                 </ul>
             </React.Fragment>
@@ -72,7 +72,7 @@ const NavLinks = (props) => {
         sideDrawerInnerNavs = (
             <ul className = 'nav-links__sidebar'>
                 <li><NavLink onClick = {closeDrawer} activeClassName = 'is-active' exact = {true} to={`/`}>I-Anime</NavLink></li>
-                <li><NavLink onClick = {closeDrawer} activeClassName = 'is-active'to={`/auth`}>Authenticate</NavLink></li>
+                <li><NavLink onClick = {closeDrawer} activeClassName = 'is-active'to={`/auth`}>Login/Signup</NavLink></li>
                 <div className = 'move-button'>{auth.token ? <button className = 'logout-btn' onClick = {auth.logout}>Logout</button> : ''}</div>
 
             </ul>
