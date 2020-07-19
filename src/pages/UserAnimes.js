@@ -7,6 +7,9 @@ import ErrorModal from '../components/ErrorModal';
 
 const UserAnimes = (props) => {
     const [animes, setAnimes] = useState([]);
+    const [animesCopy, setAnimesCopy] = useState([]);
+    const [sortType, setSortType] = useState('default');
+
     const id = useParams().id.substring(1);
     const { isLoading, error, sendRequest, clearError } = useHttpClient();
 
@@ -53,6 +56,7 @@ const UserAnimes = (props) => {
                 // await fetch(`http://localhost:5000/api/animes/user/${id}`, {method: 'GET', body: null, methods: {}})
                 // const animeList = await animeResponse.json();
                 setAnimes(animeList.animes);
+                setAnimesCopy(animeList.animes.slice()); // without slice they reference the same array. changing one woould change the other. slice returns a new reference to the new array created
             } catch(err) {}
         }
         getAnimes();
@@ -68,16 +72,39 @@ const UserAnimes = (props) => {
     ////console.log(animes);
     if(animes.length > 0) {
         if(path === 'watched') {
-            userAnimes = animes.filter((el) => (el.creator === userId && el.type === 'watched'));
+            if(sortType === 'default') {
+                userAnimes = animes.filter((el) => (el.creator === userId && el.type === 'watched'));
+            }
+            else {
+                userAnimes = animesCopy.filter((el) => (el.creator === userId && el.type === 'watched'));
+            }
             //console.log('hi');
             //console.log(userAnimes);
             watchedCount = userAnimes.length;
             //console.log(watchedCount);
         }
         else if(path === 'toWatch') {
-            userAnimes = animes.filter((el) => el.creator === userId && el.type === 'toWatch');
+            if(sortType === 'default') {
+                userAnimes = animes.filter((el) => (el.creator === userId && el.type === 'toWatch'));
+            }
+            else {
+                userAnimes = animesCopy.filter((el) => (el.creator === userId && el.type === 'toWatch'));
+            }
             toWatchCount = userAnimes.length;
             //console.log(toWatchCount);
+        }
+    }
+
+    const sortHandler = (e) => {
+        setSortType(e.target.value);
+        if(e.target.value === 'alphabetical') {
+            animesCopy.sort((a, b) => a.title.localeCompare(b.title));
+        }
+        if(e.target.value === 'descending score') {
+            animesCopy.sort((a,b) => b.score - a.score);
+        }
+        if(e.target.value === 'ascending score') {
+            animesCopy.sort((a,b) => a.score - b.score);
         }
     }
     
@@ -85,9 +112,18 @@ const UserAnimes = (props) => {
         <React.Fragment>
             {error && <ErrorModal error={error.message} show = {!!error} onCancel = {clearError} />}
             {isLoading && <LoadingSpinner/>}
-            {!isLoading && 
+            {!isLoading && <React.Fragment>
+                <div className = 'select-sort__container'>
+                Sort By: <br></br>
+                <select className = "select-sort" onChange = {sortHandler}>
+                    <option value = "default">Order added</option>
+                    <option value = "alphabetical">Alphabetical</option>
+                    <option value = "ascending score">Lowest score first</option>
+                    <option value = "descending score">Highest score first</option>
+                </select>
+            </div>
                 <div className = 'user-animes__container'>
-                
+     
                 {animes.length > 0 ? 
                     (path === 'watched' ? 
                         (watchedCount > 0 ? (userAnimes.map((anime) => (
@@ -108,6 +144,7 @@ const UserAnimes = (props) => {
                 <div className = 'no-users__card'><h3>No Animes Listed</h3></div>
                 }
                 </div>
+                </React.Fragment>
             }
         </React.Fragment>
     )

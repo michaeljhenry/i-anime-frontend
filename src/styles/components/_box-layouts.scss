@@ -93,6 +93,16 @@
     display: flex;
 }
 
+.select-sort__container {
+    display: block;
+    background-color: white;
+    margin: $m-size auto $xl-size auto;
+    width: 220px;
+    text-align: center;
+    opacity: 0.9;
+    border-radius: 10px;
+}
+
 
 @media (max-width: $desktop-breakpoint) {
     .users-container {

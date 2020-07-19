@@ -41,7 +41,6 @@ const EditAnimePage = () => {
 
     const textareaChangeHandler = (e) => {
         e.preventDefault();
-        console.log('hi');
         if (e.target.value.length <= 200 ) {
             setDescription(e.target.value);
             setCharactersRemaining(200 - e.target.value.length);
@@ -61,6 +60,7 @@ const EditAnimePage = () => {
         try {
             await sendRequest(process.env.REACT_APP_BACKEND_URL + `/animes/patch/${aid}`, 'PATCH', JSON.stringify(newAnime), {'Content-Type': 'application/json', Authorization: 'Bearer ' + auth.token});
             history.push(`/:${auth.userId}/animes/${animeInfo.type}`);
+
         } catch(err) {}
         // await fetch(`http://localhost:5000/api/animes/patch/${aid}`, 
         // {
