@@ -61,7 +61,6 @@ const EditAnimePage = () => {
         try {
             await sendRequest(process.env.REACT_APP_BACKEND_URL + `/animes/patch/${aid}`, 'PATCH', JSON.stringify(newAnime), {'Content-Type': 'application/json', Authorization: 'Bearer ' + auth.token});
             history.push(`/:${auth.userId}/animes/${animeInfo.type}`);
-
         } catch(err) {}
         // await fetch(`http://localhost:5000/api/animes/patch/${aid}`, 
         // {
