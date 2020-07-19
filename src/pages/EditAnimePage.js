@@ -11,7 +11,7 @@ const EditAnimePage = () => {
     const history = useHistory();
     const aid = useParams().aid;
     const [animeInfo, setAnimeInfo] = useState({});
-    const [description, setDescription] = useState(animeInfo.description);
+    const [description, setDescription] = useState(' ');
     const [score, setScore] = useState('');
     const [charactersRemaining, setCharactersRemaining] = useState(200);
 
@@ -27,7 +27,7 @@ const EditAnimePage = () => {
             // });
             // console.log(animeData.anime);
             setAnimeInfo(animeData.anime);
-            setDescription(animeInfo.description); // description does weird things in the textarea without this line. if i change the score, the description disappears. i don't want that.
+            setDescription(animeData.anime.description); // description does weird things in the textarea without this line. if i change the score, the description disappears. i don't want that.
         };
         getAnime();
     }, [aid, auth.token, sendRequest]);
@@ -41,7 +41,7 @@ const EditAnimePage = () => {
 
     const textareaChangeHandler = (e) => {
         e.preventDefault();
-        e.persist();
+        console.log('hi');
         if (e.target.value.length <= 200 ) {
             setDescription(e.target.value);
             setCharactersRemaining(200 - e.target.value.length);
@@ -51,7 +51,7 @@ const EditAnimePage = () => {
         e.preventDefault();
         const newAnime = {
             title: animeInfo.title,
-            description: description || animeInfo.description,
+            description: description,
             synopsis: animeInfo.synopsis,
             image_url: animeInfo.image_url,
             creator: animeInfo.creator,
@@ -120,9 +120,7 @@ const EditAnimePage = () => {
                 onChange = {textareaChangeHandler} 
                 placeholder = '200 characters to express thoughts or feelings about the anime you watched or why you want to watch it...'
                 value = {description}
-                defaultValue = {animeInfo.description}
-            >
-            </textarea>
+            />
             <div className = 'text-background'><p>Characters Remaining: {charactersRemaining}</p></div>
             <button disabled = {(animeInfo.type === 'watched' && !(score || animeInfo.score))} onClick = {onSubmitHandler}>Update</button>
             </div>
