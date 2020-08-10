@@ -1,5 +1,4 @@
 import React, {useState, useEffect, useContext} from 'react';
-import {Redirect} from 'react-router-dom';
 import AuthContext from '../context/auth-context';
 import {useHttpClient} from '../hooks/http-hook';
 import LoadingSpinner from '../components/Loader';
@@ -81,7 +80,7 @@ const AnimeForm = (props) => {
                 <div className = 'anime-form__info'> 
                     {props.animeList.length > 0 ?
                         <React.Fragment>
-                        <div className = 'no-users__card'>
+                        <div className = 'anime-form__instructions'>
                             * Select an anime
                             <br></br>
                             {props.type === 'watched' && <div>* Provide a score<br></br></div>}
@@ -102,7 +101,9 @@ const AnimeForm = (props) => {
                                     <div className = 'anime-search__label'>
                                         <img className = 'anime-form__image' src = {anime.image_url} alt = 'Anime'/>   
                                         <p>{anime.title}</p>
-                                        <div className = 'anime-search__synopsis'>{anime.synopsis}</div>
+                                        <div className = 'anime-search__synopsis'>
+                                            {anime.synopsis}
+                                        </div>
                                         <p>Score: {anime.score}</p>
                                     </div>
                                     </label>

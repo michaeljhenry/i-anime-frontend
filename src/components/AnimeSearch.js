@@ -17,7 +17,7 @@ const AnimeSearch = (props) => {
       
         const response = await sendRequest(`${baseUrl}/search/anime?q=${anime}`);
 
-      // const response = await sendRequest(`${baseUrl}/search/anime?q=${anime}&page=1&type=tv`); // THIS ADDS A FILTER
+      // const response = await sendRequest(`${baseUrl}/search/anime?q=${anime}&page=1&type=tv&order_by=state_date`); // THIS ADDS A FILTER
 
 
 

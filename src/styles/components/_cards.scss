@@ -52,12 +52,16 @@
 
 .anime-search__card {
     height: auto;
-    width: 250px;
+    width: 290px;
     text-align: center;
     margin-top: $s-size;
+    margin-right: $xs-size;
     opacity: 0.9;
 }
 
+.anime-search__synopsis {
+    font-size: 14px;
+}
 .list-options__item {
     height: 250px;
     width: 250px;
