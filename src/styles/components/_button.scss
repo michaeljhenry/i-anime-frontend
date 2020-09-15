@@ -1,81 +1,91 @@
 button {
-    outline: none;
-    border: none;
-    border-radius: 10px;
-    background-color: $baby-blue;
-    margin: $xs-size auto;
-    padding: $s-size;
-    font-weight: bold;
-    box-shadow: 4px 5px 0px 0px rgba(0,0,0,0.75);
+  outline: none;
+  border: none;
+  border-radius: 10px;
+  background-color: $baby-blue;
+  margin: $xs-size auto;
+  padding: $s-size;
+  font-weight: bold;
+  box-shadow: 4px 5px 0px 0px rgba(0, 0, 0, 0.75);
 }
 
 button:active {
-    box-shadow: inset 4px 5px 0px 0px rgba(0,0,0,0.75)
+  box-shadow: inset 4px 5px 0px 0px rgba(0, 0, 0, 0.75);
 }
 .logout-btn {
-    margin-left: $m-size;
+  margin-left: $m-size;
 }
 .logout-btn__main {
-    margin-right: 10px;
+  margin-right: 10px;
+  cursor: pointer;
+  font-weight: bold;
 }
 
 .user-search__btn {
-    padding: 2px;
-    text-align: center;
+  padding: 2px;
+  text-align: center;
 }
 
 .edit-buttons {
-    display: flex;
-    min-height: 60px;
-    width: 100%;
-    align-self: flex-end;
-    justify-content: center;
-    margin-top: auto;
-    
+  display: flex;
+  flex-direction: column;
+  min-height: 60px;
+  width: 100%;
+  align-self: flex-end;
+  justify-content: center;
+  margin-top: auto;
 }
 
 .edit-buttons a {
-    text-decoration: none;
+  text-decoration: none;
+}
+
+.edit-buttons__row {
+  display: flex;
+  margin-bottom: 0;
+  justify-content: center;
 }
 
 .delete-btn {
-    margin: auto $xs-size;
+  margin: auto $xs-size;
 }
 
 .btn-line {
-    display: block;
-    width: 25px;
-    height: 2px;
-    background-color: red;
+  display: block;
+  width: 25px;
+  height: 2px;
+  background-color: red;
 }
 
 .side-drawer__btn {
-    display: none;
+  display: none;
+}
+
+.switch-type__btn {
+  margin-right: $xs-size;
+  margin-left: $xs-size;
 }
 
 .move-button {
-    display: flex;
-    flex-direction: column;
-    align-self: flex-end;
+  display: flex;
+  flex-direction: column;
+  align-self: flex-end;
 }
 
 @media (max-width: $desktop-breakpoint) {
-    .side-drawer__btn {
-        margin: auto $xs-size;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        height: 40px;
-        padding: 10px;
-    }
-    .logout-btn__main {
-        display: none;
-    }
+  .side-drawer__btn {
+    margin: auto $xs-size;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 40px;
+    padding: 10px;
+  }
+  .logout-btn__main {
+    display: none;
+  }
 
-    .logout-btn {
-        font-size: 20px;
-    }
-
+  .logout-btn {
+    font-size: 20px;
+  }
 }
-
-

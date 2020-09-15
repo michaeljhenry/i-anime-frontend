@@ -1,65 +1,228 @@
-import React, {useContext} from 'react';
-import {Link, useParams, useHistory} from 'react-router-dom';
-import AuthContext from '../context/auth-context';
-import {useHttpClient} from '../hooks/http-hook';
-import LoadingSpinner from './Loader';
-import ErrorModal from './ErrorModal';
+import React, { useContext } from "react";
+import { Link, useParams, useHistory } from "react-router-dom";
+import AuthContext from "../context/auth-context";
+import { useHttpClient } from "../hooks/http-hook";
+import LoadingSpinner from "./Loader";
+import ErrorModal from "./ErrorModal";
 
 const AnimeCard = (props) => {
-    const user = useParams().id.substring(1);
-    const auth = useContext(AuthContext);
-    const { isLoading, error, sendRequest, clearError } = useHttpClient();
-    let history = useHistory();
+  const user = useParams().id.substring(1);
+  const auth = useContext(AuthContext);
+  const { isLoading, error, sendRequest, clearError } = useHttpClient();
+  let history = useHistory();
 
-    const onDeleteHandler = async () => {
-        try {
-            await sendRequest(process.env.REACT_APP_BACKEND_URL + `/animes/delete/${props.aid}`, 'DELETE', null, {'Authorization': 'Bearer ' + auth.token});
-            // await fetch(`http://localhost:5000/api/animes/delete/${props.aid}`, {
-            //     method: 'DELETE',
-            //     body: null,
-            //     headers: {'Authorization': 'Bearer ' + auth.token}
-            // });
-            history.push(`/${auth.userId}/animes`);
-
-        } catch(err) {}
-    }
-    const onSwitchTypeHandler = async () => {
-        try {
-        await sendRequest(process.env.REACT_APP_BACKEND_URL + `/animes/patch/type/${props.aid}`, 'PATCH', {creator: props.creator, type: props.type}, {'Authorization': 'Bearer ' + auth.token});
-            history.push(`/${auth.userId}/animes`);
-        } catch(err) {}
-    }
-    return(
-        <React.Fragment>
-        {error && <ErrorModal error={error} show = {!!error} onCancel = {clearError} />}
-        {isLoading && <LoadingSpinner/>}
-        {!isLoading && 
-            <div className = 'user-list__item' key = {props.title}>
-                <img src = {props.image_url} alt = {`${props.title} `}/>
-                <p>{props.title}</p>
-                <div className = 'user-list__item-description'>
-                    <p>{props.description}</p>
-                </div>
-                <div>
-                {props.type === 'watched' && <p style = {{fontWeight: 'bold'}}>{props.score ? `User Rating: ${props.score}` : `No User Rating`}</p>}
-
-                </div>
-                {user === auth.userId ? (
-                        <div className = 'edit-buttons'>
-                            <Link to ={`/anime/edit/${props.aid}`}>
-                                <button className = 'edit-btn'>Edit</button>
-                            </Link>
-                            <button className = 'delete-btn' onClick = {onDeleteHandler}>Delete</button>
-                            {props.type === 'toWatch' && <button className = 'switch-type__btn' onClick = {onSwitchTypeHandler}>Now Watched</button>}
-                        </div>
-                    ) 
-                    : 
-                    null
-                }
-            </div>
+  const onDeleteHandler = async () => {
+    try {
+      await sendRequest(
+        process.env.REACT_APP_BACKEND_URL + `/animes/delete/${props.aid}`,
+        "DELETE",
+        null,
+        { Authorization: "Bearer " + auth.token }
+      );
+      // await fetch(`http://localhost:5000/api/animes/delete/${props.aid}`, {
+      //     method: 'DELETE',
+      //     body: null,
+      //     headers: {'Authorization': 'Bearer ' + auth.token}
+      // });
+      history.push(`/${auth.userId}/animes`);
+    } catch (err) {}
+  };
+  const onWatchedHandler = async () => {
+    const data = {
+      creator: props.creator,
+      type: "watched",
+    };
+    try {
+      await sendRequest(
+        process.env.REACT_APP_BACKEND_URL + `/animes/patch/type/${props.aid}`,
+        "PATCH",
+        JSON.stringify(data),
+        {
+          Authorization: "Bearer " + auth.token,
+          "Content-Type": "application/json",
         }
-        </React.Fragment>
-    )
-}
+      );
+      history.push(`/${auth.userId}/animes`);
+    } catch (err) {}
+  };
+  const onToWatchHandler = async () => {
+    const data = {
+      creator: props.creator,
+      type: "toWatch",
+    };
+    try {
+      await sendRequest(
+        process.env.REACT_APP_BACKEND_URL + `/animes/patch/type/${props.aid}`,
+        "PATCH",
+        JSON.stringify(data),
+        {
+          Authorization: "Bearer " + auth.token,
+          "Content-Type": "application/json",
+        }
+      );
+      history.push(`/${auth.userId}/animes`);
+    } catch (err) {}
+  };
+  const onWatchingHandler = async () => {
+    const data = {
+      creator: props.creator,
+      type: "watching",
+    };
+    try {
+      await sendRequest(
+        process.env.REACT_APP_BACKEND_URL + `/animes/patch/type/${props.aid}`,
+        "PATCH",
+        JSON.stringify(data),
+        {
+          Authorization: "Bearer " + auth.token,
+          "Content-Type": "application/json",
+        }
+      );
+      history.push(`/${auth.userId}/animes`);
+    } catch (err) {}
+  };
+  const onDroppedHandler = async () => {
+    const data = {
+      creator: props.creator,
+      type: "dropped",
+    };
+    try {
+      await sendRequest(
+        process.env.REACT_APP_BACKEND_URL + `/animes/patch/type/${props.aid}`,
+        "PATCH",
+        JSON.stringify(data),
+        {
+          Authorization: "Bearer " + auth.token,
+          "Content-Type": "application/json",
+        }
+      );
+      history.push(`/${auth.userId}/animes`);
+    } catch (err) {}
+  };
+  return (
+    <React.Fragment>
+      {error && (
+        <ErrorModal error={error} show={!!error} onCancel={clearError} />
+      )}
+      {isLoading && <LoadingSpinner />}
+      {!isLoading && (
+        <div className="user-list__item" key={props.title}>
+          <img src={props.image_url} alt={`${props.title} `} />
+          <p>{props.title}</p>
+          <div className="user-list__item-description">
+            <p>{props.description}</p>
+          </div>
+          <div>
+            {props.type !== "toWatch" && (
+              <p style={{ fontWeight: "bold" }}>
+                {props.score ? `User Rating: ${props.score}` : `No User Rating`}
+              </p>
+            )}
+          </div>
+          {user === auth.userId ? (
+            <div className="edit-buttons">
+              <ul className="edit-buttons__row">
+                <Link to={`/anime/edit/${props.aid}`}>
+                  <button className="edit-btn">Edit</button>
+                </Link>
+                <button className="delete-btn" onClick={onDeleteHandler}>
+                  Delete
+                </button>
+              </ul>
+              {props.type === "toWatch" && (
+                <ul className="edit-buttons__row">
+                  <button
+                    className="switch-type__btn"
+                    onClick={onWatchedHandler}
+                  >
+                    Watched
+                  </button>
+                  <button
+                    className="switch-type__btn"
+                    onClick={onWatchingHandler}
+                  >
+                    Watching
+                  </button>
+                  <button
+                    className="switch-type__btn"
+                    onClick={onDroppedHandler}
+                  >
+                    Dropped
+                  </button>
+                </ul>
+              )}
+              {props.type === "watched" && (
+                <ul className="edit-buttons__row">
+                  <button
+                    className="switch-type__btn"
+                    onClick={onWatchingHandler}
+                  >
+                    Watching
+                  </button>
+                  <button
+                    className="switch-type__btn"
+                    onClick={onToWatchHandler}
+                  >
+                    ToWatch
+                  </button>
+                  <button
+                    className="switch-type__btn"
+                    onClick={onDroppedHandler}
+                  >
+                    Dropped
+                  </button>
+                </ul>
+              )}
+              {props.type === "watching" && (
+                <ul className="edit-buttons__row">
+                  <button
+                    className="switch-type__btn"
+                    onClick={onWatchedHandler}
+                  >
+                    Watched
+                  </button>
+                  <button
+                    className="switch-type__btn"
+                    onClick={onToWatchHandler}
+                  >
+                    ToWatch
+                  </button>
+                  <button
+                    className="switch-type__btn"
+                    onClick={onDroppedHandler}
+                  >
+                    Dropped
+                  </button>
+                </ul>
+              )}
+              {props.type === "dropped" && (
+                <ul className="edit-buttons__row">
+                  <button
+                    className="switch-type__btn"
+                    onClick={onWatchedHandler}
+                  >
+                    Watched
+                  </button>
+                  <button
+                    className="switch-type__btn"
+                    onClick={onToWatchHandler}
+                  >
+                    ToWatch
+                  </button>
+                  <button
+                    className="switch-type__btn"
+                    onClick={onWatchingHandler}
+                  >
+                    Watching
+                  </button>
+                </ul>
+              )}
+            </div>
+          ) : null}
+        </div>
+      )}
+    </React.Fragment>
+  );
+};
 
 export default AnimeCard;

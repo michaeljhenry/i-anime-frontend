@@ -1,213 +1,207 @@
 .user-card {
-    background-color: white;
-    
+  background-color: white;
 }
 
 .user-item {
-    margin-right: $xl-size;
-    margin-bottom: $xl-size;
-    height: 150px;
-    width: 250px;
-    list-style-type: none;
+  margin-right: $xl-size;
+  margin-bottom: $xl-size;
+  height: 150px;
+  width: 250px;
+  list-style-type: none;
 }
 
 .user-item:hover {
-    -webkit-box-shadow:0 0 30px blue; 
-    -moz-box-shadow: 0 0 30px blue; 
-    box-shadow: 0 0 30px red;
+  -webkit-box-shadow: 0 0 30px blue;
+  -moz-box-shadow: 0 0 30px blue;
+  box-shadow: 0 0 30px red;
 }
 
 .user-item a {
-    display: flex;
-    border-radius: 25px;
-    width: 100%;
-    height: 100%;
-    background-color: white;
-    opacity: 0.9;
-    text-decoration: none;
-    color: black;
+  display: flex;
+  border-radius: 25px;
+  width: 100%;
+  height: 100%;
+  background-color: white;
+  opacity: 0.9;
+  text-decoration: none;
+  color: black;
 }
 
 .card-container {
-    height: 100%;
-    width: 100%;
+  height: 100%;
+  width: 100%;
 }
 
 .card-header {
-    width: 100%;
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-around;
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-around;
 }
 
 .card-header h3 {
-    word-break: break-all;
-    font-size: 20px;
+  word-break: break-all;
+  font-size: 20px;
 }
 
 .card-footer {
-    display: flex;
-    justify-content: space-around;
+  display: flex;
+  justify-content: space-around;
 }
 
 .anime-search__card {
-    height: auto;
-    width: 290px;
-    text-align: center;
-    margin-top: $s-size;
-    margin-right: $xs-size;
-    opacity: 0.9;
+  height: auto;
+  width: 290px;
+  text-align: center;
+  margin-top: $s-size;
+  margin-right: $xs-size;
+  opacity: 0.9;
 }
 
 .anime-search__synopsis {
-    font-size: 14px;
+  font-size: 14px;
 }
 .list-options__item {
-    height: 250px;
-    width: 250px;
-    border-radius: 50%;
-    box-shadow: 2px 0px 0px 11px rgba(0,0,0,0.75);
-
+  height: 250px;
+  width: 250px;
+  border-radius: 50%;
+  box-shadow: 2px 0px 0px 11px rgba(0, 0, 0, 0.75);
+  margin: $m-size $m-size $m-size $m-size;
 }
 
-.list-options__item a{
-    width: 100%;
-    height: 100%;
-    text-decoration: none;
-    color: white;
-    text-align: center;
+.list-options__item a {
+  width: 100%;
+  height: 100%;
+  text-decoration: none;
+  color: white;
+  text-align: center;
 }
 
 .list-options__item a:hover {
-    width: 100%;
-    height: 100%;
-    text-decoration: none;
-    color: white;
-    text-align: center;
-    box-shadow: 2px 0px 0px 11px $baby-blue;
+  width: 100%;
+  height: 100%;
+  text-decoration: none;
+  color: white;
+  text-align: center;
+  box-shadow: 2px 0px 0px 11px $baby-blue;
 }
 
 .list-options__fill {
-    display: flex;
-    width: 100%;
-    height: 100%;
-    background: url('/images/pain-background.png');
-    border: 10px solid white;
-    background-size: cover;
-    border-radius: 50%;
-    padding: $s-size;
-    
+  display: flex;
+  width: 100%;
+  height: 100%;
+  background: url("/images/pain-background.png");
+  border: 10px solid white;
+  background-size: cover;
+  border-radius: 50%;
+  padding: $s-size;
 }
 
-.list-options__fill h3{
-    margin-top: $l-size;
-    
+.list-options__fill h3 {
+  margin-top: $l-size;
 }
 
 .anime-search__label {
-    height: 100%;
-    width: 100%;
-    background: white;
-    opacity: 0.99;
+  height: 100%;
+  width: 100%;
+  background: white;
+  opacity: 0.99;
 }
 
 .anime-search__card-mobile {
-    display: none;
-
+  display: none;
 }
 
 .anime-search__card:hover {
-    cursor: pointer;
-    -webkit-box-shadow:0 0 30px red; 
-    -moz-box-shadow: 0 0 30px red; 
-    box-shadow: 0 0 30px red;
+  cursor: pointer;
+  -webkit-box-shadow: 0 0 30px red;
+  -moz-box-shadow: 0 0 30px red;
+  box-shadow: 0 0 30px red;
 }
 
 .user-list__item {
-    display: flex;
-    flex-direction: column;
-    height: auto;
-    width: 280px;
-    text-align: center;
-    margin-top: $s-size;
-    margin-left: $m-size;
-    margin-right: $m-size;
-    margin-bottom: $s-size;
-    opacity: 0.9;
-    background-color: white;
-    align-items: center;
-    justify-content: stretch;
-
+  display: flex;
+  flex-direction: column;
+  height: auto;
+  width: 280px;
+  text-align: center;
+  margin-top: $s-size;
+  margin-left: $m-size;
+  margin-right: $m-size;
+  margin-bottom: $s-size;
+  opacity: 0.9;
+  background-color: white;
+  align-items: center;
+  justify-content: stretch;
 }
 
 .user-list__item-edit {
-    height: auto;
-    width: 250px;
-    text-align: center;
-    margin-top: $s-size;
-    opacity: 0.9;
-    background-color: white;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
+  height: auto;
+  width: 250px;
+  text-align: center;
+  margin-top: $s-size;
+  opacity: 0.9;
+  background-color: white;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .user-list__item-description {
-    flex: 1;
-    width: 100%;
-    padding: 2px;
+  flex: 1;
+  width: 100%;
+  padding: 2px;
 }
 
 .user-list__item-description p {
-    white-space: pre-wrap;      /* CSS3 */   
-    white-space: -moz-pre-wrap; /* Firefox */    
-    white-space: -pre-wrap;     /* Opera <7 */   
-    white-space: -o-pre-wrap;   /* Opera 7 */ 
-    word-wrap: break-word;      /* IE */ 
-    font-weight: normal;
-    text-align: center;
-    width: 100%;
-    padding: 2px;
-    font-size: 14px;
+  white-space: pre-wrap; /* CSS3 */
+  white-space: -moz-pre-wrap; /* Firefox */
+  white-space: -pre-wrap; /* Opera <7 */
+  white-space: -o-pre-wrap; /* Opera 7 */
+  word-wrap: break-word; /* IE */
+  font-weight: normal;
+  text-align: center;
+  width: 100%;
+  padding: 2px;
+  font-size: 14px;
 }
 
 .no-users__card {
-    display: block;
-    background-color: white;
-    margin: $l-size auto;
-    width: 220px;
-    text-align: center;
-    opacity: 0.9;
-    border-radius: 10px;
+  display: block;
+  background-color: white;
+  margin: $l-size auto;
+  width: 220px;
+  text-align: center;
+  opacity: 0.9;
+  border-radius: 10px;
 }
 
 .user-list__item img {
-    height: 200px;
-    width: 210px;
-    margin-top: 10px;
+  height: 200px;
+  width: 210px;
+  margin-top: 10px;
 }
 
 @media (max-width: $desktop-breakpoint) {
-    .user-item {
-        margin-right: $xs-size;
-    }
-    .list-options__item {
-        margin-top: $l-size;
-    }
-    .no-users__card {
-        width: 180px;
-    }
-    .no-users__card h3 {
-        font-size: 20px;
-        width: 180px;
-    }
-    .anime-search__synopsis {
-        display: none;
-    }
-    .anime-search__card--mobile {
-        display: none;
-    }
-
+  .user-item {
+    margin-right: $xs-size;
+  }
+  .list-options__item {
+    margin-top: $l-size;
+  }
+  .no-users__card {
+    width: 180px;
+  }
+  .no-users__card h3 {
+    font-size: 20px;
+    width: 180px;
+  }
+  .anime-search__synopsis {
+    display: none;
+  }
+  .anime-search__card--mobile {
+    display: none;
+  }
 }
 
 // #list-options__watched {
