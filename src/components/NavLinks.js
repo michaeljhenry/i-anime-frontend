@@ -9,7 +9,6 @@ const NavLinks = (props) => {
   const auth = useContext(AuthContext);
   const nameContext = useContext(NameContext);
   const [sideDrawer, setSideDrawer] = useState(false);
-  const [showOptions, setShowOptions] = useState(false);
 
   let navs;
   let sideDrawerMainNavs;
@@ -23,12 +22,7 @@ const NavLinks = (props) => {
     nameContext.setNameFunction("");
     setSideDrawer(false);
   };
-  const onAdd = () => {
-    setShowOptions(true);
-  };
-  const offAdd = () => {
-    setShowOptions(false);
-  };
+
   if (auth.isLoggedIn) {
     navs = (
       <React.Fragment>
@@ -88,36 +82,9 @@ const NavLinks = (props) => {
           <NavLink
             onClick={closeDrawer}
             activeClassName="is-active"
-            to="/anime/add/watched"
+            to="/anime/add"
           >
-            Add Watched
-          </NavLink>
-        </li>
-        <li>
-          <NavLink
-            onClick={closeDrawer}
-            activeClassName="is-active"
-            to="/anime/add/toWatch"
-          >
-            Add To-Watch
-          </NavLink>
-        </li>
-        <li>
-          <NavLink
-            onClick={closeDrawer}
-            activeClassName="is-active"
-            to="/anime/add/watching"
-          >
-            Add Watching
-          </NavLink>
-        </li>
-        <li>
-          <NavLink
-            onClick={closeDrawer}
-            activeClassName="is-active"
-            to="/anime/add/dropped"
-          >
-            Add Dropped
+            Add
           </NavLink>
         </li>
         <li>

@@ -1,65 +1,69 @@
 * {
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
 html {
-    font-size: 62.5%;
-    background:  url('/images/anime-crossover-background.png');
-    background-size: cover;
-    width: 100vw;
-    height: 100vh;
-    max-width: 100%; /* no horizontal scroll :) */
-    
+  font-size: 62.5%;
+  background: url("/images/anime-crossover-background.png");
+  background-size: cover;
+  width: 100vw;
+  height: 100vh;
+  max-width: 100%; /* no horizontal scroll :) */
 }
 
 body {
-    height: 100%;
-    width: 100%;
-    color: $dark-grey;
-    font-family: Helvetica, Arial, sans-serif;
-    font-size: $m-size;
-    line-height: 1.6;
-    
+  height: 100%;
+  width: 100%;
+  color: $dark-grey;
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: $m-size;
+  line-height: 1.6;
 }
 
 p {
-    font-weight: bold;
+  font-weight: bold;
 }
 
 button {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 button:disabled {
-    cursor: default;
+  cursor: default;
 }
 
 .is-active {
-    font-weight: bold;
-    background-color: $baby-blue;
+  font-weight: bold;
+  background-color: $baby-blue;
 }
 
 textarea {
-    display: block;
-    width: 300px;
-    height: 150px;
-    margin-top: $s-size;
-    margin-left: auto;
-    margin-right: auto;
-    opacity: 0.9;
-    resize: none;
+  display: block;
+  width: 300px;
+  height: 150px;
+  margin-top: $s-size;
+  margin-left: auto;
+  margin-right: auto;
+  opacity: 0.9;
+  resize: none;
 }
 
 h3 {
-    font-size: 24px;
-    margin-top: 20px;
+  font-size: 24px;
+  margin-top: 20px;
 }
 
 ul {
-    list-style-type: none;
-    margin-top: 0;
-    padding: 0;
+  list-style-type: none;
+  margin-top: 0;
+  padding: 0;
 }
 
 li {
-    list-style-type: none;
+  list-style-type: none;
+}
+
+@media (max-width: $desktop-breakpoint) {
+  textarea {
+    width: 200px;
+  }
 }

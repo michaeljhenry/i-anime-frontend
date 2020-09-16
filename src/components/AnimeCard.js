@@ -1,7 +1,9 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { Link, useParams, useHistory } from "react-router-dom";
 import AuthContext from "../context/auth-context";
 import { useHttpClient } from "../hooks/http-hook";
+import Modal from "./Modal";
+import ModalAnimeForm from "./ModalAnimeForm";
 import LoadingSpinner from "./Loader";
 import ErrorModal from "./ErrorModal";
 
@@ -9,6 +11,7 @@ const AnimeCard = (props) => {
   const user = useParams().id.substring(1);
   const auth = useContext(AuthContext);
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
+  const [showForm, setShowForm] = useState(false);
   let history = useHistory();
 
   const onDeleteHandler = async () => {
@@ -99,12 +102,28 @@ const AnimeCard = (props) => {
       history.push(`/${auth.userId}/animes`);
     } catch (err) {}
   };
+  const onAddClickHandler = () => {
+    setShowForm(true);
+  };
+  const onCancel = () => {
+    setShowForm(false);
+  };
   return (
     <React.Fragment>
       {error && (
         <ErrorModal error={error} show={!!error} onCancel={clearError} />
       )}
       {isLoading && <LoadingSpinner />}
+      {!isLoading && showForm && (
+        <Modal form={true} show={showForm} onCancel={onCancel}>
+          <ModalAnimeForm
+            title={props.title}
+            image_url={props.image_url}
+            synopsis={props.synopsis}
+            onCancel={onCancel}
+          />
+        </Modal>
+      )}
       {!isLoading && (
         <div className="user-list__item" key={props.title}>
           <img src={props.image_url} alt={`${props.title} `} />
@@ -119,6 +138,11 @@ const AnimeCard = (props) => {
               </p>
             )}
           </div>
+          {auth.isLoggedIn && user !== auth.userId && (
+            <button onClick={onAddClickHandler} className="edit-btn">
+              Add To My List
+            </button>
+          )}
           {user === auth.userId ? (
             <div className="edit-buttons">
               <ul className="edit-buttons__row">

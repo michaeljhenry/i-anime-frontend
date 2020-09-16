@@ -22,7 +22,6 @@ const AnimeForm = (props) => {
     setScore(e.target.value);
   };
   const typeChangeHandler = (e) => {
-    console.log(e.target.value);
     setType(e.target.value);
   };
   const textareaChangeHandler = (e) => {
@@ -72,8 +71,9 @@ const AnimeForm = (props) => {
       //         Authorization: 'Bearer ' + auth.token
       //     }
       // });
-      history.push(`/anime/add`);
+      setScore("");
       setDescription("");
+      history.push(`/anime/add`);
     } catch (err) {}
   };
   useEffect(() => {
@@ -144,9 +144,9 @@ const AnimeForm = (props) => {
               </React.Fragment>
             ) : null}
           </div>
-          <div className="anime-form__score" onChange={typeChangeHandler}>
-            <p>Anime Score: </p>
-            <select name="scores" id="scores">
+          <div className="anime-form__type" onChange={typeChangeHandler}>
+            <p>Anime Type: </p>
+            <select name="animeType" id="animeType">
               <option value="watched">Watched</option>
               <option value="watching">Watching</option>
               <option value="toWatch">ToWatch</option>

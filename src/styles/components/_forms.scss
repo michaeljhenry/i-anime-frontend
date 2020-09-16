@@ -1,53 +1,64 @@
 .anime-form__query {
-    background-color: white;
-    display: block;
-    margin-top: $s-size;
-    margin-left: auto;
-    margin-right: auto;
-    margin-bottom: $s-size;
-    opacity: 0.9;
-};
+  background-color: white;
+  display: block;
+  margin-top: $s-size;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: $s-size;
+  opacity: 0.9;
+}
 
 .anime-form__container {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    width: 100vw;
-    max-width: 100%;
-};
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  width: 100vw;
+  max-width: 100%;
+}
 
 .anime-form__info {
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-    justify-content: space-evenly;
-};
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+}
 
 .anime-form__instructions {
-    display: block;
-    background-color: white;
-    margin: $xs-size auto;
-    width: 220px;
-    text-align: center;
-    opacity: 0.9;
-    border-radius: 10px;
+  display: block;
+  background-color: white;
+  margin: $xs-size auto;
+  width: 220px;
+  text-align: center;
+  opacity: 0.9;
+  border-radius: 10px;
 }
 
 .anime-form__image {
-    height: 150px;
-    width: 150px;
-    margin-top: $xs-size;
-};
+  height: 150px;
+  width: 150px;
+  margin-top: $xs-size;
+}
 
+.anime-form__type {
+  background-color: white;
+  width: 200px;
+  margin: $m-size auto;
+  opacity: 0.9;
+  padding: 4px;
+}
+
+.anime-form__type p {
+  display: inline;
+}
 
 .anime-form__score {
-    background-color: white;
-    width: 170px;
-    margin: $m-size auto;
-    opacity: 0.9;
-    padding: 4px;
+  background-color: white;
+  width: 170px;
+  margin: $m-size auto;
+  opacity: 0.9;
+  padding: 4px;
 }
 
 .anime-form__score p {
-    display: inline;
+  display: inline;
 }
