@@ -10,6 +10,8 @@ import ErrorModal from "./ErrorModal";
 const AnimeCard = (props) => {
   const user = useParams().id.substring(1);
   const auth = useContext(AuthContext);
+  const [type, setType] = useState("");
+  const [actionType, setActionType] = useState("add");
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
   const [showForm, setShowForm] = useState(false);
   let history = useHistory();
@@ -31,76 +33,24 @@ const AnimeCard = (props) => {
     } catch (err) {}
   };
   const onWatchedHandler = async () => {
-    const data = {
-      creator: props.creator,
-      type: "watched",
-    };
-    try {
-      await sendRequest(
-        process.env.REACT_APP_BACKEND_URL + `/animes/patch/type/${props.aid}`,
-        "PATCH",
-        JSON.stringify(data),
-        {
-          Authorization: "Bearer " + auth.token,
-          "Content-Type": "application/json",
-        }
-      );
-      history.push(`/${auth.userId}/animes`);
-    } catch (err) {}
+    setType("watched");
+    setActionType("update");
+    setShowForm(true);
   };
   const onToWatchHandler = async () => {
-    const data = {
-      creator: props.creator,
-      type: "toWatch",
-    };
-    try {
-      await sendRequest(
-        process.env.REACT_APP_BACKEND_URL + `/animes/patch/type/${props.aid}`,
-        "PATCH",
-        JSON.stringify(data),
-        {
-          Authorization: "Bearer " + auth.token,
-          "Content-Type": "application/json",
-        }
-      );
-      history.push(`/${auth.userId}/animes`);
-    } catch (err) {}
+    setType("toWatch");
+    setActionType("update");
+    setShowForm(true);
   };
   const onWatchingHandler = async () => {
-    const data = {
-      creator: props.creator,
-      type: "watching",
-    };
-    try {
-      await sendRequest(
-        process.env.REACT_APP_BACKEND_URL + `/animes/patch/type/${props.aid}`,
-        "PATCH",
-        JSON.stringify(data),
-        {
-          Authorization: "Bearer " + auth.token,
-          "Content-Type": "application/json",
-        }
-      );
-      history.push(`/${auth.userId}/animes`);
-    } catch (err) {}
+    setType("watching");
+    setActionType("update");
+    setShowForm(true);
   };
   const onDroppedHandler = async () => {
-    const data = {
-      creator: props.creator,
-      type: "dropped",
-    };
-    try {
-      await sendRequest(
-        process.env.REACT_APP_BACKEND_URL + `/animes/patch/type/${props.aid}`,
-        "PATCH",
-        JSON.stringify(data),
-        {
-          Authorization: "Bearer " + auth.token,
-          "Content-Type": "application/json",
-        }
-      );
-      history.push(`/${auth.userId}/animes`);
-    } catch (err) {}
+    setType("dropped");
+    setActionType("update");
+    setShowForm(true);
   };
   const onAddClickHandler = () => {
     setShowForm(true);
@@ -121,6 +71,11 @@ const AnimeCard = (props) => {
             image_url={props.image_url}
             synopsis={props.synopsis}
             onCancel={onCancel}
+            actionType={actionType}
+            type={type}
+            description={props.description}
+            score={props.score}
+            animeId={props.aid}
           />
         </Modal>
       )}
