@@ -159,6 +159,7 @@ const AnimeForm = (props) => {
             <div className="anime-form__score" onChange={scoreChangeHandler}>
               <p>Anime Score: </p>
               <select name="scores" id="scores">
+                <option value=""> </option>
                 <option value="0.0">0.0</option>
                 <option value="0.5">0.5</option>
                 <option value="1.0">1.0</option>
