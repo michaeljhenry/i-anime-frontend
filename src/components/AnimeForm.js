@@ -133,6 +133,13 @@ const AnimeForm = (props) => {
                               <div className="anime-search__synopsis">
                                 {anime.synopsis}
                               </div>
+                              <a
+                                href={anime.url}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                              >
+                                Read More Here
+                              </a>
                               <p>Score: {anime.score}</p>
                             </div>
                           </label>

@@ -49,17 +49,28 @@
   justify-content: space-around;
 }
 
+// .anime-search__card {
+//   height: auto;
+//   min-width: 290px;
+//   text-align: center;
+//   margin-top: $s-size;
+//   margin-right: $xs-size;
+//   opacity: 0.9;
+// }
+
 .anime-search__card {
   height: auto;
-  width: 290px;
+  min-width: 290px;
   text-align: center;
   margin-top: $s-size;
-  margin-right: $xs-size;
+  margin-bottom: $s-size;
+  padding: 10px;
   opacity: 0.9;
 }
 
 .anime-search__synopsis {
   font-size: 14px;
+  word-wrap: break-word;
 }
 .list-options__item {
   height: 250px;
@@ -114,9 +125,9 @@
 
 .anime-search__card:hover {
   cursor: pointer;
-  -webkit-box-shadow: 0 0 30px red;
-  -moz-box-shadow: 0 0 30px red;
-  box-shadow: 0 0 30px red;
+  -webkit-box-shadow: 0 0 30px yellow;
+  -moz-box-shadow: 0 0 30px yellow;
+  box-shadow: 0 0 30px yellow;
 }
 
 .user-list__item {

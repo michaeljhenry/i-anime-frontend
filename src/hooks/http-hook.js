@@ -4,7 +4,7 @@ export const useHttpClient = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState();
 
-  const activeHttpRequests = useRef([]); // logic for if a response is incoming gbut the user switches pages before it arrives. we want to abort that request.
+  const activeHttpRequests = useRef([]); // logic for if a response is incoming but the user switches pages before it arrives. we want to abort that request.
 
   // wrapped in useCallback to avoid function re-creation when the component that uses this function re-renders and avoids infinite loops
   const sendRequest = useCallback(
