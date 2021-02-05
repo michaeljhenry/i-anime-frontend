@@ -5,6 +5,8 @@ import {
   Switch,
   Redirect,
 } from "react-router-dom";
+import "bootstrap/dist/css/bootstrap.min.css";
+
 import "./styles/styles.scss";
 // import AddToWatchPage from './pages/AddToWatchPage';
 import AuthContext from "./context/auth-context";
@@ -24,6 +26,9 @@ const AddAnimePage = React.lazy(() => import("./pages/AddAnimePage"));
 const EditAnimePage = React.lazy(() => import("./pages/EditAnimePage"));
 const UserAnimes = React.lazy(() => import("./pages/UserAnimes"));
 const UserPage = React.lazy(() => import("./pages/UserPage"));
+const AnimeDashboardPage = React.lazy(() =>
+  import("./pages/AnimeDashboardPage")
+);
 
 const App = () => {
   const [token, setToken] = useState(false);
@@ -123,6 +128,7 @@ const App = () => {
         <Route exact path="/">
           <DashboardPage />
         </Route>
+        <Route component={AnimeDashboardPage} exact path="/animedash"></Route>
         <Route path="/auth">
           <Auth />
         </Route>
@@ -169,8 +175,6 @@ const App = () => {
         }}
       >
         <Router>
-          <MainNav />
-
           <Suspense
             fallback={
               <div>

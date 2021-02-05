@@ -19,7 +19,7 @@ const AnimeSearch = (props) => {
 
     // await fetch(`${baseUrl}/search/anime?q=${anime}&page=1&type=tv`)
     // .then(res => res.json())
-    console.log(response);
+    // console.log(response);
     props.getInfo(response);
     ////console.log(response.results[0]);
     // .then(res => res.json())
