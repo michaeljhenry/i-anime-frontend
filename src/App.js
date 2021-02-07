@@ -11,6 +11,7 @@ import "./styles/styles.scss";
 // import AddToWatchPage from './pages/AddToWatchPage';
 import AuthContext from "./context/auth-context";
 import DashboardPage from "./pages/DashboardPage";
+import NewDashboardPage from "./pages/NewDashboard";
 import LoadingSpinner from "./components/Loader";
 // import EditAnimePage from './pages/EditAnimePage';
 // import UserAnimes from './pages/UserAnimes';
@@ -129,6 +130,7 @@ const App = () => {
           <DashboardPage />
         </Route>
         <Route component={AnimeDashboardPage} exact path="/animedash"></Route>
+        <Route component={NewDashboardPage} exact path="/newdash"></Route>
         <Route path="/auth">
           <Auth />
         </Route>
