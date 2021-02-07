@@ -1,0 +1,90 @@
+.userrow {
+  //background-color: rgb(27, 26, 26);
+  border: 0.2px solid grey;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  flex-direction: column;
+  align-items: center;
+  color: white;
+
+  padding-top: $m-size;
+}
+
+.userrow-footer {
+  width: 100%;
+  display: flex;
+  flex-wrap: nowrap;
+}
+.userrow img {
+  width: 150px;
+  height: 150px;
+}
+
+.userrow-btn {
+  font-size: 15px;
+  background-color: black;
+  border: none;
+  padding-left: 2%;
+  padding-right: 2%;
+  flex-grow: 1;
+}
+
+.userrow-btn:active,
+.userrow-btn:focus,
+.btn-primary:not(:disabled):not(.disabled):active,
+.btn-primary:not(:disabled):not(.disabled):active:focus,
+.btn-primary:not(:disabled):not(.disabled).active:focus {
+  border: 0;
+  box-shadow: none;
+  border-bottom: 2px solid #007bff;
+}
+
+.userrow-btn:active,
+.btn-primary:not(:disabled):not(.disabled):active,
+.btn-primary:not(:disabled):not(.disabled).active {
+  background-color: #007bff37;
+}
+
+.userrow-btn:focus {
+  background-color: black !important;
+  border: 0;
+  border-bottom: 2px solid #007bff;
+  box-shadow: none;
+}
+
+.userrow-btn:hover {
+  background-color: #007bff37;
+}
+
+.userrow-btn .active {
+  border: 0;
+  box-shadow: none;
+  border-bottom: 2px solid #007bff;
+  background-color: black;
+}
+
+.userrow-btn.active:hover {
+  background-color: #007bff37 !important;
+}
+
+.animelistrow {
+  padding-top: $m-size;
+  margin-bottom: $l-size;
+  justify-content: space-evenly;
+}
+
+@media (min-width: 768px) {
+  .userrow {
+    //background-color: rgb(27, 26, 26);
+    border: 0.2px solid grey;
+    width: 60%;
+    margin-left: auto;
+    margin-right: auto;
+    flex-direction: column;
+    align-items: center;
+    padding-left: $m-size;
+    padding-right: $m-size;
+    padding-top: $m-size;
+  }
+}
