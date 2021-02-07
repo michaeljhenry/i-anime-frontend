@@ -10,6 +10,7 @@ html {
   max-width: 100%; /* no horizontal scroll :) */
 }
 
+#root,
 body {
   //background: url("/images/anime-crossover-background.png");
   background-color: black;
@@ -22,6 +23,10 @@ body {
   overflow-x: hidden;
   margin-top: 60px;
   position: relative;
+}
+
+#root {
+  margin: 0;
 }
 
 p {
@@ -54,7 +59,6 @@ textarea {
 
 h3 {
   font-size: 24px;
-  margin-top: 20px;
 }
 
 ul {
