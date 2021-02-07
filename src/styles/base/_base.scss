@@ -1,9 +1,9 @@
 * {
   box-sizing: border-box;
+  margin: 0;
 }
 html {
   font-size: 62.5%;
-  background: url("/images/anime-crossover-background.png");
   background-size: cover;
   width: 100vw;
   height: 100vh;
@@ -11,12 +11,17 @@ html {
 }
 
 body {
-  height: 100%;
-  width: 100%;
+  //background: url("/images/anime-crossover-background.png");
+  background-color: black;
+  height: calc(100vh - 60px);
+  width: 100vw;
   color: $dark-grey;
-  font-family: Helvetica, Arial, sans-serif;
+  font-family: Roboto, sans-serif;
   font-size: $m-size;
   line-height: 1.6;
+  overflow-x: hidden;
+  margin-top: 60px;
+  position: relative;
 }
 
 p {
@@ -60,6 +65,10 @@ ul {
 
 li {
   list-style-type: none;
+}
+
+.row {
+  margin: 0;
 }
 
 @media (max-width: $desktop-breakpoint) {
