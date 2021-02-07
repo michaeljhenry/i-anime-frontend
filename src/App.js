@@ -19,6 +19,8 @@ import LoadingSpinner from "./components/Loader";
 // import Auth from './pages/Auth';
 import NameContext from "./context/name-context";
 import MainNav from "./components/MainNav";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
 
 let logoutTimer;
 
@@ -131,6 +133,8 @@ const App = () => {
         </Route>
         <Route component={AnimeDashboardPage} exact path="/animedash"></Route>
         <Route component={NewDashboardPage} exact path="/newdash"></Route>
+        <Route component={Login} exact path="/login"></Route>
+        <Route component={Register} exact path="/register"></Route>
         <Route path="/auth">
           <Auth />
         </Route>
