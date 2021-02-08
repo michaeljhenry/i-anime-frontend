@@ -72,7 +72,7 @@ const NewAnimeCard = (props) => {
         )}
         <Row className="animelistcard-body__footer">
           {!auth.isLoggedIn && (
-            <Card.Text>
+            <Card.Text className="animelistcard-body__footer-center">
               User Rating: {props.score ? props.score : "No Rating"}
             </Card.Text>
           )}

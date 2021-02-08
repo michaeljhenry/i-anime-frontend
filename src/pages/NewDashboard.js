@@ -5,7 +5,6 @@ import NewNav from "../components/NewNav";
 const NewDashboard = () => {
   return (
     <>
-      <NewNav />
       <Container className="dashboard-container" fluid>
         <Row className="dashboard-btn__row">
           <Button className="dashboard-button" id="dashboard-users">

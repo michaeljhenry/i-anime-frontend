@@ -22,6 +22,7 @@ import MainNav from "./components/MainNav";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import NewUserPage from "./pages/NewUserPage";
+import NewNav from "./components/NewNav";
 
 let logoutTimer;
 
@@ -142,7 +143,7 @@ const App = () => {
           <Auth />
         </Route>
         <Route exact path="/:id/animes">
-          <UserPage />
+          <NewUserPage />
         </Route>
         <Route path="/:id/animes/watched">
           <UserAnimes />
@@ -184,6 +185,8 @@ const App = () => {
         }}
       >
         <Router>
+          <NewNav />
+
           <Suspense
             fallback={
               <div>

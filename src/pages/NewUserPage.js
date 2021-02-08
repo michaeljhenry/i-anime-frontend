@@ -10,7 +10,7 @@ const NewUserPage = () => {
   const [animeWatchedList, setAnimeWatchedList] = useState([]);
   const [animeToWatchList, setAnimeToWatchList] = useState([]);
   const [animeDroppedList, setAnimeDroppedList] = useState([]);
-  const [type, setType] = useState("");
+  const [type, setType] = useState("watched");
   const [animesCopy, setAnimesCopy] = useState([]);
   const [sortType, setSortType] = useState("default");
   const { isLoading, error, sendRequest, clearError } = useHttpClient();

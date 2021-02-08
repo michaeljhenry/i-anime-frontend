@@ -37,19 +37,19 @@
 .btn-primary:not(:disabled):not(.disabled).active:focus {
   border: 0;
   box-shadow: none;
-  border-bottom: 2px solid #007bff;
+  border-bottom: 3px solid #005cbf;
 }
 
 .userrow-btn:active,
 .btn-primary:not(:disabled):not(.disabled):active,
 .btn-primary:not(:disabled):not(.disabled).active {
-  background-color: #007bff37;
+  background-color: black;
 }
 
 .userrow-btn:focus {
   background-color: black !important;
   border: 0;
-  border-bottom: 2px solid #007bff;
+  border-bottom: 3px solid #005cbf;
   box-shadow: none;
 }
 
@@ -57,10 +57,10 @@
   background-color: #007bff37;
 }
 
-.userrow-btn .active {
+.userrow-btn.active {
   border: 0;
   box-shadow: none;
-  border-bottom: 2px solid #007bff;
+  border-bottom: 3px solid #005cbf;
   background-color: black;
 }
 

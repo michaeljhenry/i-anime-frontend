@@ -32,3 +32,11 @@
 .navbar-expand-lg .navbar-collapse {
   margin-top: auto;
 }
+
+.navbar-collapse.collapse.show {
+  background-color: black;
+}
+
+.navbar-dark .navbar-nav .nav-link {
+  background-color: black;
+}
