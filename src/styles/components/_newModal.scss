@@ -1,0 +1,76 @@
+.modal.fade .modal-dialog {
+  transform: translate(0, 50px);
+}
+
+.modal-content {
+  border: 3px solid #9f1c1c;
+  color: white;
+  background-color: #1f2933;
+}
+
+.editmodal--header span {
+  color: white;
+  font-size: 30px;
+}
+.editmodal--body {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+.editmodal--body img {
+  width: 150px;
+  height: 150px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.editmodal--body h3 {
+  text-align: center;
+}
+
+.editmodal--radiocontainer {
+  justify-content: center;
+  align-items: center;
+}
+.editmodal--radiocontainer .form-check-input {
+  margin-bottom: 0;
+}
+.editmodal--radios {
+  flex-direction: row;
+}
+
+.editmodal--row__vert {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid black;
+  padding: 8px;
+  margin-bottom: $xs-size;
+}
+
+.editmodal--row__horz {
+  display: flex;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  flex-wrap: wrap;
+}
+
+.editmodal--row__vert h4 {
+  text-align: center;
+  margin-top: 5px;
+}
+
+.editmodal--scorebtn {
+  font-size: 16px;
+  width: 40px;
+}
+
+.editmodal--scorebtn__active {
+  background-color: #6c757d;
+  color: white;
+  width: 40px;
+  font-size: 16px;
+}
+
+.editmodal--footer button {
+  font-size: 15px;
+}

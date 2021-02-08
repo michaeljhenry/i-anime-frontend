@@ -46,7 +46,6 @@ const NewUserPage = () => {
         // await fetch(`http://localhost:5000/api/animes/user/${id}`, {method: 'GET', body: null, methods: {}})
         // const animeList = await animeResponse.json();
         animeList.animes.forEach((anime) => {
-          console.log(anime.type);
           if (anime.type === "watched") {
             watchedList.push(anime);
           } else if (anime.type === "watching") {

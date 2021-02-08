@@ -3,6 +3,7 @@ import { Card, Row, Button } from "react-bootstrap";
 import AuthContext from "../context/auth-context";
 import { Link, useParams, useHistory } from "react-router-dom";
 import { useHttpClient } from "../hooks/http-hook";
+import EditAnimeModal from "../components/EditAnimeModal";
 
 const NewAnimeCard = (props) => {
   const auth = useContext(AuthContext);
@@ -10,33 +11,17 @@ const NewAnimeCard = (props) => {
   const [type, setType] = useState("");
   const [actionType, setActionType] = useState("add");
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
-
-  console.log(user);
-  console.log(auth);
-  console.log(user === auth.userId);
+  const [showModal, setShowModal] = useState(false);
 
   const onAddClickHandler = () => {
     // setShowForm(true);
   };
-  const onWatchedHandler = async () => {
-    setType("watched");
-    setActionType("update");
-    //setShowForm(true);
+
+  const onEditHandler = () => {
+    setShowModal(true);
   };
-  const onToWatchHandler = async () => {
-    setType("toWatch");
-    setActionType("update");
-    //setShowForm(true);
-  };
-  const onWatchingHandler = async () => {
-    setType("watching");
-    setActionType("update");
-    // setShowForm(true);
-  };
-  const onDroppedHandler = async () => {
-    setType("dropped");
-    setActionType("update");
-    // setShowForm(true);
+  const onCloseHandler = () => {
+    setShowModal(false);
   };
 
   const onDeleteHandler = async () => {
@@ -56,134 +41,60 @@ const NewAnimeCard = (props) => {
     } catch (err) {}
   };
   return (
-    <Card className="animelistcard" style={{ width: "18rem" }}>
-      <Card.Img variant="top" src={`${props.image_url}`} />
-      <Card.Body className="animelistcard-body">
-        <Card.Title className="animelistcard-body__header">
-          {props.title}
-        </Card.Title>
-        <Card.Text className="animelistcard-body__desc">
-          {props.description}
-        </Card.Text>
-        {auth.isLoggedIn && (
-          <Card.Text>
-            User Rating: {props.score ? props.score : "No Rating"}
+    <>
+      <Card className="animelistcard" style={{ width: "18rem" }}>
+        <Card.Img variant="top" src={`${props.image_url}`} />
+        <Card.Body className="animelistcard-body">
+          <Card.Title className="animelistcard-body__header">
+            {props.title}
+          </Card.Title>
+          <Card.Text className="animelistcard-body__desc">
+            {props.description}
           </Card.Text>
-        )}
-        <Row className="animelistcard-body__footer">
-          {!auth.isLoggedIn && (
-            <Card.Text className="animelistcard-body__footer-center">
+          {auth.isLoggedIn && (
+            <Card.Text>
               User Rating: {props.score ? props.score : "No Rating"}
             </Card.Text>
           )}
-          {auth.isLoggedIn && user !== auth.userId && (
-            <Button onClick={onAddClickHandler} className="edit-btn">
-              Add To My List
-            </Button>
-          )}
-          {user === auth.userId ? (
-            <>
-              <Button className="edit-btn">Edit</Button>
-              <Button
-                variant="danger"
-                className="delete-btn"
-                onClick={onDeleteHandler}
-              >
-                Delete
+          <Row className="animelistcard-body__footer">
+            {!auth.isLoggedIn && (
+              <Card.Text className="animelistcard-body__footer-center">
+                User Rating: {props.score ? props.score : "No Rating"}
+              </Card.Text>
+            )}
+            {auth.isLoggedIn && user !== auth.userId && (
+              <Button onClick={onAddClickHandler} className="edit-btn">
+                Add To My List
               </Button>
-              {props.type === "toWatch" && (
-                <Row>
-                  <Button
-                    className="switch-type__btn"
-                    onClick={onWatchedHandler}
-                  >
-                    Watched
-                  </Button>
-                  <Button
-                    className="switch-type__btn"
-                    onClick={onWatchingHandler}
-                  >
-                    Watching
-                  </Button>
-                  <Button
-                    className="switch-type__btn"
-                    onClick={onDroppedHandler}
-                  >
-                    Dropped
-                  </Button>
-                </Row>
-              )}
-              {props.type === "watched" && (
-                <Row className="edit-buttons__row">
-                  <Button
-                    className="switch-type__btn"
-                    onClick={onWatchingHandler}
-                  >
-                    Watching
-                  </Button>
-                  <Button
-                    className="switch-type__btn"
-                    onClick={onToWatchHandler}
-                  >
-                    ToWatch
-                  </Button>
-                  <Button
-                    className="switch-type__btn"
-                    onClick={onDroppedHandler}
-                  >
-                    Dropped
-                  </Button>
-                </Row>
-              )}
-              {props.type === "watching" && (
-                <Row className="edit-buttons__row">
-                  <Button
-                    className="switch-type__btn"
-                    onClick={onWatchedHandler}
-                  >
-                    Watched
-                  </Button>
-                  <Button
-                    className="switch-type__btn"
-                    onClick={onToWatchHandler}
-                  >
-                    ToWatch
-                  </Button>
-                  <Button
-                    className="switch-type__btn"
-                    onClick={onDroppedHandler}
-                  >
-                    Dropped
-                  </Button>
-                </Row>
-              )}
-              {props.type === "dropped" && (
-                <Row className="edit-buttons__row">
-                  <Button
-                    className="switch-type__btn"
-                    onClick={onWatchedHandler}
-                  >
-                    Watched
-                  </Button>
-                  <Button
-                    className="switch-type__btn"
-                    onClick={onToWatchHandler}
-                  >
-                    ToWatch
-                  </Button>
-                  <Button
-                    className="switch-type__btn"
-                    onClick={onWatchingHandler}
-                  >
-                    Watching
-                  </Button>
-                </Row>
-              )}
-            </>
-          ) : null}
-        </Row>
-      </Card.Body>
-    </Card>
+            )}
+            {user === auth.userId ? (
+              <>
+                <Button className="edit-btn" onClick={onEditHandler}>
+                  Edit
+                </Button>
+                <Button
+                  variant="danger"
+                  className="delete-btn"
+                  onClick={onDeleteHandler}
+                >
+                  Delete
+                </Button>
+              </>
+            ) : null}
+          </Row>
+        </Card.Body>
+      </Card>
+      {showModal && (
+        <EditAnimeModal
+          show={showModal}
+          onCloseHandler={onCloseHandler}
+          type={type}
+          description={props.description}
+          title={props.title}
+          score={props.score}
+        />
+      )}
+    </>
   );
 };
 
