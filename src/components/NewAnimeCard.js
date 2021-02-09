@@ -42,7 +42,7 @@ const NewAnimeCard = (props) => {
   };
   return (
     <>
-      <Card className="animelistcard" style={{ width: "18rem" }}>
+      <Card className="animelistcard">
         <Card.Img variant="top" src={`${props.image_url}`} />
         <Card.Body className="animelistcard-body">
           <Card.Title className="animelistcard-body__header">
