@@ -104,7 +104,9 @@ const App = () => {
           <DashboardPage />
         </Route>
         <Route component={AnimeDashboardPage} exact path="/animedash"></Route>
-
+        <Route component={NewDashboardPage} exact path="/newdash"></Route>
+        <Route component={Login} exact path="/login"></Route>
+        <Route component={Register} exact path="/register"></Route>
         <Route path="/anime/add">
           <AddAnimePage />
         </Route>

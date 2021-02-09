@@ -8,7 +8,7 @@ import EditAnimeModal from "../components/EditAnimeModal";
 const NewAnimeCard = (props) => {
   const auth = useContext(AuthContext);
   const user = useParams().id;
-  const [type, setType] = useState("");
+  const [type, setType] = useState(props.type);
   const [actionType, setActionType] = useState("add");
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
   const [showModal, setShowModal] = useState(false);
@@ -92,6 +92,8 @@ const NewAnimeCard = (props) => {
           description={props.description}
           title={props.title}
           score={props.score}
+          creator={user}
+          aid={props.aid}
         />
       )}
     </>

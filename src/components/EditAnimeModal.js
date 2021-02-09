@@ -1,4 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import AuthContext from "../context/auth-context";
+import { useHttpClient } from "../hooks/http-hook";
+
 import {
   Modal,
   Button,
@@ -11,6 +14,8 @@ import {
 } from "react-bootstrap";
 
 const EditAnimeModal = (props) => {
+  const auth = useContext(AuthContext);
+
   const numbers = [
     "0.0",
     "0.5",
@@ -34,12 +39,14 @@ const EditAnimeModal = (props) => {
     "9.5",
     "10.0",
   ];
-  const [score, setScore] = useState(Number(props.score) || "");
-  const [newType, setNewType] = useState("");
+  const [score, setScore] = useState(props.score || "");
+  const [newType, setNewType] = useState(props.type);
   const [description, setDescription] = useState(props.description || "");
   const [charactersRemaining, setCharactersRemaining] = useState(
     200 - props.description.length
   );
+
+  const { isLoading, error, sendRequest, clearError } = useHttpClient();
 
   const textareaChangeHandler = (e) => {
     console.log(e.target.value);
@@ -47,6 +54,39 @@ const EditAnimeModal = (props) => {
       setDescription(e.target.value);
       setCharactersRemaining(200 - e.target.value.length);
     }
+  };
+
+  const onSubmitHandler = async (e) => {
+    e.preventDefault();
+    const newAnime = {
+      title: props.title,
+      description: description,
+      creator: props.creator,
+      type: newType, //animeInfo.type,
+      score: newType === "toWatch" ? "" : score,
+    };
+    try {
+      await sendRequest(
+        process.env.REACT_APP_BACKEND_URL + `/animes/patch/${props.aid}`,
+        "PATCH",
+        JSON.stringify(newAnime),
+        {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + auth.token,
+        }
+      );
+      props.onCloseHandler();
+      window.parent.location = window.parent.location.href;
+    } catch (err) {}
+    // await fetch(`http://localhost:5000/api/animes/patch/${aid}`,
+    // {
+    //     method: 'PATCH',
+    //     body: JSON.stringify(newAnime),
+    //     headers: {
+    //         'Content-Type': 'application/json',
+    //         Authorization: 'Bearer ' + auth.token
+    //     }
+    // });
   };
 
   useEffect(() => {
@@ -76,6 +116,8 @@ const EditAnimeModal = (props) => {
                 label="Watched"
                 type="radio"
                 id="watched"
+                value="watched"
+                checked={"watched" === newType}
                 onChange={(e) => setNewType(e.target.id)}
               />
             </Row>
@@ -87,6 +129,8 @@ const EditAnimeModal = (props) => {
                 label="To Watch"
                 type="radio"
                 id="toWatch"
+                value="toWatch"
+                checked={"toWatch" === newType}
                 onChange={(e) => setNewType(e.target.id)}
               />
             </Row>
@@ -98,7 +142,9 @@ const EditAnimeModal = (props) => {
                 label="Watching"
                 type="radio"
                 id="watching"
+                value="watching"
                 onChange={(e) => setNewType(e.target.id)}
+                checked={"watching" === newType}
               />
             </Row>
             <Row className="editmodal--radiocontainer">
@@ -109,7 +155,9 @@ const EditAnimeModal = (props) => {
                 label="Dropped"
                 type="radio"
                 id="dropped"
+                value="dropped"
                 onChange={(e) => setNewType(e.target.id)}
+                checked={"dropped" === newType}
               />
             </Row>
           </Row>
@@ -154,13 +202,17 @@ const EditAnimeModal = (props) => {
           </Form.Group>
         </Modal.Body>
         <Modal.Footer className="editmodal--footer">
-          <Button variant="secondary" onClick={props.onCloseHandler}>
+          <Button
+            type="button"
+            variant="secondary"
+            onClick={props.onCloseHandler}
+          >
             Close
           </Button>
           <Button
             type="submit"
             variant="primary"
-            onClick={props.onCloseHandler}
+            onClick={onSubmitHandler}
             disabled={!newType || (newType !== "toWatch" && !score)}
           >
             Save Changes
