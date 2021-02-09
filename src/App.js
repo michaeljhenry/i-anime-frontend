@@ -23,6 +23,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import NewUserPage from "./pages/NewUserPage";
 import NewNav from "./components/NewNav";
+import UsersDashboardPage from "./pages/UsersDashboardPage";
 
 let logoutTimer;
 
@@ -105,6 +106,7 @@ const App = () => {
         </Route>
         <Route component={AnimeDashboardPage} exact path="/animedash"></Route>
         <Route component={NewDashboardPage} exact path="/newdash"></Route>
+        <Route component={UsersDashboardPage} exact path="/usersdash"></Route>
         <Route component={Login} exact path="/login"></Route>
         <Route component={Register} exact path="/register"></Route>
         <Route path="/anime/add">
@@ -139,6 +141,7 @@ const App = () => {
         </Route>
         <Route component={AnimeDashboardPage} exact path="/animedash"></Route>
         <Route component={NewDashboardPage} exact path="/newdash"></Route>
+        <Route component={UsersDashboardPage} exact path="/usersdash"></Route>
         <Route component={Login} exact path="/login"></Route>
         <Route component={Register} exact path="/register"></Route>
         <Route path="/auth">

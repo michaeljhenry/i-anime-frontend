@@ -1,7 +1,7 @@
 .animelistcard {
   background-color: black;
   border: 1px solid grey;
-  min-width: 290px;
+  width: 290px;
   margin-bottom: $l-size;
 }
 
@@ -51,4 +51,36 @@
 
 .animelistcard-body__footer-center {
   margin: auto auto;
+}
+
+.userslistcard {
+  width: 200px;
+  background-color: black;
+  color: white;
+  border: 2px solid grey;
+  margin-right: $xs-size;
+  margin-left: $xs-size;
+  margin-top: $m-size;
+}
+
+.userslistcard--image {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.userslistcard--body__header {
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.userslistcard--body__text {
+  text-align: left;
+  font-weight: normal;
+}
+
+.userslistcard--body__link {
+  font-size: 14px;
 }
