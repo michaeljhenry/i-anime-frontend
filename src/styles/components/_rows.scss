@@ -74,6 +74,54 @@
   justify-content: space-evenly;
 }
 
+.animesearchform--row {
+  display: flex;
+  margin: auto auto;
+}
+
+.animesearchcards--row {
+  flex-wrap: nowrap;
+  width: 100%;
+  justify-content: flex-start;
+  overflow-x: scroll;
+  padding-top: $xs-size;
+  padding-bottom: $s-size;
+  scroll-behavior: smooth;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.animesearchcards--row::-webkit-scrollbar {
+  display: none;
+}
+
+.animesearchcards--row .form-group {
+  height: 100%;
+  display: flex;
+}
+
+.animeform--row__vert {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid black;
+  padding: 8px;
+  margin-bottom: $xs-size;
+  width: 100%;
+}
+
+.animeform--row__horz {
+  display: flex;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.animeform--row__vert h4 {
+  margin-top: 5px;
+  margin-bottom: 0;
+}
+
 @media (min-width: 768px) {
   .userrow {
     //background-color: rgb(27, 26, 26);

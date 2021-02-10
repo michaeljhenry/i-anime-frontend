@@ -89,9 +89,6 @@ const EditAnimeModal = (props) => {
     // });
   };
 
-  useEffect(() => {
-    console.log(score);
-  }, [score]);
   return (
     <Modal
       className="editmodal"
@@ -131,7 +128,10 @@ const EditAnimeModal = (props) => {
                 id="toWatch"
                 value="toWatch"
                 checked={"toWatch" === newType}
-                onChange={(e) => setNewType(e.target.id)}
+                onChange={(e) => {
+                  setScore("");
+                  setNewType(e.target.id);
+                }}
               />
             </Row>
             <Row className="editmodal--radiocontainer">

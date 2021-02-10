@@ -1,0 +1,56 @@
+.animesearchform--label {
+  text-align: center;
+  width: 100%;
+  font-weight: bold;
+}
+
+.animesearchform {
+  margin-top: 10px;
+  display: flex;
+}
+
+.animesearchform button {
+  margin: auto auto;
+  display: block;
+  height: 36px;
+}
+
+.animesearchform .form-control {
+  margin-left: auto;
+}
+.animesearchcard--radio input {
+  display: none;
+}
+
+.animeform {
+  padding: $m-size;
+}
+.animeform--radiocontainer .form-check-input {
+  margin-bottom: 0;
+}
+.animeform--radios {
+  flex-direction: row;
+}
+
+.animeform--scorebtn {
+  font-size: 16px;
+  width: 45px;
+}
+
+.animeform--scorebtn__active {
+  background-color: #6c757d;
+  color: white;
+  width: 45px;
+  font-size: 16px;
+}
+
+.animeform--btn {
+  font-size: 20px;
+  margin-left: 8px;
+}
+
+.animeform--textarea {
+  width: 300px;
+  height: 110px !important;
+  margin: 0;
+}
