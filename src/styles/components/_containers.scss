@@ -8,3 +8,17 @@
   flex-direction: row;
   flex-wrap: wrap;
 }
+
+.addanimepage--container {
+  width: 100%;
+  max-width: 100%;
+  padding: 0;
+}
+
+.animedetailscontainer {
+  width: 100%;
+  min-height: 100%;
+  color: white;
+  justify-content: center;
+  padding: $s-size;
+}
