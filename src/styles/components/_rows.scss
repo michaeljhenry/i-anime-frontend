@@ -1,0 +1,138 @@
+.userrow {
+  //background-color: rgb(27, 26, 26);
+  border: 0.2px solid grey;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  flex-direction: column;
+  align-items: center;
+  color: white;
+
+  padding-top: $m-size;
+}
+
+.userrow-footer {
+  width: 100%;
+  display: flex;
+  flex-wrap: nowrap;
+}
+.userrow img {
+  width: 150px;
+  height: 150px;
+}
+
+.userrow-btn {
+  font-size: 15px;
+  background-color: black;
+  border: none;
+  padding-left: 2%;
+  padding-right: 2%;
+  flex-grow: 1;
+}
+
+.userrow-btn:active,
+.userrow-btn:focus,
+.btn-primary:not(:disabled):not(.disabled):active,
+.btn-primary:not(:disabled):not(.disabled):active:focus,
+.btn-primary:not(:disabled):not(.disabled).active:focus {
+  border: 0;
+  box-shadow: none;
+  border-bottom: 3px solid #005cbf;
+}
+
+.userrow-btn:active,
+.btn-primary:not(:disabled):not(.disabled):active,
+.btn-primary:not(:disabled):not(.disabled).active {
+  background-color: black;
+}
+
+.userrow-btn:focus {
+  background-color: black !important;
+  border: 0;
+  border-bottom: 3px solid #005cbf;
+  box-shadow: none;
+}
+
+.userrow-btn:hover {
+  background-color: #007bff37;
+}
+
+.userrow-btn.active {
+  border: 0;
+  box-shadow: none;
+  border-bottom: 3px solid #005cbf;
+  background-color: black;
+}
+
+.userrow-btn.active:hover {
+  background-color: #007bff37 !important;
+}
+
+.animelistrow {
+  padding-top: $m-size;
+  margin-bottom: $l-size;
+  justify-content: space-evenly;
+}
+
+.animesearchform--row {
+  display: flex;
+  margin: auto auto;
+}
+
+.animesearchcards--row {
+  flex-wrap: nowrap;
+  width: 100%;
+  justify-content: flex-start;
+  overflow-x: scroll;
+  padding-top: $xs-size;
+  padding-bottom: $s-size;
+  scroll-behavior: smooth;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.animesearchcards--row::-webkit-scrollbar {
+  display: none;
+}
+
+.animesearchcards--row .form-group {
+  height: 100%;
+  display: flex;
+}
+
+.animeform--row__vert {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid black;
+  padding: 8px;
+  margin-bottom: $xs-size;
+  width: 100%;
+}
+
+.animeform--row__horz {
+  display: flex;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.animeform--row__vert h4 {
+  margin-top: 5px;
+  margin-bottom: 0;
+}
+
+@media (min-width: 768px) {
+  .userrow {
+    //background-color: rgb(27, 26, 26);
+    border: 0.2px solid grey;
+    width: 60%;
+    margin-left: auto;
+    margin-right: auto;
+    flex-direction: column;
+    align-items: center;
+    padding-left: $m-size;
+    padding-right: $m-size;
+    padding-top: $m-size;
+  }
+}

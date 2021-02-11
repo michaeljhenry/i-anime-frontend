@@ -1,0 +1,243 @@
+.anime-dash__main {
+  height: 70vh;
+  width: 100vw;
+  /*background-image: linear-gradient(90deg, #111 20%, transparent 70%),
+    url("https://wallpapercave.com/wp/wp1837595.jpg");*/
+  background-image: linear-gradient(0deg, #111 10%, transparent 90%),
+    url("https://wallpapercave.com/wp/wp1837595.jpg");
+  //https://images.alphacoders.com/557/thumb-350-557030.jpg
+  background-repeat: no-repeat;
+  background-position: 70%;
+  background-size: cover;
+  position: relative;
+  margin: 0;
+  box-shadow: -2px -1px 8px 20px rgba(0, 0, 0, 0.75) inset;
+}
+.anime-dash__main-content {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backdrop-filter: blur(3px);
+  background-color: rgba(0, 0, 0, 0.5);
+  margin: 0;
+}
+.anime-dash__main-text__container {
+  color: white;
+  margin: 0;
+  width: calc(90%);
+  display: flex;
+  flex-direction: column;
+  align-self: center;
+  padding-left: 30px;
+  line-height: 1.3;
+  position: absolute;
+  bottom: 0;
+}
+
+#anime-dash__main-title {
+  font-weight: bold;
+  font-size: 40px;
+  text-align: center;
+}
+
+.anime-dash__main-text {
+  color: white;
+  font-size: 16px;
+  font-weight: normal;
+  display: -webkit-box;
+  -webkit-line-clamp: 12;
+  -webkit-box-orient: vertical;
+  max-height: 500px; /* I needed this to get it to work */
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+
+.separator {
+  border-bottom: 1px solid white;
+  margin-right: 20px;
+  flex: 1;
+}
+
+.separator-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: nowrap;
+  margin: 20px 0 0 0;
+}
+
+.separator-row h1 {
+  color: white;
+  font-weight: bold;
+  margin-right: 10px;
+  margin-left: 10px;
+}
+
+.dash-row {
+  height: 300px;
+  display: flex;
+  align-items: center;
+  transition: all 500ms linear;
+  align-self: flex-start;
+  overflow-x: scroll;
+  scroll-behavior: smooth;
+  flex-wrap: nowrap;
+  margin-right: 0;
+}
+
+.dash-row:last-child {
+  margin-right: 30px;
+}
+
+.dash-row::-webkit-scrollbar {
+  display: none;
+}
+
+.dash-img {
+  margin-right: 10px;
+}
+
+.anime-card {
+  min-width: 180px;
+  max-width: 180px;
+  height: 250px;
+  position: relative;
+  border: none;
+  transition: transform 300ms linear;
+  margin-left: 20px;
+}
+
+.anime-card__image {
+  height: 100%;
+}
+
+.anime-card__content {
+  height: 100%;
+  width: 100%;
+  opacity: 0;
+  color: white;
+  transition: all 300ms linear;
+  position: absolute;
+  font-weight: bold;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+}
+
+.anime-card__content-title {
+  font-weight: bold;
+  -webkit-font-smoothing: antialiased;
+  text-align: center;
+  font-size: 14px;
+}
+
+.anime-card:hover {
+  transform: scale(1.1);
+  z-index: 2;
+}
+.anime-card:hover .anime-card__content {
+  opacity: 1;
+  backdrop-filter: blur(1px);
+}
+
+.scroll-btn {
+  height: 30px;
+  width: 30px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  background-color: black;
+  border: 2px solid white;
+  margin-right: 20px;
+}
+
+.scroll-btn:hover,
+.scroll-btn:active,
+.scroll-btn:focus {
+  outline: none;
+  border: 2px solid white;
+  background-color: black;
+}
+
+.scroll-btn h1 {
+  margin: 0;
+  color: white;
+}
+
+.card-text {
+  text-align: center;
+  margin-bottom: 0;
+}
+
+.anime-card__footer {
+  margin-top: auto;
+  padding: 0;
+}
+
+.anime-card__btn {
+  border-radius: 2em;
+  background-color: transparent;
+  font-size: 16px;
+  font-weight: bold;
+  border: 1px solid white;
+  margin: auto auto;
+  letter-spacing: 1px;
+  position: absolute;
+  top: 45%;
+  left: 15%;
+}
+
+.animecard--btn__main {
+  border-radius: 2em;
+  background-color: transparent;
+  font-size: 16px;
+  font-weight: bold;
+  border: 1px solid white;
+  margin: auto auto;
+  letter-spacing: 1px;
+  position: relative;
+}
+
+.anime-card__btn:active,
+.anime-card__btn:focus {
+  background-color: transparent;
+  border: 1px solid white;
+}
+
+.anime-card__btn:hover {
+  background-color: black;
+  border: 1px solid white;
+}
+
+@media (min-width: 600px) {
+  .anime-dash__main-text__container {
+    width: calc(50%);
+    margin: 0;
+    position: static;
+  }
+  #anime-dash__main-title {
+    text-align: left;
+  }
+  .anime-dash__main {
+    height: 70vh;
+    width: 100vw;
+    /*background-image: linear-gradient(90deg, #111 20%, transparent 70%),
+      url("https://wallpapercave.com/wp/wp1837595.jpg");*/
+    background-image: linear-gradient(90deg, #111 20%, transparent 70%),
+      url("https://wallpapercave.com/wp/wp1837595.jpg");
+    //https://images.alphacoders.com/557/thumb-350-557030.jpg
+    background-position: 50%;
+
+    margin: 0;
+  }
+  .anime-dash__main-content {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backdrop-filter: blur(2px);
+    background-color: rgba(0, 0, 0, 0.5);
+    margin: 0;
+  }
+}

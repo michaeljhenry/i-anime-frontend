@@ -1,0 +1,123 @@
+.animelistcard {
+  background-color: black;
+  border: 1px solid grey;
+  width: 290px;
+  margin-bottom: $l-size;
+}
+
+.animelistcard img {
+  width: 100%;
+  height: 240px;
+  object-position: center;
+}
+.animelistcard-body,
+.animesearchcard-body {
+  color: white;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.animelistcard-body__header,
+.animesearchcard-body__header {
+  font-size: 2rem;
+  padding: 5px;
+  text-align: center;
+  font-weight: bold;
+}
+
+.animelistcard-body__desc,
+.animesearchcard-body__desc {
+  font-size: 1.5rem;
+  font-weight: normal;
+  min-height: 50px;
+  padding-bottom: $xs-size;
+  padding-left: $xs-size;
+  padding-right: $xs-size;
+  flex-grow: 1;
+}
+
+.animelistcard-body__footer,
+.animelistcard-body__footer {
+  background-color: #007bff37;
+  padding: $xs-size;
+}
+
+.animelistcard-body__footer button {
+  font-size: 15px;
+  margin: auto auto;
+}
+
+.animelistcard-body__footer .row {
+  width: 100%;
+  padding-top: 5px;
+}
+
+.animelistcard-body__footer-center,
+.animesearchcard-body__footer-center {
+  margin: auto auto;
+}
+
+.userslistcard {
+  width: 200px;
+  background-color: black;
+  color: white;
+  border: 2px solid grey;
+  margin-right: $xs-size;
+  margin-left: $xs-size;
+  margin-top: $m-size;
+}
+
+.userslistcard--image {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.userslistcard--body__header {
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.userslistcard--body__text {
+  text-align: left;
+  font-weight: normal;
+}
+
+.userslistcard--body__link {
+  font-size: 14px;
+}
+
+.animesearchcard {
+  background-color: black;
+  border: 1px solid grey;
+  width: 270px;
+  margin-bottom: 3.2rem;
+  margin-bottom: 0;
+  flex-grow: 1;
+  min-height: 100%;
+  cursor: pointer;
+}
+
+.animesearchcard img {
+  width: 100%;
+  height: 150px;
+  object-position: center;
+}
+
+.animesearchcard--radio {
+  padding: 0;
+  min-height: 100%;
+  position: relative;
+  margin: 20px 20px;
+}
+.animesearchcard--radio.active {
+  transform: scale(1.1);
+  z-index: 2;
+}
+
+.form-check-label {
+  height: 100%;
+}

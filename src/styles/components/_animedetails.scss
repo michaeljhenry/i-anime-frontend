@@ -1,0 +1,44 @@
+.animedetailsrowbody {
+  margin: auto auto;
+  justify-content: center;
+}
+
+.animedetailsrowbody--synopsis {
+  width: 100%;
+  font-weight: normal;
+  font-size: 16px;
+}
+
+.animedetailsrowbody--image {
+  width: 300px;
+  height: 350px;
+}
+
+.animelistdetailsrowbody--col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.animedetailsrowbody--p {
+  align-self: flex-start;
+  font-weight: normal;
+}
+
+.animedetailsrow h1 {
+  margin-right: $m-size;
+  font-weight: bold;
+  letter-spacing: 1px;
+  font-size: 34px;
+}
+.animedetailsrow h4 {
+  display: flex;
+  align-items: center;
+}
+
+#animelistdetails--trailerheading {
+  font-weight: bold;
+  letter-spacing: 2px;
+  font-size: 30px;
+  padding: 10px;
+}
