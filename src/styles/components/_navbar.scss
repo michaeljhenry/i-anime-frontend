@@ -46,7 +46,6 @@
 #logout {
   display: flex;
   padding: 5px;
-  margin-right: 10px;
   cursor: pointer;
   background-color: black;
 }
@@ -58,10 +57,9 @@
   border: 0;
 }
 
-.nav-link {
+.navbar-nav .nav-link {
   color: white;
-  margin-left: 10px;
-  padding: 5px;
+  padding-left: 10px;
 }
 
 .nav-link:hover {
@@ -69,7 +67,7 @@
 }
 
 .navbar-nav {
-  width: 95%;
+  width: 100%;
 }
 
 .authoptions {
@@ -81,5 +79,13 @@
   .authoptions {
     flex-direction: row;
     margin-left: auto;
+  }
+  .navbar-nav {
+    width: 95%;
+  }
+  .nav-link {
+    color: white;
+    margin-left: 10px;
+    padding: 5px;
   }
 }
