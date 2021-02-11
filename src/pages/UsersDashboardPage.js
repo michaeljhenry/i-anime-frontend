@@ -37,7 +37,7 @@ const UsersDashboardPage = () => {
   return (
     <Container className="usersdashboard--container">
       {isLoading && <LoaderSpinner />}
-      {error && <Message>{error.message}</Message>}
+      {error && <Message variant="danger">{error.message}</Message>}
       {activeUsers.length > 0 ? (
         activeUsers.map((user) => (
           <NewUserCard

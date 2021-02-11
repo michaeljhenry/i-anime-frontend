@@ -35,7 +35,7 @@ const NewAnimeSearch = (props) => {
     <React.Fragment>
       {isLoading && <LoaderSpinner />}
       <Form onSubmit={getValue} className="animesearchform">
-        {error && <Message>{error.message}</Message>}
+        {error && <Message variant="danger">{error.message}</Message>}
         <Form.Group className="animesearchform--row">
           <Form.Control
             onChange={(e) => setAnime(e.target.value)}

@@ -42,7 +42,7 @@ const NewAnimeCard = (props) => {
   };
   return (
     <>
-      {error && <Message>{error.message}</Message>}
+      {error && <Message variant="danger">{error.message}</Message>}
       {isLoading && <LoaderSpinner />}
       <Card className="animelistcard">
         <Card.Img variant="top" src={`${props.image_url}`} />
