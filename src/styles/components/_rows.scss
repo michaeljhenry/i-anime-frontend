@@ -30,42 +30,31 @@
   flex-grow: 1;
 }
 
-.userrow-btn:active,
-.userrow-btn:focus,
-.btn-primary:not(:disabled):not(.disabled):active,
-.btn-primary:not(:disabled):not(.disabled):active:focus,
-.btn-primary:not(:disabled):not(.disabled).active:focus {
-  border: 0;
-  box-shadow: none;
-  border-bottom: 3px solid #005cbf;
+.userrow-btn.btn-primary:hover {
+  background-color: #660000;
 }
 
-.userrow-btn:active,
-.btn-primary:not(:disabled):not(.disabled):active,
-.btn-primary:not(:disabled):not(.disabled).active {
+.userrow-btn.btn-primary:not(:disabled):not(.disabled):active,
+.userrow-btn.btn-primary:not(:disabled):not(.disabled):active:focus,
+.userrow-btn.btn-primary:not(:disabled):not(.disabled).active:focus {
+  background-color: #660000;
+  border-color: #660000;
+  box-shadow: none;
+}
+
+.userrow-btn.btn-primary:focus {
   background-color: black;
-}
-
-.userrow-btn:focus {
-  background-color: black !important;
-  border: 0;
-  border-bottom: 3px solid #005cbf;
-  box-shadow: none;
-}
-
-.userrow-btn:hover {
-  background-color: #007bff37;
-}
-
-.userrow-btn.active {
   border: 0;
   box-shadow: none;
-  border-bottom: 3px solid #005cbf;
+}
+
+.userrow-btn.active.btn-primary:not(:disabled):not(.disabled).active {
+  border: 0;
+  box-shadow: none;
+  //border-bottom: 3px solid #005cbf;
+  border-bottom: 5px solid #660000;
   background-color: black;
-}
-
-.userrow-btn.active:hover {
-  background-color: #007bff37 !important;
+  color: #b80404;
 }
 
 .animelistrow {

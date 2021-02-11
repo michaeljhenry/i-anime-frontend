@@ -21,22 +21,22 @@ const NewNav = () => {
               Home
             </Nav.Link>
           </LinkContainer>
-          {auth.isLoggedIn && (
-            <React.Fragment>
-              <LinkContainer to="/add">
-                <Nav.Link eventKey="2">Add</Nav.Link>
-              </LinkContainer>
-              <LinkContainer to={`/${auth.userId}/animes`}>
-                <Nav.Link eventKey="3">My Profile</Nav.Link>
-              </LinkContainer>
-            </React.Fragment>
-          )}
           <LinkContainer to="/usersdash">
             <Nav.Link eventKey="4">Users</Nav.Link>
           </LinkContainer>
           <LinkContainer to="/animedash">
             <Nav.Link eventKey="5">Animes</Nav.Link>
           </LinkContainer>
+          {auth.isLoggedIn && (
+            <React.Fragment>
+              <LinkContainer to="/add">
+                <Nav.Link eventKey="2">Add</Nav.Link>
+              </LinkContainer>
+              <LinkContainer to={`/user/${auth.userId}`}>
+                <Nav.Link eventKey="3">My Profile</Nav.Link>
+              </LinkContainer>
+            </React.Fragment>
+          )}
           <div className="authoptions">
             {!auth.isLoggedIn && (
               <React.Fragment>

@@ -18,7 +18,7 @@ const NewUserCard = (props) => {
         <Card.Text className="userslistcard--body__text">
           Animes Listed: {props.animes.length}
         </Card.Text>
-        <Link className="userslistcard--body__link" to={`/${props.id}/animes`}>
+        <Link className="userslistcard--body__link" to={`/user/${props.id}`}>
           See Profile
         </Link>
       </Card.Body>

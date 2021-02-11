@@ -56,15 +56,29 @@
   margin: 10px auto;
 }
 
+.dashboard-button:active {
+  background-color: #660000;
+}
+
 .dashboard-button:focus {
-  background-color: black;
+  background-color: transparent;
   border: 1px solid white;
   box-shadow: none;
 }
 
+.dashboard-button:hover {
+  background-color: #660000;
+  border: 1px solid black;
+}
+
+.dashboard-button.btn-primary:not(:disabled):not(.disabled):active {
+  background-color: #660000;
+}
+
 .dashboard-button.btn-primary:not(:disabled):not(.disabled):active,
 .dashboard-button.btn-primary:not(:disabled):not(.disabled):active:focus {
-  border: 1px solid white;
+  border: 1px solid black;
+  // background-color: #3e0101d9;
 }
 /*
 #dashboard-users {
