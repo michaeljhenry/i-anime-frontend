@@ -39,6 +39,8 @@ const NewAnimeForm = (props) => {
   const [description, setDescription] = useState("");
   const [charactersRemaining, setCharactersRemaining] = useState(200);
   const animeSearchRow = useRef(null);
+  const form = useRef(null);
+
   const size = useWindowSize();
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
   const showLessHandler = (e) => {
@@ -90,6 +92,7 @@ const NewAnimeForm = (props) => {
   useEffect(() => {
     if (chosenAnimeIndex !== "") {
       setChosenAnime(props.animeList[chosenAnimeIndex].title);
+      form.current.scrollIntoView({ behavior: "smooth" });
     }
   }, [chosenAnimeIndex, props.animeList]);
 
@@ -147,7 +150,7 @@ const NewAnimeForm = (props) => {
               ))}
             </Row>
 
-            <Row className="separator-row">
+            <Row className="separator-row" ref={form}>
               <h1>* Select a type</h1>
               <hr className="separator"></hr>
             </Row>
