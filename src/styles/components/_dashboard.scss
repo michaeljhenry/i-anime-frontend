@@ -55,6 +55,17 @@
   align-self: flex-start;
   margin: 10px auto;
 }
+
+.dashboard-button:focus {
+  background-color: black;
+  border: 1px solid white;
+  box-shadow: none;
+}
+
+.dashboard-button.btn-primary:not(:disabled):not(.disabled):active,
+.dashboard-button.btn-primary:not(:disabled):not(.disabled):active:focus {
+  border: 1px solid white;
+}
 /*
 #dashboard-users {
   top: 45%;

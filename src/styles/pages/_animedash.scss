@@ -49,6 +49,7 @@
   -webkit-box-orient: vertical;
   max-height: 500px; /* I needed this to get it to work */
   overflow: hidden;
+  margin-bottom: 20px;
 }
 
 .separator {
@@ -186,6 +187,17 @@
   position: absolute;
   top: 45%;
   left: 15%;
+}
+
+.animecard--btn__main {
+  border-radius: 2em;
+  background-color: transparent;
+  font-size: 16px;
+  font-weight: bold;
+  border: 1px solid white;
+  margin: auto auto;
+  letter-spacing: 1px;
+  position: relative;
 }
 
 .anime-card__btn:active,

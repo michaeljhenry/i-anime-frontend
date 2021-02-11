@@ -1,10 +1,8 @@
 import React, { useState, useEffect, useContext, useRef } from "react";
 import AuthContext from "../context/auth-context";
 import { useHttpClient } from "../hooks/http-hook";
-import LoadingSpinner from "../components/Loader";
-import "../pages/Anime.css";
-import { useHistory } from "react-router-dom";
-import ErrorModal from "./ErrorModal";
+import Message from "../components/Message";
+import LoaderSpinner from "../components/Loader";
 import { Form, Button, Row, InputGroup } from "react-bootstrap";
 import AnimeSearchCard from "./AnimeSearchCard";
 import useWindowSize from "../hooks/useWindowSize";
@@ -43,7 +41,6 @@ const NewAnimeForm = (props) => {
   const animeSearchRow = useRef(null);
   const size = useWindowSize();
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
-
   const showLessHandler = (e) => {
     animeSearchRow.current.scrollLeft =
       animeSearchRow.current.scrollLeft - size.width * 0.85 + 40;
@@ -62,7 +59,7 @@ const NewAnimeForm = (props) => {
 
   const onSubmitHandler = async (e) => {
     e.preventDefault();
-    console.log(type, score, chosenAnime, description);
+    clearError();
 
     const data = {
       title: chosenAnime,
@@ -91,13 +88,20 @@ const NewAnimeForm = (props) => {
   };
 
   useEffect(() => {
-    //console.log(chosenAnimeIndex);
     if (chosenAnimeIndex !== "") {
       setChosenAnime(props.animeList[chosenAnimeIndex].title);
     }
   }, [chosenAnimeIndex, props.animeList]);
+
+  useEffect(() => {
+    setChosenAnimeIndex("");
+    setChosenAnime("");
+  }, [props.animeList]);
+
   return (
     <>
+      {isLoading && <LoaderSpinner />}
+      {error && <Message>{error.message}</Message>}
       {props.animeList.length > 0 && (
         <Row className="separator-row">
           <h1>* Choose an anime</h1>
@@ -253,14 +257,18 @@ const NewAnimeForm = (props) => {
         </Form.Group>
         {type !== "toWatch" ? (
           <Button
-            disabled={!(chosenAnimeIndex && score)}
+            disabled={!type || !chosenAnime || !score}
             type="submit"
             className="animeform--btn"
           >
             Add Anime
           </Button>
         ) : (
-          <Button type="submit" className="animeform--btn">
+          <Button
+            disabled={!type || !chosenAnime}
+            type="submit"
+            className="animeform--btn"
+          >
             Add Anime
           </Button>
         )}

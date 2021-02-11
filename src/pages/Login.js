@@ -1,14 +1,10 @@
 import React, { useContext, useState, useReducer, useRef } from "react";
 import { Container, Form, Button, Row } from "react-bootstrap";
 import validate from "../reducers/validate";
-import { withRouter } from "react-router-dom";
 import AuthContext from "../context/auth-context";
-import ImageUpload from "../components/ImageUpload";
-import LoginBox from "../components/LoginBox";
 import { useHttpClient } from "../hooks/http-hook";
 import LoaderSpinner from "../components/Loader";
-import ErrorModal from "../components/ErrorModal";
-import FormContainer from "../components/FormContainer";
+import Message from "../components/Message";
 
 const initialState = {
   isNameValid: false,
@@ -17,36 +13,23 @@ const initialState = {
 };
 
 const Login = (props) => {
-  const { isLoading, error, sendRequest, clearError } = useHttpClient();
+  const { isLoading, error, sendRequest } = useHttpClient();
 
   const auth = useContext(AuthContext);
-  const [charactersRemaining, setCharactersRemaining] = useState(20);
-  const [name, setName] = useState("");
+
   const [email, setEmail] = useState("");
-  const [image, setImage] = useState("");
   const [password, setPassword] = useState("");
-  //const [submitAttempt, setSubmitAttempt] = useState(false);
-  const [authMode, setAuthMode] = useState(true);
   const [checkbox, setCheckbox] = useState(false);
-  const signupPassVisible = useRef();
   const loginPassVisible = useRef();
 
-  const [isNameActive, setIsNameActive] = useState(true);
   const [isEmailActive, setIsEmailActive] = useState(true);
   const [isPasswordActive, setIsPasswordActive] = useState(true);
 
   const [state, dispatch] = useReducer(validate, initialState);
 
-  const onImageUpload = (data, fileIsValid) => {
-    if (fileIsValid) {
-      const imagePicked = [data];
-      setImage(imagePicked[0]);
-    }
-  };
   const authHandler = async (e) => {
     e.persist();
     e.preventDefault();
-    //console.log('hi');
     let userData;
     userData = {
       email,
@@ -59,22 +42,10 @@ const Login = (props) => {
         JSON.stringify(userData),
         { "Content-Type": "application/json" }
       );
-      // await fetch(`http://localhost:5000/api/users/login`, {
-      //     method: 'POST',
-      //     body: JSON.stringify(userData),
-      //     headers: {'Content-Type': 'application/json'}
-      // });
-      ///const responseData = await response.json();
       auth.login(responseData.id, responseData.token);
-      props.history.push("/animedash");
-    } catch (err) {}
-  };
-  const nameChangeHandler = (e) => {
-    e.preventDefault();
-    if (e.target.value.length <= 20) {
-      setName(e.target.value);
-      setCharactersRemaining(20 - e.target.value.length);
-      dispatch({ type: "CHANGE_NAME", val: e.target.value });
+      props.history.push("/");
+    } catch (err) {
+      console.log(err);
     }
   };
   const emailChangeHandler = (e) => {
@@ -87,9 +58,7 @@ const Login = (props) => {
     setPassword(e.target.value);
     dispatch({ type: "CHANGE_PASSWORD", val: e.target.value });
   };
-  const onNameBlurHandler = () => {
-    setIsNameActive(false);
-  };
+
   const onEmailBlurHandler = () => {
     if (email.length > 0) {
       setIsEmailActive(false);
@@ -100,7 +69,7 @@ const Login = (props) => {
       setIsPasswordActive(false);
     }
   };
-  const onLoginHandler = () => {
+  const onSignupHandler = () => {
     props.history.push("/register");
   };
 
@@ -117,8 +86,11 @@ const Login = (props) => {
   };
   return (
     <Container className="form-container">
+      {isLoading && <LoaderSpinner />}
+
       <Row className="form-row">
         <h1 className="auth-page__title">Sign In</h1>
+        {error && <Message variant="danger">{error.message}</Message>}
         <Form onSubmit={authHandler} className="login-form">
           <Form.Group controlId="formBasicEmail">
             <Form.Label>Email address</Form.Label>
@@ -128,7 +100,7 @@ const Login = (props) => {
               onChange={emailChangeHandler}
               onBlur={onEmailBlurHandler}
               value={email}
-              autocomplete="off"
+              autoComplete="off"
             />
             {isEmailActive ? (
               ""
@@ -149,7 +121,7 @@ const Login = (props) => {
               onBlur={onPasswordBlurHandler}
               ref={loginPassVisible}
               value={password}
-              autocomplete="off"
+              autoComplete="off"
             />
             {isPasswordActive ? (
               ""
@@ -181,7 +153,7 @@ const Login = (props) => {
             >
               <h3>Sign In</h3>
             </Button>
-            <Button onClick={onLoginHandler} variant="secondary" type="button">
+            <Button onClick={onSignupHandler} variant="secondary" type="button">
               <h3>Register</h3>
             </Button>
           </Row>
