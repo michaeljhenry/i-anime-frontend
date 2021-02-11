@@ -122,14 +122,14 @@ const NewAnimeForm = (props) => {
               className="scroll-btn"
               onClick={showLessHandler}
             >
-              <h1 id="airing">{`<`}</h1>
+              {`<`}
             </Button>
             <Button
               variant="dark"
               className="scroll-btn"
               onClick={showMoreHandler}
             >
-              <h1 id="airing">{`>`}</h1>
+              {`>`}
             </Button>
           </Row>
           <Row className="animesearchcards--row" ref={animeSearchRow}>

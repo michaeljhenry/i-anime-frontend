@@ -30,25 +30,28 @@ const AnimeDashboardPage = () => {
   const { isLoading, error, sendRequest } = useHttpClient();
 
   const showLessHandler = (e) => {
+    console.log(e.target);
+
     if (e.target.id === "airing") {
       dashrowAiring.current.scrollLeft =
         dashrowAiring.current.scrollLeft - size.width + 200;
     } else if (e.target.id === "upcoming") {
       dashrowUpcoming.current.scrollLeft =
         dashrowUpcoming.current.scrollLeft - size.width + 200;
-    } else {
+    } else if (e.target.id === "today") {
       dashrowToday.current.scrollLeft =
         dashrowToday.current.scrollLeft - size.width + 200;
     }
   };
   const showMoreHandler = (e) => {
+    console.log(e.target);
     if (e.target.id === "airing") {
       dashrowAiring.current.scrollLeft =
         dashrowAiring.current.scrollLeft + size.width - 200;
     } else if (e.target.id === "upcoming") {
       dashrowUpcoming.current.scrollLeft =
         dashrowUpcoming.current.scrollLeft + size.width - 200;
-    } else {
+    } else if (e.target.id === "today") {
       dashrowToday.current.scrollLeft =
         dashrowToday.current.scrollLeft + size.width - 200;
     }
@@ -99,15 +102,17 @@ const AnimeDashboardPage = () => {
               variant="dark"
               className="scroll-btn"
               onClick={showLessHandler}
+              id="airing"
             >
-              <h1 id="airing">{`<`}</h1>
+              {`<`}
             </Button>
             <Button
               variant="dark"
               className="scroll-btn"
               onClick={showMoreHandler}
+              id="airing"
             >
-              <h1 id="airing">{`>`}</h1>
+              {`>`}
             </Button>
           </Row>
           <Row className="dash-row" ref={dashrowAiring}>
@@ -145,15 +150,17 @@ const AnimeDashboardPage = () => {
               variant="dark"
               className="scroll-btn"
               onClick={showLessHandler}
+              id="upcoming"
             >
-              <h1 id="upcoming">{`<`}</h1>
+              {`<`}
             </Button>
             <Button
               variant="dark"
               className="scroll-btn"
               onClick={showMoreHandler}
+              id="upcoming"
             >
-              <h1 id="upcoming">{`>`}</h1>
+              {`>`}
             </Button>
           </Row>
           <Row className="dash-row" ref={dashrowUpcoming}>
@@ -185,21 +192,23 @@ const AnimeDashboardPage = () => {
               ))}
           </Row>
           <Row className="separator-row">
-            <h1 id="today">Airing Today</h1>
+            <h1>Airing Today</h1>
             <hr className="separator"></hr>
             <Button
               variant="dark"
               className="scroll-btn"
               onClick={showLessHandler}
+              id="today"
             >
-              <h1>{`<`}</h1>
+              {`<`}
             </Button>
             <Button
               variant="dark"
               className="scroll-btn"
               onClick={showMoreHandler}
+              id="today"
             >
-              <h1>{`>`}</h1>
+              {`>`}
             </Button>
           </Row>
           <Row className="dash-row" ref={dashrowToday}>
