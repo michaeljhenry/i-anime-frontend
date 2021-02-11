@@ -78,7 +78,7 @@ const NewUserPage = () => {
       } catch (err) {}
     };
     getUser();
-  }, []);
+  }, [userId, sendRequest]);
 
   return (
     <Container id="userpage-container">

@@ -14,7 +14,7 @@ html {
 body {
   //background: url("/images/anime-crossover-background.png");
   background-color: black;
-  height: calc(100vh - 60px);
+  min-height: calc(100vh - 60px);
   width: 100vw;
   color: $dark-grey;
   font-family: Roboto, sans-serif;
