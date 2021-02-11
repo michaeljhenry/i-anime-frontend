@@ -10,7 +10,6 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./styles/styles.scss";
 // import AddToWatchPage from './pages/AddToWatchPage';
 import AuthContext from "./context/auth-context";
-import DashboardPage from "./pages/DashboardPage";
 import NewDashboardPage from "./pages/NewDashboard";
 import LoadingSpinner from "./components/Loader";
 // import EditAnimePage from './pages/EditAnimePage';
@@ -18,24 +17,20 @@ import LoadingSpinner from "./components/Loader";
 // import UserPage from './pages/UserPage';
 // import Auth from './pages/Auth';
 import NameContext from "./context/name-context";
-import MainNav from "./components/MainNav";
-import Login from "./pages/Login";
-import Register from "./pages/Register";
-import NewUserPage from "./pages/NewUserPage";
 import NewNav from "./components/NewNav";
-import UsersDashboardPage from "./pages/UsersDashboardPage";
-import NewAddAnimePage from "./pages/NewAddAnimePage";
-import AnimeDetailsPage from "./pages/AnimeDetailsPage";
 
 let logoutTimer;
 
-const Auth = React.lazy(() => import("./pages/Auth")); // code splitting. don't upload this code until required
-const AddAnimePage = React.lazy(() => import("./pages/AddAnimePage"));
-const EditAnimePage = React.lazy(() => import("./pages/EditAnimePage"));
-const UserAnimes = React.lazy(() => import("./pages/UserAnimes"));
-const UserPage = React.lazy(() => import("./pages/UserPage"));
+const NewAddAnimePage = React.lazy(() => import("./pages/NewAddAnimePage"));
+const NewUserPage = React.lazy(() => import("./pages/NewUserPage"));
+const Login = React.lazy(() => import("./pages/Login"));
+const Register = React.lazy(() => import("./pages/Register"));
+const AnimeDetailsPage = React.lazy(() => import("./pages/AnimeDetailsPage"));
 const AnimeDashboardPage = React.lazy(() =>
   import("./pages/AnimeDashboardPage")
+);
+const UsersDashboardPage = React.lazy(() =>
+  import("./pages/UsersDashboardPage")
 );
 
 const App = () => {
@@ -104,37 +99,18 @@ const App = () => {
     routes = (
       <Switch>
         <Route exact path="/">
-          <DashboardPage />
+          <NewDashboardPage />
         </Route>
         <Route component={AnimeDashboardPage} exact path="/animedash"></Route>
-        <Route component={NewDashboardPage} exact path="/newdash"></Route>
         <Route component={UsersDashboardPage} exact path="/usersdash"></Route>
         <Route component={Login} exact path="/login"></Route>
         <Route component={Register} exact path="/register"></Route>
         <Route component={NewAddAnimePage} path="/add"></Route>
-        <Route component={AnimeDetailsPage} exact path="/animedetails"></Route>
-
-        <Route exact path="/anime/add">
-          <AddAnimePage />
-        </Route>
-        <Route path="/anime/edit/:aid">
-          <EditAnimePage />
-        </Route>
-        <Route exact path="/:id/animes">
-          <NewUserPage />
-        </Route>
-        <Route path="/:id/animes/watched">
-          <UserAnimes />
-        </Route>
-        <Route path="/:id/animes/toWatch">
-          <UserAnimes />
-        </Route>
-        <Route path="/:id/animes/watching">
-          <UserAnimes />
-        </Route>
-        <Route path="/:id/animes/dropped">
-          <UserAnimes />
-        </Route>
+        <Route
+          component={AnimeDetailsPage}
+          exact
+          path="/animedetails/:id"
+        ></Route>
         <Redirect to="/" />
       </Switch>
     );
@@ -142,37 +118,19 @@ const App = () => {
     routes = (
       <Switch>
         <Route exact path="/">
-          <DashboardPage />
+          <NewDashboardPage />
         </Route>
         <Route component={AnimeDashboardPage} exact path="/animedash"></Route>
-        <Route component={NewDashboardPage} exact path="/newdash"></Route>
         <Route component={UsersDashboardPage} exact path="/usersdash"></Route>
         <Route component={Login} exact path="/login"></Route>
         <Route component={Register} exact path="/register"></Route>
-        <Route component={AnimeDetailsPage} exact path="/animedetails"></Route>
-        <Route path="/auth">
-          <Auth />
-        </Route>
+        <Route
+          component={AnimeDetailsPage}
+          exact
+          path="/animedetails/:id"
+        ></Route>
         <Route exact path="/:id/animes">
           <NewUserPage />
-        </Route>
-        <Route path="/:id/animes/watched">
-          <UserAnimes />
-        </Route>
-        <Route path="/:id/animes/toWatch">
-          <UserAnimes />
-        </Route>
-        <Route path="/:id/animes/watched">
-          <UserAnimes />
-        </Route>
-        <Route path="/:id/animes/watching">
-          <UserAnimes />
-        </Route>
-        <Route path="/:id/animes/dropped">
-          <UserAnimes />
-        </Route>
-        <Route path="/:id/animes/toWatch">
-          <UserAnimes />
         </Route>
         <Redirect to="/" />
       </Switch>

@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { Link, useParams } from "react-router-dom";
-import { Container, Image, Row, Button, Card, Col } from "react-bootstrap";
+import { useParams } from "react-router-dom";
+import { Container, Image, Row, Button } from "react-bootstrap";
 import NewAnimeCard from "../components/NewAnimeCard";
 import { useHttpClient } from "../hooks/http-hook";
+import Message from "../components/Message";
+import LoaderSpinner from "../components/Loader";
 
 const NewUserPage = () => {
   const userId = useParams().id;
@@ -12,8 +14,9 @@ const NewUserPage = () => {
   const [animeDroppedList, setAnimeDroppedList] = useState([]);
   const [type, setType] = useState("watched");
   const [animesCopy, setAnimesCopy] = useState([]);
-  const [sortType, setSortType] = useState("default");
-  const { isLoading, error, sendRequest, clearError } = useHttpClient();
+  const [userData, setUserData] = useState([]);
+  // const [sortType, setSortType] = useState("default");
+  const { isLoading, error, sendRequest } = useHttpClient();
 
   const showWatchingHandler = () => {
     setType("watching");
@@ -42,7 +45,6 @@ const NewUserPage = () => {
         const animeList = await sendRequest(
           process.env.REACT_APP_BACKEND_URL + `/animes/user/${userId}`
         );
-        console.log(animeList);
         // await fetch(`http://localhost:5000/api/animes/user/${id}`, {method: 'GET', body: null, methods: {}})
         // const animeList = await animeResponse.json();
         animeList.animes.forEach((anime) => {
@@ -65,15 +67,30 @@ const NewUserPage = () => {
     };
     getAnimes();
   }, [userId, sendRequest]);
+
   useEffect(() => {
-    console.log(animeWatchedList);
-  }, [animeWatchedList]);
+    const getUser = async () => {
+      try {
+        const userInfo = await sendRequest(
+          process.env.REACT_APP_BACKEND_URL + `/users/user/${userId}`
+        );
+        setUserData(userInfo);
+      } catch (err) {}
+    };
+    getUser();
+  }, []);
+
   return (
     <Container id="userpage-container">
+      {error && <Message variant="danger">{error.message}</Message>}
+      {isLoading && <LoaderSpinner />}
       <Row className="userrow">
-        <Image src="/images/shikamaru-background.png"></Image>
+        <Image
+          src={`${process.env.REACT_APP_IMAGE_URL}/${userData.image}`}
+          alt="profile"
+        ></Image>
         <Row>
-          <h1>Michael Henry</h1>
+          <h1>{userData.name}</h1>
         </Row>
         <Row>
           <h2>Total Anime: {animesCopy.length}</h2>
@@ -111,55 +128,73 @@ const NewUserPage = () => {
       </Row>
       <Row className="animelistrow">
         {type === "watched" &&
-          animeWatchedList.map((anime) => (
-            <NewAnimeCard
-              key={anime.title}
-              score={anime.score}
-              description={anime.description}
-              aid={anime._id}
-              title={anime.title}
-              image_url={anime.image_url}
-              type={anime.type}
-              creator={anime.creator}
-            />
+          (animeWatchedList.length > 0 ? (
+            animeWatchedList.map((anime) => (
+              <NewAnimeCard
+                key={anime.title}
+                score={anime.score}
+                description={anime.description}
+                synopsis={anime.synopsis}
+                aid={anime._id}
+                title={anime.title}
+                image_url={anime.image_url}
+                type={anime.type}
+                creator={anime.creator}
+              />
+            ))
+          ) : (
+            <Message>No Anime In This List</Message>
           ))}
         {type === "watching" &&
-          animeWatchingList.map((anime) => (
-            <NewAnimeCard
-              key={anime.title}
-              score={anime.score}
-              description={anime.description}
-              aid={anime._id}
-              title={anime.title}
-              image_url={anime.image_url}
-              type={anime.type}
-              creator={anime.creator}
-            />
+          (animeWatchingList.length > 0 ? (
+            animeWatchingList.map((anime) => (
+              <NewAnimeCard
+                key={anime.title}
+                score={anime.score}
+                description={anime.description}
+                aid={anime._id}
+                title={anime.title}
+                image_url={anime.image_url}
+                type={anime.type}
+                creator={anime.creator}
+              />
+            ))
+          ) : (
+            <Message>No Anime In This List</Message>
           ))}
         {type === "toWatch" &&
-          animeToWatchList.map((anime) => (
-            <NewAnimeCard
-              key={anime.title}
-              description={anime.description}
-              aid={anime._id}
-              title={anime.title}
-              image_url={anime.image_url}
-              type={anime.type}
-              creator={anime.creator}
-            />
+          (animeToWatchList.length > 0 ? (
+            animeToWatchList.map((anime) => (
+              <NewAnimeCard
+                key={anime.title}
+                score={anime.score}
+                description={anime.description}
+                aid={anime._id}
+                title={anime.title}
+                image_url={anime.image_url}
+                type={anime.type}
+                creator={anime.creator}
+              />
+            ))
+          ) : (
+            <Message>No Anime In This List</Message>
           ))}
         {type === "dropped" &&
-          animeDroppedList.map((anime) => (
-            <NewAnimeCard
-              key={anime.title}
-              score={anime.score}
-              description={anime.description}
-              aid={anime._id}
-              title={anime.title}
-              image_url={anime.image_url}
-              type={anime.type}
-              creator={anime.creator}
-            />
+          (animeDroppedList.length > 0 ? (
+            animeDroppedList.map((anime) => (
+              <NewAnimeCard
+                key={anime.title}
+                score={anime.score}
+                description={anime.description}
+                aid={anime._id}
+                title={anime.title}
+                image_url={anime.image_url}
+                type={anime.type}
+                creator={anime.creator}
+              />
+            ))
+          ) : (
+            <Message>No Anime In This List</Message>
           ))}
       </Row>
     </Container>

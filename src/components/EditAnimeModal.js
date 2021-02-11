@@ -1,17 +1,10 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useContext } from "react";
 import AuthContext from "../context/auth-context";
 import { useHttpClient } from "../hooks/http-hook";
+import Message from "./Message";
+import LoaderSpinner from "./Loader";
 
-import {
-  Modal,
-  Button,
-  Form,
-  Image,
-  Row,
-  Dropdown,
-  InputGroup,
-  FormControl,
-} from "react-bootstrap";
+import { Modal, Button, Form, Row, InputGroup } from "react-bootstrap";
 
 const EditAnimeModal = (props) => {
   const auth = useContext(AuthContext);
@@ -46,7 +39,7 @@ const EditAnimeModal = (props) => {
     200 - props.description.length
   );
 
-  const { isLoading, error, sendRequest, clearError } = useHttpClient();
+  const { isLoading, error, sendRequest } = useHttpClient();
 
   const textareaChangeHandler = (e) => {
     console.log(e.target.value);
@@ -58,168 +51,200 @@ const EditAnimeModal = (props) => {
 
   const onSubmitHandler = async (e) => {
     e.preventDefault();
-    const newAnime = {
-      title: props.title,
-      description: description,
-      creator: props.creator,
-      type: newType, //animeInfo.type,
-      score: newType === "toWatch" ? "" : score,
-    };
-    try {
-      await sendRequest(
-        process.env.REACT_APP_BACKEND_URL + `/animes/patch/${props.aid}`,
-        "PATCH",
-        JSON.stringify(newAnime),
-        {
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + auth.token,
-        }
-      );
-      props.onCloseHandler();
-      window.parent.location = window.parent.location.href;
-    } catch (err) {}
-    // await fetch(`http://localhost:5000/api/animes/patch/${aid}`,
-    // {
-    //     method: 'PATCH',
-    //     body: JSON.stringify(newAnime),
-    //     headers: {
-    //         'Content-Type': 'application/json',
-    //         Authorization: 'Bearer ' + auth.token
-    //     }
-    // });
+    if (props.actionType === "edit") {
+      const newAnime = {
+        title: props.title,
+        description: description,
+        creator: props.creator,
+        type: newType, //animeInfo.type,
+        score: newType === "toWatch" ? "" : score,
+      };
+      try {
+        await sendRequest(
+          process.env.REACT_APP_BACKEND_URL + `/animes/patch/${props.aid}`,
+          "PATCH",
+          JSON.stringify(newAnime),
+          {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + auth.token,
+          }
+        );
+        props.onCloseHandler();
+        window.parent.location = window.parent.location.href; // page refresh
+      } catch (err) {}
+    } else {
+      const newAnime = {
+        title: props.title,
+        description: description,
+        synopsis: props.synopsis,
+        creator: auth.userId,
+        type: newType, //animeInfo.type,
+        score: newType === "toWatch" ? "" : score,
+        image_url: props.image_url,
+      };
+      try {
+        await sendRequest(
+          process.env.REACT_APP_BACKEND_URL + `/animes/add`,
+          "POST",
+          JSON.stringify(newAnime),
+          {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + auth.token,
+          }
+        );
+        props.onCloseHandler();
+      } catch (err) {}
+    }
   };
 
   return (
-    <Modal
-      className="editmodal"
-      show={props.show}
-      onHide={props.onCloseHandler}
-    >
-      <Modal.Header className="editmodal--header" closeButton>
-        <Modal.Title>
-          <h2>Edit Anime</h2>
-        </Modal.Title>
-      </Modal.Header>
-      <Form>
-        <Modal.Body className="editmodal--body">
-          <h3>{props.title}</h3>
-          <Row className="editmodal--row__vert">
-            <h4>* Select A Type</h4>
-            <Row className="editmodal--radiocontainer">
-              <Form.Check
-                className="editmodal--radios"
-                inline
-                name="type"
-                label="Watched"
-                type="radio"
-                id="watched"
-                value="watched"
-                checked={"watched" === newType}
-                onChange={(e) => setNewType(e.target.id)}
-              />
-            </Row>
-            <Row className="editmodal--radiocontainer">
-              <Form.Check
-                className="editmodal--radios"
-                inline
-                name="type"
-                label="To Watch"
-                type="radio"
-                id="toWatch"
-                value="toWatch"
-                checked={"toWatch" === newType}
-                onChange={(e) => {
-                  setScore("");
-                  setNewType(e.target.id);
-                }}
-              />
-            </Row>
-            <Row className="editmodal--radiocontainer">
-              <Form.Check
-                className="editmodal--radios"
-                inline
-                name="type"
-                label="Watching"
-                type="radio"
-                id="watching"
-                value="watching"
-                onChange={(e) => setNewType(e.target.id)}
-                checked={"watching" === newType}
-              />
-            </Row>
-            <Row className="editmodal--radiocontainer">
-              <Form.Check
-                className="editmodal--radios"
-                inline
-                name="type"
-                label="Dropped"
-                type="radio"
-                id="dropped"
-                value="dropped"
-                onChange={(e) => setNewType(e.target.id)}
-                checked={"dropped" === newType}
-              />
-            </Row>
-          </Row>
-          {!newType ||
-            (newType !== "toWatch" && (
-              <Form.Group>
-                <Row className="editmodal--row__vert">
-                  <h4>* Select a score</h4>
-                  <Row className="editmodal--row__horz">
-                    <InputGroup className="mb-3">
-                      {numbers.map((number) => (
-                        <Button
-                          onClick={() => setScore(number)}
-                          key={number}
-                          className={`editmodal--scorebtn${
-                            score === number ? "__active" : ""
-                          }`}
-                          variant="outline-secondary"
-                          type="button"
-                        >
-                          {number}
-                        </Button>
-                      ))}
-                    </InputGroup>
-                  </Row>
-                  <h4>Selected score: {score}</h4>
-                </Row>
-              </Form.Group>
-            ))}
-          <Form.Group controlId="exampleForm.ControlTextarea1">
+    <React.Fragment>
+      {isLoading && <LoaderSpinner />}
+      <Modal
+        className="editmodal"
+        show={props.show}
+        onHide={props.onCloseHandler}
+      >
+        <Modal.Header className="editmodal--header" closeButton>
+          <Modal.Title>
+            {props.actionType === "edit" ? (
+              <h2>Edit Anime</h2>
+            ) : (
+              <h2>Add Anime</h2>
+            )}
+          </Modal.Title>
+          {error && <Message>{error.message}</Message>}
+        </Modal.Header>
+        <Form onSubmit={onSubmitHandler}>
+          <Modal.Body className="editmodal--body">
+            <h3>{props.title}</h3>
             <Row className="editmodal--row__vert">
-              <h4>Express your thoughts</h4>
-              <Form.Control
-                as="textarea"
-                rows={3}
-                placeholder="Express your feelings about the anime or why you want to watch it"
-                onChange={textareaChangeHandler}
-                value={description}
-              />
-              <h4>Characters remaining: {charactersRemaining}</h4>
+              <h4>* Select A Type</h4>
+              <Row className="editmodal--radiocontainer">
+                <Form.Check
+                  className="editmodal--radios"
+                  inline
+                  name="type"
+                  label="Watched"
+                  type="radio"
+                  id="watched"
+                  value="watched"
+                  checked={"watched" === newType}
+                  onChange={(e) => setNewType(e.target.id)}
+                />
+              </Row>
+              <Row className="editmodal--radiocontainer">
+                <Form.Check
+                  className="editmodal--radios"
+                  inline
+                  name="type"
+                  label="To Watch"
+                  type="radio"
+                  id="toWatch"
+                  value="toWatch"
+                  checked={"toWatch" === newType}
+                  onChange={(e) => {
+                    setScore("");
+                    setNewType(e.target.id);
+                  }}
+                />
+              </Row>
+              <Row className="editmodal--radiocontainer">
+                <Form.Check
+                  className="editmodal--radios"
+                  inline
+                  name="type"
+                  label="Watching"
+                  type="radio"
+                  id="watching"
+                  value="watching"
+                  onChange={(e) => setNewType(e.target.id)}
+                  checked={"watching" === newType}
+                />
+              </Row>
+              <Row className="editmodal--radiocontainer">
+                <Form.Check
+                  className="editmodal--radios"
+                  inline
+                  name="type"
+                  label="Dropped"
+                  type="radio"
+                  id="dropped"
+                  value="dropped"
+                  onChange={(e) => setNewType(e.target.id)}
+                  checked={"dropped" === newType}
+                />
+              </Row>
             </Row>
-          </Form.Group>
-        </Modal.Body>
-        <Modal.Footer className="editmodal--footer">
-          <Button
-            type="button"
-            variant="secondary"
-            onClick={props.onCloseHandler}
-          >
-            Close
-          </Button>
-          <Button
-            type="submit"
-            variant="primary"
-            onClick={onSubmitHandler}
-            disabled={!newType || (newType !== "toWatch" && !score)}
-          >
-            Save Changes
-          </Button>
-        </Modal.Footer>
-      </Form>
-    </Modal>
+            {!newType ||
+              (newType !== "toWatch" && (
+                <Form.Group>
+                  <Row className="editmodal--row__vert">
+                    <h4>* Select a score</h4>
+                    <Row className="editmodal--row__horz">
+                      <InputGroup className="mb-3">
+                        {numbers.map((number) => (
+                          <Button
+                            onClick={() => setScore(number)}
+                            key={number}
+                            className={`editmodal--scorebtn${
+                              score === number ? "__active" : ""
+                            }`}
+                            variant="outline-secondary"
+                            type="button"
+                          >
+                            {number}
+                          </Button>
+                        ))}
+                      </InputGroup>
+                    </Row>
+                    <h4>Selected score: {score}</h4>
+                  </Row>
+                </Form.Group>
+              ))}
+            <Form.Group controlId="exampleForm.ControlTextarea1">
+              <Row className="editmodal--row__vert">
+                <h4>Express your thoughts</h4>
+                <Form.Control
+                  as="textarea"
+                  rows={3}
+                  placeholder="Express your feelings about the anime or why you want to watch it"
+                  onChange={textareaChangeHandler}
+                  value={description}
+                />
+                <h4>Characters remaining: {charactersRemaining}</h4>
+              </Row>
+            </Form.Group>
+          </Modal.Body>
+          <Modal.Footer className="editmodal--footer">
+            <Button
+              type="button"
+              variant="secondary"
+              onClick={props.onCloseHandler}
+            >
+              Close
+            </Button>
+            {props.actionType === "edit" ? (
+              <Button
+                type="submit"
+                variant="primary"
+                disabled={!newType || (newType !== "toWatch" && !score)}
+              >
+                Save Changes
+              </Button>
+            ) : (
+              <Button
+                type="submit"
+                variant="primary"
+                disabled={!newType || (newType !== "toWatch" && !score)}
+              >
+                Add Anime
+              </Button>
+            )}
+          </Modal.Footer>
+        </Form>
+      </Modal>
+    </React.Fragment>
   );
 };
 

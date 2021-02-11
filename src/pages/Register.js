@@ -1,14 +1,11 @@
 import React, { useContext, useState, useReducer, useRef } from "react";
 import { Container, Form, Button, Row } from "react-bootstrap";
 import validate from "../reducers/validate";
-import { withRouter } from "react-router-dom";
 import AuthContext from "../context/auth-context";
 import ImageUpload from "../components/ImageUpload";
-import LoginBox from "../components/LoginBox";
 import { useHttpClient } from "../hooks/http-hook";
 import LoaderSpinner from "../components/Loader";
-import ErrorModal from "../components/ErrorModal";
-import FormContainer from "../components/FormContainer";
+import Message from "../components/Message";
 
 const initialState = {
   isNameValid: false,
@@ -17,19 +14,16 @@ const initialState = {
 };
 
 const Register = (props) => {
-  const { isLoading, error, sendRequest, clearError } = useHttpClient();
+  const { isLoading, error, sendRequest } = useHttpClient();
 
   const auth = useContext(AuthContext);
-  const [charactersRemaining, setCharactersRemaining] = useState(20);
+  const [charactersRemaining, setCharactersRemaining] = useState(30);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [image, setImage] = useState("");
   const [password, setPassword] = useState("");
-  //const [submitAttempt, setSubmitAttempt] = useState(false);
-  const [authMode, setAuthMode] = useState(true);
   const [checkbox, setCheckbox] = useState(false);
   const signupPassVisible = useRef();
-  const loginPassVisible = useRef();
 
   const [isNameActive, setIsNameActive] = useState(true);
   const [isEmailActive, setIsEmailActive] = useState(true);
@@ -44,39 +38,31 @@ const Register = (props) => {
     }
   };
   const authHandler = async (e) => {
-    e.persist();
     e.preventDefault();
-    //console.log('hi');
-    let userData;
+    console.log("hi");
     const userInfo = new FormData();
     userInfo.append("name", name);
     userInfo.append("image", image);
     userInfo.append("email", email); // this is the key fileUpload.single('image') is looking for in our backend
     userInfo.append("password", password);
-    //console.log(userInfo);
     try {
       const response = await sendRequest(
         process.env.REACT_APP_BACKEND_URL + `/users/signup`,
         "POST",
         userInfo
       );
-      //console.log(response);
-      // await fetch(`http://localhost:5000/api/users/signup`, {
-      //     method: 'POST',
-      //     body: userInfo,
-      // });
-      const responseData = await response.json();
-      console.log(responseData);
       auth.login(response.userId, response.token);
-    } catch (err) {}
-    setImage("");
-    ////console.log(`Submit attempt? ${submitAttempt}`);
+      setImage("");
+      props.history.push("/");
+    } catch (err) {
+      console.log(err);
+    }
   };
   const nameChangeHandler = (e) => {
     e.preventDefault();
-    if (e.target.value.length <= 20) {
+    if (e.target.value.length <= 30) {
       setName(e.target.value);
-      setCharactersRemaining(20 - e.target.value.length);
+      setCharactersRemaining(30 - e.target.value.length);
       dispatch({ type: "CHANGE_NAME", val: e.target.value });
     }
   };
@@ -127,8 +113,11 @@ const Register = (props) => {
   };
   return (
     <Container className="form-container">
+      {isLoading && <LoaderSpinner />}
       <Row className="form-row">
-        <h1 className="auth-page__title">Register</h1>
+        <h1 className="auth-page__title">Register </h1>
+        {error && <Message variant="danger">{error.message}</Message>}
+
         <Form onSubmit={authHandler} className="login-form">
           <Form.Group controlId="name">
             <Form.Label>Name</Form.Label>
@@ -138,7 +127,7 @@ const Register = (props) => {
               onChange={nameChangeHandler}
               onBlur={onNameBlurHandler}
               value={name}
-              autocomplete="off"
+              autoComplete="off"
             />
             <Form.Text style={{ fontSize: "14px" }}>
               Characters Remaining: {charactersRemaining}
@@ -162,7 +151,7 @@ const Register = (props) => {
               onChange={emailChangeHandler}
               onBlur={onEmailBlurHandler}
               value={email}
-              autocomplete="off"
+              autoComplete="off"
             />
             {isEmailActive ? (
               ""
@@ -186,7 +175,7 @@ const Register = (props) => {
               onBlur={onPasswordBlurHandler}
               ref={signupPassVisible}
               value={password}
-              autocomplete="off"
+              autoComplete="off"
             />
             {isPasswordActive ? (
               ""

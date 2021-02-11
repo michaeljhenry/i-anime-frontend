@@ -2,13 +2,14 @@ import React, { useState, useEffect, useContext } from "react";
 import { Container } from "react-bootstrap";
 import NewUserCard from "../components/NewUserCard";
 import { useHttpClient } from "../hooks/http-hook";
-import LoadingSpinner from "../components/Loader";
+import LoaderSpinner from "../components/Loader";
+import Message from "../components/Message";
 import NameContext from "../context/name-context";
 const UsersDashboardPage = () => {
   const nameContext = useContext(NameContext);
   const [activeUsers, setActiveUsers] = useState([]);
 
-  const { isLoading, error, sendRequest, clearError } = useHttpClient();
+  const { isLoading, error, sendRequest } = useHttpClient();
   useEffect(() => {
     return () => {
       nameContext.setNameFunction("");
@@ -35,6 +36,8 @@ const UsersDashboardPage = () => {
 
   return (
     <Container className="usersdashboard--container">
+      {isLoading && <LoaderSpinner />}
+      {error && <Message>{error.message}</Message>}
       {activeUsers.length > 0 ? (
         activeUsers.map((user) => (
           <NewUserCard
@@ -46,9 +49,7 @@ const UsersDashboardPage = () => {
           />
         ))
       ) : (
-        <div className="no-users__card">
-          <h3>No Users Registered</h3>
-        </div>
+        <Message>No Users Registered</Message>
       )}
     </Container>
   );

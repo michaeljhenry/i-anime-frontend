@@ -1,23 +1,28 @@
 import React, { useState, useContext } from "react";
 import { Card, Row, Button } from "react-bootstrap";
 import AuthContext from "../context/auth-context";
-import { Link, useParams, useHistory } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useHttpClient } from "../hooks/http-hook";
 import EditAnimeModal from "../components/EditAnimeModal";
+import LoaderSpinner from "../components/Loader";
+import Message from "../components/Message";
 
 const NewAnimeCard = (props) => {
   const auth = useContext(AuthContext);
   const user = useParams().id;
   const [type, setType] = useState(props.type);
   const [actionType, setActionType] = useState("add");
-  const { isLoading, error, sendRequest, clearError } = useHttpClient();
+  const { isLoading, error, sendRequest } = useHttpClient();
   const [showModal, setShowModal] = useState(false);
 
   const onAddClickHandler = () => {
     // setShowForm(true);
+    setActionType("add");
+    setShowModal(true);
   };
 
   const onEditHandler = () => {
+    setActionType("edit");
     setShowModal(true);
   };
   const onCloseHandler = () => {
@@ -32,16 +37,13 @@ const NewAnimeCard = (props) => {
         null,
         { Authorization: "Bearer " + auth.token }
       );
-      // await fetch(`http://localhost:5000/api/animes/delete/${props.aid}`, {
-      //     method: 'DELETE',
-      //     body: null,
-      //     headers: {'Authorization': 'Bearer ' + auth.token}
-      // });
-      props.history.push(`/${auth.userId}/animes`);
+      window.parent.location = window.parent.location.href;
     } catch (err) {}
   };
   return (
     <>
+      {error && <Message>{error.message}</Message>}
+      {isLoading && <LoaderSpinner />}
       <Card className="animelistcard">
         <Card.Img variant="top" src={`${props.image_url}`} />
         <Card.Body className="animelistcard-body">
@@ -88,12 +90,15 @@ const NewAnimeCard = (props) => {
         <EditAnimeModal
           show={showModal}
           onCloseHandler={onCloseHandler}
-          type={type}
-          description={props.description}
+          type={actionType === "edit" ? type : ""}
+          description={actionType === "edit" ? props.description : ""}
+          synopsis={props.synopsis}
+          image_url={props.image_url}
           title={props.title}
-          score={props.score}
+          score={actionType === "edit" ? props.score : ""}
           creator={user}
-          aid={props.aid}
+          aid={actionType === "edit" ? props.aid : null}
+          actionType={actionType}
         />
       )}
     </>

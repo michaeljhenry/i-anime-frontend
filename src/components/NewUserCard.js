@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, Button } from "react-bootstrap";
+import { Card } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
 const NewUserCard = (props) => {
@@ -8,14 +8,15 @@ const NewUserCard = (props) => {
       <Card.Img
         className="userslistcard--image"
         variant="top"
-        src="/images/shikamaru-background.png"
+        src={`${process.env.REACT_APP_IMAGE_URL}/${props.image}`}
+        alt="profile"
       />
-      <Card.Body classname="userslistcard--body">
+      <Card.Body className="userslistcard--body">
         <Card.Title className="userslistcard--body__header">
           {props.name}
         </Card.Title>
         <Card.Text className="userslistcard--body__text">
-          Animes Listed: {props.animes.length + 1}
+          Animes Listed: {props.animes.length}
         </Card.Text>
         <Link className="userslistcard--body__link" to={`/${props.id}/animes`}>
           See Profile
