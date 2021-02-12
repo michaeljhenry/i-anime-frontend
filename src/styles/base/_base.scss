@@ -79,6 +79,15 @@ li {
   font-size: 16px;
   color: black;
 }
+
+.alert-small {
+  width: 300px;
+}
+.alert-small__center {
+  width: 300px;
+  margin: 20px auto;
+  text-align: center;
+}
 @media (max-width: $desktop-breakpoint) {
   textarea {
     width: 200px;

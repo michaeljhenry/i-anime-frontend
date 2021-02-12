@@ -1,6 +1,6 @@
 .animelistcard {
   background-color: black;
-  border: 1px solid grey;
+  border: 2px solid #660000;
   width: 290px;
   margin-bottom: $l-size;
 }
@@ -43,7 +43,6 @@
 .animelistcard-body__footer {
   //background-color: #007bff37;
   //background-color: #bb000e;
-  background-color: #660000;
   padding: $xs-size;
 }
 
@@ -135,33 +134,62 @@
 
 .animesearchcard {
   background-color: black;
-  border: 1px solid grey;
+  border: 2px solid #660000;
   width: 290px;
   margin-bottom: 3.2rem;
   margin-bottom: 0;
-  min-height: 100%;
+  height: 100%;
   cursor: pointer;
+  position: relative;
+  color: white;
+  border-radius: 15px;
 }
 
 .animesearchcard img {
-  width: 150px;
-  height: 180px;
+  width: 100%;
+  height: 350px;
   object-position: center;
   margin-left: auto;
   margin-right: auto;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+}
+
+.animesearchcard--contentcontainer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  transition: all 300ms linear;
+  background-color: rgba(0, 0, 0, 0.5);
+  height: 100%;
+}
+.animesearchcard--contentlink a {
+  color: white;
+  font-weight: bold;
+  margin: 0 auto;
+}
+
+.animesearchcard--contentlink {
+  color: white;
+}
+
+.animesearchcard:hover .animesearchcard--contentcontainer {
+  opacity: 1;
+  backdrop-filter: blur(1px);
 }
 
 .animesearchcard--radio {
   padding: 0;
-  min-height: 100%;
+  height: 430px;
   position: relative;
-  margin: 20px 20px;
+  margin: 0 20px;
 }
-.animesearchcard--radio.active {
+/* .animesearchcard--radio.active {
   //transform: scale(1.1);
   z-index: 2;
-  border: 5px solid #660000;
-}
+  border: 3px solid #660000;
+} */
 
 .form-check-label {
   height: 100%;

@@ -3,60 +3,40 @@ import AuthContext from "../context/auth-context";
 import { useHttpClient } from "../hooks/http-hook";
 import Message from "../components/Message";
 import LoaderSpinner from "../components/Loader";
-import { Form, Button, Row, InputGroup } from "react-bootstrap";
+import { Form, Button, Row, InputGroup, Card } from "react-bootstrap";
+import { Link } from "react-router-dom";
 import AnimeSearchCard from "./AnimeSearchCard";
 import EditAnimeModal from "./EditAnimeModal";
 import useWindowSize from "../hooks/useWindowSize";
 
 const NewAnimeForm = (props) => {
-  const numbers = [
-    "0.0",
-    "0.5",
-    "1.0",
-    "1.5",
-    "2.0",
-    "2.5",
-    "3.0",
-    "3.5",
-    "4.0",
-    "4.5",
-    "5.0",
-    "5.5",
-    "6.0",
-    "6.5",
-    "7.0",
-    "7.5",
-    "8.0",
-    "8.5",
-    "9.0",
-    "9.5",
-    "10.0",
-  ];
   const [chosenAnimeIndex, setChosenAnimeIndex] = useState("");
   const [chosenAnime, setChosenAnime] = useState("");
+  const [animeList, setAnimeList] = useState("");
   const auth = useContext(AuthContext);
-  const [score, setScore] = useState("");
-  const [type, setType] = useState("");
-  const [description, setDescription] = useState("");
-  const [charactersRemaining, setCharactersRemaining] = useState(200);
   const animeSearchRow = useRef(null);
+  const recommendedAnimeRow = useRef(null);
   const [showModal, setShowModal] = useState(false);
+  const [recommended, setRecommended] = useState(false);
 
   const size = useWindowSize();
-  const { isLoading, error, sendRequest, clearError } = useHttpClient();
+  const { isLoading, error, sendRequest } = useHttpClient();
   const showLessHandler = (e) => {
-    animeSearchRow.current.scrollLeft =
-      animeSearchRow.current.scrollLeft - size.width * 0.85 + 40;
+    if (e.target.id === "search") {
+      animeSearchRow.current.scrollLeft =
+        animeSearchRow.current.scrollLeft - size.width * 0.85 + 40;
+    } else if (e.target.id === "recommended") {
+      recommendedAnimeRow.current.scrollLeft =
+        recommendedAnimeRow.current.scrollLeft - size.width + 240;
+    }
   };
   const showMoreHandler = (e) => {
-    animeSearchRow.current.scrollLeft =
-      animeSearchRow.current.scrollLeft + size.width * 0.85 - 40;
-  };
-
-  const textareaChangeHandler = (e) => {
-    if (e.target.value.length <= 200) {
-      setDescription(e.target.value);
-      setCharactersRemaining(200 - e.target.value.length);
+    if (e.target.id === "search") {
+      animeSearchRow.current.scrollLeft =
+        animeSearchRow.current.scrollLeft + size.width * 0.85 - 40;
+    } else if (e.target.id === "recommended") {
+      recommendedAnimeRow.current.scrollLeft =
+        recommendedAnimeRow.current.scrollLeft + size.width - 240;
     }
   };
 
@@ -66,36 +46,6 @@ const NewAnimeForm = (props) => {
     setChosenAnime("");
   };
 
-  const onSubmitHandler = async (e) => {
-    e.preventDefault();
-    clearError();
-
-    const data = {
-      title: chosenAnime,
-      description: description,
-      image_url: props.animeList[chosenAnimeIndex].image_url,
-      synopsis: props.animeList[chosenAnimeIndex].synopsis,
-      mal_id: props.animeList[chosenAnimeIndex].mal_id,
-      score: score,
-      creator: auth.userId,
-      type: type,
-    };
-    try {
-      await sendRequest(
-        process.env.REACT_APP_BACKEND_URL + `/animes/add`,
-        "POST",
-        JSON.stringify(data),
-        {
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + auth.token,
-        }
-      );
-      setType("");
-      setScore("");
-      setDescription("");
-    } catch (err) {}
-  };
-
   useEffect(() => {
     if (chosenAnimeIndex !== "") {
       setChosenAnime(props.animeList[chosenAnimeIndex].title);
@@ -103,24 +53,48 @@ const NewAnimeForm = (props) => {
     }
   }, [chosenAnimeIndex, props.animeList]);
 
+  const showRecommendedHandler = () => {
+    setAnimeList([]);
+  };
+
   useEffect(() => {
     setChosenAnimeIndex("");
     setChosenAnime("");
+    setAnimeList(props.animeList);
   }, [props.animeList]);
+
+  useEffect(() => {
+    const baseUrl = "https://api.jikan.moe/v3";
+
+    const getAnime = async () => {
+      const response = await sendRequest(`${baseUrl}/anime/1/recommendations`);
+      setRecommended(response.recommendations);
+    };
+    getAnime();
+  }, [sendRequest]);
 
   return (
     <React.Fragment>
       {isLoading && <LoaderSpinner />}
       {error && <Message variant="danger">{error.message}</Message>}
-      {props.animeList.length > 0 && (
+      {animeList.length > 0 && (
         <React.Fragment>
+          <Row>
+            <Button
+              className="recommended--btn"
+              onClick={showRecommendedHandler}
+            >
+              Show Recommended Anime
+            </Button>
+          </Row>
           <Row className="separator-row">
-            <h1>* Choose an anime</h1>
-            <hr className="separator"></hr>
+            <h1>Choose an anime</h1>
+            <hr className="separator__black"></hr>
             <Button
               variant="dark"
               className="scroll-btn"
               onClick={showLessHandler}
+              id="search"
             >
               {`<`}
             </Button>
@@ -128,12 +102,13 @@ const NewAnimeForm = (props) => {
               variant="dark"
               className="scroll-btn"
               onClick={showMoreHandler}
+              id="search"
             >
               {`>`}
             </Button>
           </Row>
           <Row className="animesearchcards--row" ref={animeSearchRow}>
-            {props.animeList.map((anime, index) => (
+            {animeList.map((anime, index) => (
               <Form.Check
                 key={anime.title}
                 className={`animesearchcard--radio ${
@@ -171,6 +146,64 @@ const NewAnimeForm = (props) => {
               actionType={"add"}
             />
           )}
+        </React.Fragment>
+      )}
+      {recommended.length > 0 && animeList.length === 0 && (
+        <React.Fragment>
+          <Message className="alert-small__center">
+            Don't know what to search?<br></br>Try one of these!
+          </Message>
+          <Row className="separator-row">
+            <h1>Suggested anime</h1>
+            <hr className="separator__black"></hr>
+            <Button
+              variant="dark"
+              className="scroll-btn"
+              onClick={showLessHandler}
+              id="recommended"
+            >
+              {`<`}
+            </Button>
+            <Button
+              variant="dark"
+              className="scroll-btn"
+              onClick={showMoreHandler}
+              id="recommended"
+            >
+              {`>`}
+            </Button>
+          </Row>
+          <Row className="dash-row" ref={recommendedAnimeRow}>
+            {recommended.map((anime) => (
+              <Card key={anime.title} className="anime-card">
+                <Card.Img
+                  className="anime-card__image"
+                  variant="top"
+                  src={`${anime.image_url}`}
+                />
+                <Card.Body className="anime-card__content">
+                  <Card.Title className="anime-card__content-title">
+                    {anime.title}
+                  </Card.Title>
+                  <Link to={`/animedetails/${anime.mal_id}`} key={anime.title}>
+                    <Button className="anime-card__btn" variant="primary">
+                      SEE DETAILS
+                    </Button>
+                  </Link>
+
+                  <div className="anime-card__footer">
+                    <Card.Text>{anime.type}</Card.Text>
+                    {anime.start_date && (
+                      <Card.Text>{anime.start_date}</Card.Text>
+                    )}
+                  </div>
+                </Card.Body>
+                <Row className="newfooter--container">
+                  <Row className="newfooter__bottom">{anime.title}</Row>
+                </Row>
+              </Card>
+            ))}
+          </Row>
         </React.Fragment>
       )}
     </React.Fragment>
