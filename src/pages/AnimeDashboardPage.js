@@ -30,8 +30,6 @@ const AnimeDashboardPage = () => {
   const { isLoading, error, sendRequest } = useHttpClient();
 
   const showLessHandler = (e) => {
-    console.log(e.target);
-
     if (e.target.id === "airing") {
       dashrowAiring.current.scrollLeft =
         dashrowAiring.current.scrollLeft - size.width + 200;
@@ -44,7 +42,6 @@ const AnimeDashboardPage = () => {
     }
   };
   const showMoreHandler = (e) => {
-    console.log(e.target);
     if (e.target.id === "airing") {
       dashrowAiring.current.scrollLeft =
         dashrowAiring.current.scrollLeft + size.width - 200;
