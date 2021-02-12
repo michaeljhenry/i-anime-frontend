@@ -60,7 +60,9 @@ const AnimeDetailsPage = (props) => {
                   ))}
               </p>
               {anime.score && (
-                <p className="animedetailsrowbody--p">Score: {anime.score}</p>
+                <p className="animedetailsrowbody--p">
+                  <i className="fas fa-star"></i>&nbsp; Score: {anime.score}
+                </p>
               )}
               {auth.isLoggedIn && (
                 <Button

@@ -13,8 +13,8 @@ const AddAnimePage = (props) => {
   const getInfo = (animeInfo) => {
     // try useEffect to update animeList
 
-    if (animeInfo.results.length > 10) {
-      for (var i = 0; i < 10; i++) {
+    if (animeInfo.results.length > 20) {
+      for (var i = 0; i < 20; i++) {
         array.push(animeInfo.results[i]);
       }
     } else {
