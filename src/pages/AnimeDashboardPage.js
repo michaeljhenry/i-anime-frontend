@@ -36,7 +36,7 @@ const AnimeDashboardPage = () => {
     } else if (e.target.id === "upcoming") {
       dashrowUpcoming.current.scrollLeft =
         dashrowUpcoming.current.scrollLeft - size.width + 200;
-    } else {
+    } else if (e.target.id === "today") {
       dashrowToday.current.scrollLeft =
         dashrowToday.current.scrollLeft - size.width + 200;
     }
@@ -48,7 +48,7 @@ const AnimeDashboardPage = () => {
     } else if (e.target.id === "upcoming") {
       dashrowUpcoming.current.scrollLeft =
         dashrowUpcoming.current.scrollLeft + size.width - 200;
-    } else {
+    } else if (e.target.id === "today") {
       dashrowToday.current.scrollLeft =
         dashrowToday.current.scrollLeft + size.width - 200;
     }
@@ -77,7 +77,7 @@ const AnimeDashboardPage = () => {
     setTopUpcomingAnime(animeResults[1].top);
     setTopAiringAnime(animeResults[2].top);
 
-    // console.log(animeResults);
+    console.log(animeResults);
   }, [sendRequest, day, dayNum, days]);
 
   useEffect(() => {
@@ -92,7 +92,176 @@ const AnimeDashboardPage = () => {
       {isLoading && <LoaderSpinner />}
       {!error && !isLoading && (
         <>
-          {todayAnime.length > 0 && (
+          <Row className="separator-row">
+            <h1>Airing Anime</h1>
+            <hr className="separator"></hr>
+            <Button
+              variant="dark"
+              className="scroll-btn"
+              onClick={showLessHandler}
+              id="airing"
+            >
+              {`<`}
+            </Button>
+            <Button
+              variant="dark"
+              className="scroll-btn"
+              onClick={showMoreHandler}
+              id="airing"
+            >
+              {`>`}
+            </Button>
+          </Row>
+          <Row className="dash-row" ref={dashrowAiring}>
+            {topAiringAnime.length > 0 &&
+              topAiringAnime.map((anime) => (
+                <Link to={`/animedetails/${anime.mal_id}`} key={anime.title}>
+                  <Card className="anime-card">
+                    <Card.Img
+                      className="anime-card__image"
+                      variant="top"
+                      src={`${anime.image_url}`}
+                    />
+                    <Card.Body className="anime-card__content">
+                      <Card.Title className="anime-card__content-title">
+                        {anime.title}
+                      </Card.Title>
+                      <Button className="anime-card__btn" variant="primary">
+                        SEE DETAILS
+                      </Button>
+                      <div className="anime-card__footer">
+                        <Card.Text>{anime.type}</Card.Text>
+                        {anime.start_date && (
+                          <Card.Text>{anime.start_date}</Card.Text>
+                        )}
+                      </div>
+                    </Card.Body>
+                    <Row className="newfooter">{anime.title}</Row>
+                    <Row className="newfooter">
+                      <i className="fas fa-star"></i>&nbsp; Score: {anime.score}
+                    </Row>
+                  </Card>
+                </Link>
+              ))}
+          </Row>
+          <Row className="separator-row">
+            <h1>Upcoming Anime</h1>
+            <hr className="separator"></hr>
+            <Button
+              variant="dark"
+              className="scroll-btn"
+              onClick={showLessHandler}
+              id="upcoming"
+            >
+              {`<`}
+            </Button>
+            <Button
+              variant="dark"
+              className="scroll-btn"
+              onClick={showMoreHandler}
+              id="upcoming"
+            >
+              {`>`}
+            </Button>
+          </Row>
+          <Row className="dash-row" ref={dashrowUpcoming}>
+            {topUpcomingAnime.length > 0 &&
+              topUpcomingAnime.map((anime) => (
+                <Link to={`/animedetails/${anime.mal_id}`} key={anime.title}>
+                  <Card className="anime-card">
+                    <Card.Img
+                      className="anime-card__image"
+                      variant="top"
+                      src={`${anime.image_url}`}
+                    />
+                    <Card.Body className="anime-card__content">
+                      <Card.Title className="anime-card__content-title">
+                        {anime.title}
+                      </Card.Title>
+                      <Button className="anime-card__btn" variant="primary">
+                        SEE DETAILS
+                      </Button>
+                      <div className="anime-card__footer">
+                        <Card.Text>{anime.type}</Card.Text>
+                        {anime.start_date && (
+                          <Card.Text>{anime.start_date}</Card.Text>
+                        )}
+                      </div>
+                    </Card.Body>
+                    <Row className="newfooter">{anime.title}</Row>
+                    <Row style={{ marginTop: "auto" }} className="newfooter">
+                      {anime.start_date
+                        ? `Start date: ${anime.start_date}`
+                        : "Unannounced start date"}
+                    </Row>
+                  </Card>
+                </Link>
+              ))}
+          </Row>
+          <Row className="separator-row">
+            <h1>Airing Today</h1>
+            <hr className="separator"></hr>
+            <Button
+              variant="dark"
+              className="scroll-btn"
+              onClick={showLessHandler}
+              id="today"
+            >
+              {`<`}
+            </Button>
+            <Button
+              variant="dark"
+              className="scroll-btn"
+              onClick={showMoreHandler}
+              id="today"
+            >
+              {`>`}
+            </Button>
+          </Row>
+          <Row className="dash-row__last" ref={dashrowToday}>
+            {todayAnime.length > 0 &&
+              todayAnime.map((anime) => (
+                <Link to={`/animedetails/${anime.mal_id}`} key={anime.title}>
+                  <Card className="anime-card">
+                    <Card.Img
+                      className="anime-card__image"
+                      variant="top"
+                      src={`${anime.image_url}`}
+                    />
+                    <Card.Body className="anime-card__content">
+                      <Card.Title className="anime-card__content-title">
+                        {anime.title}
+                      </Card.Title>
+                      <Button className="anime-card__btn" variant="primary">
+                        SEE DETAILS
+                      </Button>
+                      <div className="anime-card__footer">
+                        <Card.Text>{anime.type}</Card.Text>
+                        {anime.start_date && (
+                          <Card.Text>{anime.start_date}</Card.Text>
+                        )}
+                      </div>
+                    </Card.Body>
+                    <Row className="newfooter">{anime.title}</Row>
+                    <Row className="newfooter">
+                      <i className="fas fa-star"></i>&nbsp;
+                      {anime.score ? anime.score : "No score available"}
+                    </Row>
+                  </Card>
+                </Link>
+              ))}
+          </Row>
+        </>
+      )}
+    </>
+  );
+};
+
+export default AnimeDashboardPage;
+
+/*
+
+{todayAnime.length > 0 && (
             <Row className="anime-dash__main">
               <Row className="anime-dash__main-content">
                 <Row className="anime-dash__main-text__container">
@@ -127,148 +296,4 @@ const AnimeDashboardPage = () => {
               </Row>
             </Row>
           )}
-          <Row className="separator-row">
-            <h1>Airing Anime</h1>
-            <hr className="separator"></hr>
-            <Button
-              variant="dark"
-              className="scroll-btn"
-              onClick={showLessHandler}
-            >
-              <h1 id="airing">{`<`}</h1>
-            </Button>
-            <Button
-              variant="dark"
-              className="scroll-btn"
-              onClick={showMoreHandler}
-            >
-              <h1 id="airing">{`>`}</h1>
-            </Button>
-          </Row>
-          <Row className="dash-row" ref={dashrowAiring}>
-            {topAiringAnime.length > 0 &&
-              topAiringAnime.map((anime) => (
-                <Link to={`/animedetails/${anime.mal_id}`} key={anime.title}>
-                  <Card className="anime-card">
-                    <Card.Img
-                      className="anime-card__image"
-                      variant="top"
-                      src={`${anime.image_url}`}
-                    />
-                    <Card.Body className="anime-card__content">
-                      <Card.Title className="anime-card__content-title">
-                        {anime.title}
-                      </Card.Title>
-                      <Button className="anime-card__btn" variant="primary">
-                        SEE DETAILS
-                      </Button>
-                      <div className="anime-card__footer">
-                        <Card.Text>{anime.type}</Card.Text>
-                        {anime.start_date && (
-                          <Card.Text>{anime.start_date}</Card.Text>
-                        )}
-                      </div>
-                    </Card.Body>
-                  </Card>
-                </Link>
-              ))}
-          </Row>
-          <Row className="separator-row">
-            <h1>Upcoming Anime</h1>
-            <hr className="separator"></hr>
-            <Button
-              variant="dark"
-              className="scroll-btn"
-              onClick={showLessHandler}
-            >
-              <h1 id="upcoming">{`<`}</h1>
-            </Button>
-            <Button
-              variant="dark"
-              className="scroll-btn"
-              onClick={showMoreHandler}
-            >
-              <h1 id="upcoming">{`>`}</h1>
-            </Button>
-          </Row>
-          <Row className="dash-row" ref={dashrowUpcoming}>
-            {topUpcomingAnime.length > 0 &&
-              topUpcomingAnime.map((anime) => (
-                <Link to={`/animedetails/${anime.mal_id}`} key={anime.title}>
-                  <Card className="anime-card">
-                    <Card.Img
-                      className="anime-card__image"
-                      variant="top"
-                      src={`${anime.image_url}`}
-                    />
-                    <Card.Body className="anime-card__content">
-                      <Card.Title className="anime-card__content-title">
-                        {anime.title}
-                      </Card.Title>
-                      <Button className="anime-card__btn" variant="primary">
-                        SEE DETAILS
-                      </Button>
-                      <div className="anime-card__footer">
-                        <Card.Text>{anime.type}</Card.Text>
-                        {anime.start_date && (
-                          <Card.Text>{anime.start_date}</Card.Text>
-                        )}
-                      </div>
-                    </Card.Body>
-                  </Card>
-                </Link>
-              ))}
-          </Row>
-          <Row className="separator-row">
-            <h1 id="today">Airing Today</h1>
-            <hr className="separator"></hr>
-            <Button
-              variant="dark"
-              className="scroll-btn"
-              onClick={showLessHandler}
-            >
-              <h1>{`<`}</h1>
-            </Button>
-            <Button
-              variant="dark"
-              className="scroll-btn"
-              onClick={showMoreHandler}
-            >
-              <h1>{`>`}</h1>
-            </Button>
-          </Row>
-          <Row className="dash-row" ref={dashrowToday}>
-            {todayAnime.length > 0 &&
-              todayAnime.map((anime) => (
-                <Link to={`/animedetails/${anime.mal_id}`} key={anime.title}>
-                  <Card className="anime-card">
-                    <Card.Img
-                      className="anime-card__image"
-                      variant="top"
-                      src={`${anime.image_url}`}
-                    />
-                    <Card.Body className="anime-card__content">
-                      <Card.Title className="anime-card__content-title">
-                        {anime.title}
-                      </Card.Title>
-                      <Button className="anime-card__btn" variant="primary">
-                        SEE DETAILS
-                      </Button>
-                      <div className="anime-card__footer">
-                        <Card.Text>{anime.type}</Card.Text>
-                        {anime.start_date && (
-                          <Card.Text>{anime.start_date}</Card.Text>
-                        )}
-                      </div>
-                    </Card.Body>
-                  </Card>
-                </Link>
-              ))}
-          </Row>
-        </>
-      )}
-    </>
-  );
-};
-
-export default AnimeDashboardPage;
+*/

@@ -103,9 +103,13 @@ const App = () => {
         </Route>
         <Route component={AnimeDashboardPage} exact path="/animedash"></Route>
         <Route component={UsersDashboardPage} exact path="/usersdash"></Route>
+        <Route component={NewUserPage} exact path="/user/:id" />
         <Route component={Login} exact path="/login"></Route>
         <Route component={Register} exact path="/register"></Route>
         <Route component={NewAddAnimePage} path="/add"></Route>
+        <Route exact path="/user/:id">
+          <NewUserPage />
+        </Route>
         <Route
           component={AnimeDetailsPage}
           exact
@@ -129,7 +133,7 @@ const App = () => {
           exact
           path="/animedetails/:id"
         ></Route>
-        <Route exact path="/:id/animes">
+        <Route exact path="/user/:id">
           <NewUserPage />
         </Route>
         <Redirect to="/" />

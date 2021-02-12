@@ -37,8 +37,10 @@ const UsersDashboardPage = () => {
   return (
     <Container className="usersdashboard--container">
       {isLoading && <LoaderSpinner />}
-      {error && <Message>{error.message}</Message>}
-      {activeUsers.length > 0 ? (
+      {!isLoading && error && (
+        <Message variant="danger">{error.message}</Message>
+      )}
+      {!isLoading && activeUsers.length > 0 ? (
         activeUsers.map((user) => (
           <NewUserCard
             key={user.email}

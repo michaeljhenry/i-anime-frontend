@@ -78,125 +78,129 @@ const NewUserPage = () => {
       } catch (err) {}
     };
     getUser();
-  }, []);
+  }, [userId, sendRequest]);
 
   return (
     <Container id="userpage-container">
       {error && <Message variant="danger">{error.message}</Message>}
       {isLoading && <LoaderSpinner />}
-      <Row className="userrow">
-        <Image
-          src={`${process.env.REACT_APP_IMAGE_URL}/${userData.image}`}
-          alt="profile"
-        ></Image>
-        <Row>
-          <h1>{userData.name}</h1>
-        </Row>
-        <Row>
-          <h2>Total Anime: {animesCopy.length}</h2>
-        </Row>
-        <Row className="userrow-footer">
-          <Button
-            onClick={showWatchedHandler}
-            type="button"
-            className={`userrow-btn ${type === "watched" ? "active" : ""}`}
-          >
-            Watched
-          </Button>
-          <Button
-            onClick={showWatchingHandler}
-            type="button"
-            className={`userrow-btn ${type === "watching" ? "active" : ""}`}
-          >
-            Watching
-          </Button>
-          <Button
-            onClick={showToWatchHandler}
-            type="button"
-            className={`userrow-btn ${type === "toWatch" ? "active" : ""}`}
-          >
-            To-Watch
-          </Button>
-          <Button
-            onClick={showDroppedHandler}
-            type="button"
-            className={`userrow-btn ${type === "dropped" ? "active" : ""}`}
-          >
-            Dropped
-          </Button>
-        </Row>
-      </Row>
-      <Row className="animelistrow">
-        {type === "watched" &&
-          (animeWatchedList.length > 0 ? (
-            animeWatchedList.map((anime) => (
-              <NewAnimeCard
-                key={anime.title}
-                score={anime.score}
-                description={anime.description}
-                synopsis={anime.synopsis}
-                aid={anime._id}
-                title={anime.title}
-                image_url={anime.image_url}
-                type={anime.type}
-                creator={anime.creator}
-              />
-            ))
-          ) : (
-            <Message>No Anime In This List</Message>
-          ))}
-        {type === "watching" &&
-          (animeWatchingList.length > 0 ? (
-            animeWatchingList.map((anime) => (
-              <NewAnimeCard
-                key={anime.title}
-                score={anime.score}
-                description={anime.description}
-                aid={anime._id}
-                title={anime.title}
-                image_url={anime.image_url}
-                type={anime.type}
-                creator={anime.creator}
-              />
-            ))
-          ) : (
-            <Message>No Anime In This List</Message>
-          ))}
-        {type === "toWatch" &&
-          (animeToWatchList.length > 0 ? (
-            animeToWatchList.map((anime) => (
-              <NewAnimeCard
-                key={anime.title}
-                score={anime.score}
-                description={anime.description}
-                aid={anime._id}
-                title={anime.title}
-                image_url={anime.image_url}
-                type={anime.type}
-                creator={anime.creator}
-              />
-            ))
-          ) : (
-            <Message>No Anime In This List</Message>
-          ))}
-        {type === "dropped" &&
-          (animeDroppedList.length > 0 ? (
-            animeDroppedList.map((anime) => (
-              <NewAnimeCard
-                key={anime.title}
-                score={anime.score}
-                description={anime.description}
-                aid={anime._id}
-                title={anime.title}
-                image_url={anime.image_url}
-                type={anime.type}
-                creator={anime.creator}
-              />
-            ))
-          ) : (
-            <Message>No Anime In This List</Message>
-          ))}
-      </Row>
+      {!isLoading && (
+        <React.Fragment>
+          <Row className="userrow">
+            <Image
+              src={`${process.env.REACT_APP_IMAGE_URL}/${userData.image}`}
+              alt="profile"
+            ></Image>
+            <Row>
+              <h1>{userData.name}</h1>
+            </Row>
+            <Row>
+              <h2>Total Anime: {animesCopy.length}</h2>
+            </Row>
+            <Row className="userrow-footer">
+              <Button
+                onClick={showWatchedHandler}
+                type="button"
+                className={`userrow-btn ${type === "watched" ? "active" : ""}`}
+              >
+                Watched
+              </Button>
+              <Button
+                onClick={showWatchingHandler}
+                type="button"
+                className={`userrow-btn ${type === "watching" ? "active" : ""}`}
+              >
+                Watching
+              </Button>
+              <Button
+                onClick={showToWatchHandler}
+                type="button"
+                className={`userrow-btn ${type === "toWatch" ? "active" : ""}`}
+              >
+                To-Watch
+              </Button>
+              <Button
+                onClick={showDroppedHandler}
+                type="button"
+                className={`userrow-btn ${type === "dropped" ? "active" : ""}`}
+              >
+                Dropped
+              </Button>
+            </Row>
+          </Row>
+          <Row className="animelistrow">
+            {type === "watched" &&
+              (animeWatchedList.length > 0 ? (
+                animeWatchedList.map((anime) => (
+                  <NewAnimeCard
+                    key={anime.title}
+                    score={anime.score}
+                    description={anime.description}
+                    synopsis={anime.synopsis}
+                    aid={anime._id}
+                    title={anime.title}
+                    image_url={anime.image_url}
+                    type={anime.type}
+                    creator={anime.creator}
+                  />
+                ))
+              ) : (
+                <Message>No Anime In This List</Message>
+              ))}
+            {type === "watching" &&
+              (animeWatchingList.length > 0 ? (
+                animeWatchingList.map((anime) => (
+                  <NewAnimeCard
+                    key={anime.title}
+                    score={anime.score}
+                    description={anime.description}
+                    aid={anime._id}
+                    title={anime.title}
+                    image_url={anime.image_url}
+                    type={anime.type}
+                    creator={anime.creator}
+                  />
+                ))
+              ) : (
+                <Message>No Anime In This List</Message>
+              ))}
+            {type === "toWatch" &&
+              (animeToWatchList.length > 0 ? (
+                animeToWatchList.map((anime) => (
+                  <NewAnimeCard
+                    key={anime.title}
+                    score={anime.score}
+                    description={anime.description}
+                    aid={anime._id}
+                    title={anime.title}
+                    image_url={anime.image_url}
+                    type={anime.type}
+                    creator={anime.creator}
+                  />
+                ))
+              ) : (
+                <Message>No Anime In This List</Message>
+              ))}
+            {type === "dropped" &&
+              (animeDroppedList.length > 0 ? (
+                animeDroppedList.map((anime) => (
+                  <NewAnimeCard
+                    key={anime.title}
+                    score={anime.score}
+                    description={anime.description}
+                    aid={anime._id}
+                    title={anime.title}
+                    image_url={anime.image_url}
+                    type={anime.type}
+                    creator={anime.creator}
+                  />
+                ))
+              ) : (
+                <Message>No Anime In This List</Message>
+              ))}
+          </Row>
+        </React.Fragment>
+      )}
     </Container>
   );
 };

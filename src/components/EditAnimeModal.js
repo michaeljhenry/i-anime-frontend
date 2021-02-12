@@ -81,6 +81,7 @@ const EditAnimeModal = (props) => {
         type: newType, //animeInfo.type,
         score: newType === "toWatch" ? "" : score,
         image_url: props.image_url,
+        mal_id: props.mal_id ? props.mal_id : "",
       };
       try {
         await sendRequest(
@@ -108,12 +109,17 @@ const EditAnimeModal = (props) => {
         <Modal.Header className="editmodal--header" closeButton>
           <Modal.Title>
             {props.actionType === "edit" ? (
-              <h2>Edit Anime</h2>
+              <React.Fragment>
+                <h2>Edit Anime</h2>
+                {error && <Message variant="danger">{error.message}</Message>}
+              </React.Fragment>
             ) : (
-              <h2>Add Anime</h2>
+              <React.Fragment>
+                <h2>Add Anime</h2>
+                {error && <Message variant="danger">{error.message}</Message>}
+              </React.Fragment>
             )}
           </Modal.Title>
-          {error && <Message>{error.message}</Message>}
         </Modal.Header>
         <Form onSubmit={onSubmitHandler}>
           <Modal.Body className="editmodal--body">

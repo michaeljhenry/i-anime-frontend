@@ -6,9 +6,11 @@
 }
 
 .animelistcard img {
-  width: 100%;
-  height: 240px;
+  width: 230px;
+  height: 260px;
   object-position: center;
+  margin-left: auto;
+  margin-right: auto;
 }
 .animelistcard-body,
 .animesearchcard-body {
@@ -39,7 +41,9 @@
 
 .animelistcard-body__footer,
 .animelistcard-body__footer {
-  background-color: #007bff37;
+  //background-color: #007bff37;
+  //background-color: #bb000e;
+  background-color: #660000;
   padding: $xs-size;
 }
 
@@ -93,18 +97,19 @@
 .animesearchcard {
   background-color: black;
   border: 1px solid grey;
-  width: 270px;
+  width: 290px;
   margin-bottom: 3.2rem;
   margin-bottom: 0;
-  flex-grow: 1;
   min-height: 100%;
   cursor: pointer;
 }
 
 .animesearchcard img {
-  width: 100%;
-  height: 150px;
+  width: 150px;
+  height: 180px;
   object-position: center;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .animesearchcard--radio {
@@ -114,8 +119,9 @@
   margin: 20px 20px;
 }
 .animesearchcard--radio.active {
-  transform: scale(1.1);
+  //transform: scale(1.1);
   z-index: 2;
+  border: 5px solid #660000;
 }
 
 .form-check-label {

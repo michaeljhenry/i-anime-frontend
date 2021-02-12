@@ -1,15 +1,24 @@
-import React, { useState, useEffect } from "react";
-import { Container, Image, Row, Col } from "react-bootstrap";
+import React, { useState, useEffect, useContext } from "react";
+import { Container, Image, Row, Col, Button } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 
 import { useHttpClient } from "../hooks/http-hook";
+import AuthContext from "../context/auth-context";
 import LoaderSpinner from "../components/Loader";
 import Message from "../components/Message";
+import EditAnimeModal from "../components/EditAnimeModal";
 
 const AnimeDetailsPage = (props) => {
   const { isLoading, error, sendRequest } = useHttpClient();
   const [anime, setAnime] = useState(null);
+  const [showModal, setShowModal] = useState(false);
   const mal_id = useParams().id;
+  const auth = useContext(AuthContext);
+
+  const onCloseHandler = () => {
+    setShowModal(false);
+  };
+
   useEffect(() => {
     const getAnime = async () => {
       const response = await sendRequest(
@@ -53,6 +62,14 @@ const AnimeDetailsPage = (props) => {
               {anime.score && (
                 <p className="animedetailsrowbody--p">Score: {anime.score}</p>
               )}
+              {auth.isLoggedIn && (
+                <Button
+                  onClick={() => setShowModal(true)}
+                  className="animecard--btn__main"
+                >
+                  Add To List
+                </Button>
+              )}
             </Col>
           </Row>
           {anime.trailer_url && (
@@ -70,6 +87,22 @@ const AnimeDetailsPage = (props) => {
                 ></iframe>
               </Row>
             </React.Fragment>
+          )}
+          {showModal && (
+            <EditAnimeModal
+              show={showModal}
+              onCloseHandler={onCloseHandler}
+              type=""
+              description=""
+              mal_id={anime.mal_id}
+              synopsis={anime.synopsis}
+              image_url={anime.image_url}
+              title={anime.title}
+              score={""}
+              creator={auth.userId}
+              aid={null}
+              actionType={"add"}
+            />
           )}
         </React.Fragment>
       )}

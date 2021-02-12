@@ -73,7 +73,7 @@
 }
 
 .dash-row {
-  height: 300px;
+  height: 350px;
   display: flex;
   align-items: center;
   transition: all 500ms linear;
@@ -82,6 +82,21 @@
   scroll-behavior: smooth;
   flex-wrap: nowrap;
   margin-right: 0;
+  overflow-y: hidden;
+}
+
+.dash-row__last {
+  height: 350px;
+  display: flex;
+  align-items: center;
+  transition: all 500ms linear;
+  align-self: flex-start;
+  overflow-x: scroll;
+  scroll-behavior: smooth;
+  flex-wrap: nowrap;
+  margin-right: 0;
+  overflow-y: hidden;
+  margin-bottom: 50px;
 }
 
 .dash-row:last-child {
@@ -92,22 +107,30 @@
   display: none;
 }
 
+.dash-row__last::-webkit-scrollbar {
+  display: none;
+}
+
 .dash-img {
   margin-right: 10px;
 }
 
 .anime-card {
-  min-width: 180px;
-  max-width: 180px;
-  height: 250px;
+  min-width: 240px;
+  max-width: 240px;
+  height: 330px;
   position: relative;
   border: none;
   transition: transform 300ms linear;
   margin-left: 20px;
+  background-color: black;
+  border-radius: 15px;
 }
 
 .anime-card__image {
-  height: 100%;
+  height: 250px;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
 }
 
 .anime-card__content {
@@ -147,7 +170,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 16px;
+  font-size: 25px;
   background-color: black;
   border: 2px solid white;
   margin-right: 20px;
@@ -186,13 +209,13 @@
   letter-spacing: 1px;
   position: absolute;
   top: 45%;
-  left: 15%;
+  left: 25%;
 }
 
 .animecard--btn__main {
   border-radius: 2em;
   background-color: transparent;
-  font-size: 16px;
+  font-size: 24px;
   font-weight: bold;
   border: 1px solid white;
   margin: auto auto;
@@ -200,15 +223,45 @@
   position: relative;
 }
 
-.anime-card__btn:active,
+.animecard--btn__main:focus,
 .anime-card__btn:focus {
-  background-color: transparent;
   border: 1px solid white;
+  box-shadow: none;
+  background-color: transparent;
 }
 
+.animecard--btn__main.btn-primary:not(:disabled):not(.disabled):active:focus,
+.anime-card__btn.btn-primary:not(:disabled):not(.disabled):active:focus {
+  border: 1px solid black;
+}
+
+.animecard--btn__main:hover,
 .anime-card__btn:hover {
-  background-color: black;
-  border: 1px solid white;
+  background-color: #660000;
+  border: 1px solid black;
+}
+
+.animecard--btn__main.btn-primary:not(:disabled):not(.disabled):active,
+.anime-card__btn.btn-primary:not(:disabled):not(.disabled):active {
+  border: 1px solid black;
+  background-color: #660000;
+}
+
+.newfooter {
+  font-size: 14px;
+  color: white;
+  padding: 2px;
+  max-height: 50px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  margin-top: auto;
+}
+
+.fa,
+.fas {
+  color: yellow;
 }
 
 @media (min-width: 600px) {

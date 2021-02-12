@@ -5,6 +5,7 @@ import Message from "../components/Message";
 import LoaderSpinner from "../components/Loader";
 import { Form, Button, Row, InputGroup } from "react-bootstrap";
 import AnimeSearchCard from "./AnimeSearchCard";
+import EditAnimeModal from "./EditAnimeModal";
 import useWindowSize from "../hooks/useWindowSize";
 
 const NewAnimeForm = (props) => {
@@ -39,6 +40,8 @@ const NewAnimeForm = (props) => {
   const [description, setDescription] = useState("");
   const [charactersRemaining, setCharactersRemaining] = useState(200);
   const animeSearchRow = useRef(null);
+  const [showModal, setShowModal] = useState(false);
+
   const size = useWindowSize();
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
   const showLessHandler = (e) => {
@@ -55,6 +58,12 @@ const NewAnimeForm = (props) => {
       setDescription(e.target.value);
       setCharactersRemaining(200 - e.target.value.length);
     }
+  };
+
+  const onCloseHandler = () => {
+    setShowModal(false);
+    setChosenAnimeIndex("");
+    setChosenAnime("");
   };
 
   const onSubmitHandler = async (e) => {
@@ -90,6 +99,7 @@ const NewAnimeForm = (props) => {
   useEffect(() => {
     if (chosenAnimeIndex !== "") {
       setChosenAnime(props.animeList[chosenAnimeIndex].title);
+      setShowModal(true);
     }
   }, [chosenAnimeIndex, props.animeList]);
 
@@ -99,182 +109,223 @@ const NewAnimeForm = (props) => {
   }, [props.animeList]);
 
   return (
-    <>
+    <React.Fragment>
       {isLoading && <LoaderSpinner />}
-      {error && <Message>{error.message}</Message>}
+      {error && <Message variant="danger">{error.message}</Message>}
       {props.animeList.length > 0 && (
-        <Row className="separator-row">
-          <h1>* Choose an anime</h1>
-          <hr className="separator"></hr>
-          <Button
-            variant="dark"
-            className="scroll-btn"
-            onClick={showLessHandler}
-          >
-            <h1 id="airing">{`<`}</h1>
-          </Button>
-          <Button
-            variant="dark"
-            className="scroll-btn"
-            onClick={showMoreHandler}
-          >
-            <h1 id="airing">{`>`}</h1>
-          </Button>
-        </Row>
+        <React.Fragment>
+          <Row className="separator-row">
+            <h1>* Choose an anime</h1>
+            <hr className="separator"></hr>
+            <Button
+              variant="dark"
+              className="scroll-btn"
+              onClick={showLessHandler}
+            >
+              {`<`}
+            </Button>
+            <Button
+              variant="dark"
+              className="scroll-btn"
+              onClick={showMoreHandler}
+            >
+              {`>`}
+            </Button>
+          </Row>
+          <Row className="animesearchcards--row" ref={animeSearchRow}>
+            {props.animeList.map((anime, index) => (
+              <Form.Check
+                key={anime.title}
+                className={`animesearchcard--radio ${
+                  chosenAnimeIndex === index ? "active" : ""
+                }`}
+                name="anime-select"
+                id={`cb-${index}`}
+                type="radio"
+                label={
+                  <AnimeSearchCard
+                    title={anime.title}
+                    synopsis={anime.synopsis}
+                    score={anime.score}
+                    image_url={anime.image_url}
+                    url={anime.url}
+                  />
+                }
+                onClick={() => setChosenAnimeIndex(index)}
+              />
+            ))}
+          </Row>
+          {chosenAnime && showModal && (
+            <EditAnimeModal
+              show={showModal}
+              onCloseHandler={onCloseHandler}
+              type=""
+              description=""
+              mal_id={props.animeList[chosenAnimeIndex].mal_id}
+              synopsis={props.animeList[chosenAnimeIndex].synopsis}
+              image_url={props.animeList[chosenAnimeIndex].image_url}
+              title={props.animeList[chosenAnimeIndex].title}
+              score={""}
+              creator={auth.userId}
+              aid={null}
+              actionType={"add"}
+            />
+          )}
+        </React.Fragment>
       )}
-
-      <Form onSubmit={onSubmitHandler} className="animeform">
-        <Row className="animesearchcards--row" ref={animeSearchRow}>
-          {props.animeList.map((anime, index) => (
-            <Form.Check
-              key={anime.title}
-              className={`animesearchcard--radio ${
-                chosenAnimeIndex === index ? "active" : ""
-              }`}
-              name="anime-select"
-              id={`cb-${index}`}
-              type="radio"
-              label={
-                <AnimeSearchCard
-                  title={anime.title}
-                  synopsis={anime.synopsis}
-                  score={anime.score}
-                  image_url={anime.image_url}
-                  url={anime.url}
-                />
-              }
-              onClick={() => setChosenAnimeIndex(index)}
-            />
-          ))}
-        </Row>
-
-        <Row className="separator-row">
-          <h1>* Select a type</h1>
-          <hr className="separator"></hr>
-        </Row>
-        <Row className="animeform--row__vert">
-          <Row className="animeform--radiocontainer">
-            <Form.Check
-              className="animeform--radios"
-              inline
-              name="type"
-              label="Watched"
-              type="radio"
-              id="watched"
-              value="watched"
-              onChange={(e) => {
-                setScore("");
-                setType(e.target.id);
-              }}
-              checked={"watched" === type}
-            />
-          </Row>
-          <Row className="animeform--radiocontainer">
-            <Form.Check
-              className="animeform--radios"
-              inline
-              name="type"
-              label="To Watch"
-              type="radio"
-              id="toWatch"
-              value="toWatch"
-              onChange={(e) => setType(e.target.id)}
-              checked={"toWatch" === type}
-            />
-          </Row>
-          <Row className="animeform--radiocontainer">
-            <Form.Check
-              className="animeform--radios"
-              inline
-              name="type"
-              label="Watching"
-              type="radio"
-              id="watching"
-              value="watching"
-              onChange={(e) => setType(e.target.id)}
-              checked={"watching" === type}
-            />
-          </Row>
-          <Row className="animeform--radiocontainer">
-            <Form.Check
-              className="animeform--radios"
-              inline
-              name="type"
-              label="Dropped"
-              type="radio"
-              id="dropped"
-              value="dropped"
-              onChange={(e) => setType(e.target.id)}
-              checked={"dropped" === type}
-            />
-          </Row>
-        </Row>
-        {type !== "toWatch" && (
-          <React.Fragment>
-            <Row className="separator-row">
-              <h1>* Select a score</h1>
-              <hr className="separator"></hr>
-            </Row>
-            <Form.Group>
-              <Row className="animeform--row__vert">
-                <Row className="animeform--row__horz">
-                  <InputGroup>
-                    {numbers.map((number) => (
-                      <Button
-                        key={number}
-                        className={`animeform--scorebtn${
-                          score === number ? "__active" : ""
-                        }`}
-                        variant="outline-secondary"
-                        type="button"
-                        onClick={() => setScore(number)}
-                      >
-                        {number}
-                      </Button>
-                    ))}
-                  </InputGroup>
-                </Row>
-              </Row>
-            </Form.Group>
-          </React.Fragment>
-        )}
-        <Row className="separator-row">
-          <h1>Express thoughts</h1>
-          <hr className="separator"></hr>
-        </Row>
-        <Form.Group controlId="exampleForm.ControlTextarea1">
-          <Row className="animeform--row__vert">
-            <Form.Control
-              as="textarea"
-              rows={3}
-              placeholder="Express your feelings about the anime or why you want to watch it"
-              className=" animeform--textarea"
-              value={description}
-              onChange={textareaChangeHandler}
-            />
-            <h4>Characters remaining: {charactersRemaining}</h4>
-          </Row>
-        </Form.Group>
-        {type !== "toWatch" ? (
-          <Button
-            disabled={!type || !chosenAnime || !score}
-            type="submit"
-            className="animeform--btn"
-          >
-            Add Anime
-          </Button>
-        ) : (
-          <Button
-            disabled={!type || !chosenAnime}
-            type="submit"
-            className="animeform--btn"
-          >
-            Add Anime
-          </Button>
-        )}
-      </Form>
-    </>
+    </React.Fragment>
   );
 };
 
 export default NewAnimeForm;
+
+/* <Form onSubmit={onSubmitHandler} className="animeform">
+            <Row className="animesearchcards--row" ref={animeSearchRow}>
+              {props.animeList.map((anime, index) => (
+                <Form.Check
+                  key={anime.title}
+                  className={`animesearchcard--radio ${
+                    chosenAnimeIndex === index ? "active" : ""
+                  }`}
+                  name="anime-select"
+                  id={`cb-${index}`}
+                  type="radio"
+                  label={
+                    <AnimeSearchCard
+                      title={anime.title}
+                      synopsis={anime.synopsis}
+                      score={anime.score}
+                      image_url={anime.image_url}
+                      url={anime.url}
+                    />
+                  }
+                  onClick={() => setChosenAnimeIndex(index)}
+                />
+              ))}
+            </Row>
+
+            <Row className="separator-row" ref={form}>
+              <h1>* Select a type</h1>
+              <hr className="separator"></hr>
+            </Row>
+            <Row className="animeform--row__vert">
+              <Row className="animeform--radiocontainer">
+                <Form.Check
+                  className="animeform--radios"
+                  inline
+                  name="type"
+                  label="Watched"
+                  type="radio"
+                  id="watched"
+                  value="watched"
+                  onChange={(e) => {
+                    setScore("");
+                    setType(e.target.id);
+                  }}
+                  checked={"watched" === type}
+                />
+              </Row>
+              <Row className="animeform--radiocontainer">
+                <Form.Check
+                  className="animeform--radios"
+                  inline
+                  name="type"
+                  label="To Watch"
+                  type="radio"
+                  id="toWatch"
+                  value="toWatch"
+                  onChange={(e) => setType(e.target.id)}
+                  checked={"toWatch" === type}
+                />
+              </Row>
+              <Row className="animeform--radiocontainer">
+                <Form.Check
+                  className="animeform--radios"
+                  inline
+                  name="type"
+                  label="Watching"
+                  type="radio"
+                  id="watching"
+                  value="watching"
+                  onChange={(e) => setType(e.target.id)}
+                  checked={"watching" === type}
+                />
+              </Row>
+              <Row className="animeform--radiocontainer">
+                <Form.Check
+                  className="animeform--radios"
+                  inline
+                  name="type"
+                  label="Dropped"
+                  type="radio"
+                  id="dropped"
+                  value="dropped"
+                  onChange={(e) => setType(e.target.id)}
+                  checked={"dropped" === type}
+                />
+              </Row>
+            </Row>
+            {type !== "toWatch" && (
+              <React.Fragment>
+                <Row className="separator-row">
+                  <h1>* Select a score</h1>
+                  <hr className="separator"></hr>
+                </Row>
+                <Form.Group>
+                  <Row className="animeform--row__vert">
+                    <Row className="animeform--row__horz">
+                      <InputGroup>
+                        {numbers.map((number) => (
+                          <Button
+                            key={number}
+                            className={`animeform--scorebtn${
+                              score === number ? "__active" : ""
+                            }`}
+                            variant="outline-secondary"
+                            type="button"
+                            onClick={() => setScore(number)}
+                          >
+                            {number}
+                          </Button>
+                        ))}
+                      </InputGroup>
+                    </Row>
+                  </Row>
+                </Form.Group>
+              </React.Fragment>
+            )}
+            <Row className="separator-row">
+              <h1>Express thoughts</h1>
+              <hr className="separator"></hr>
+            </Row>
+            <Form.Group controlId="exampleForm.ControlTextarea1">
+              <Row className="animeform--row__vert">
+                <Form.Control
+                  as="textarea"
+                  rows={3}
+                  placeholder="Express your feelings about the anime or why you want to watch it"
+                  className=" animeform--textarea"
+                  value={description}
+                  onChange={textareaChangeHandler}
+                />
+                <h4>Characters remaining: {charactersRemaining}</h4>
+              </Row>
+            </Form.Group>
+            {type !== "toWatch" ? (
+              <Button
+                disabled={!type || !chosenAnime || !score}
+                type="submit"
+                className="animeform--btn"
+              >
+                Add Anime
+              </Button>
+            ) : (
+              <Button
+                disabled={!type || !chosenAnime}
+                type="submit"
+                className="animeform--btn"
+              >
+                Add Anime
+              </Button>
+            )}
+          </Form> */
