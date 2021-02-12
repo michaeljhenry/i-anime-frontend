@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import { Link } from "react-router-dom";
-import { Button, Card, Row } from "react-bootstrap";
+import { Button, Card, Row, Image } from "react-bootstrap";
 import { useHttpClient } from "../hooks/http-hook";
 import useWindowSize from "../hooks/useWindowSize";
 import Message from "../components/Message";
@@ -92,6 +92,8 @@ const AnimeDashboardPage = () => {
       {isLoading && <LoaderSpinner />}
       {!error && !isLoading && (
         <>
+          <Image id="logo" src="/images/I-A - Copy (2).png" alt="logo" />
+
           <Row className="separator-row">
             <h1>Airing Anime</h1>
             <hr className="separator__black"></hr>
