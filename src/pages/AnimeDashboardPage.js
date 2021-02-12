@@ -77,7 +77,7 @@ const AnimeDashboardPage = () => {
     setTopUpcomingAnime(animeResults[1].top);
     setTopAiringAnime(animeResults[2].top);
 
-    // console.log(animeResults);
+    console.log(animeResults);
   }, [sendRequest, day, dayNum, days]);
 
   useEffect(() => {
@@ -136,6 +136,10 @@ const AnimeDashboardPage = () => {
                         )}
                       </div>
                     </Card.Body>
+                    <Row className="newfooter">{anime.title}</Row>
+                    <Row className="newfooter">
+                      <i className="fas fa-star"></i>&nbsp; Score: {anime.score}
+                    </Row>
                   </Card>
                 </Link>
               ))}
@@ -184,6 +188,12 @@ const AnimeDashboardPage = () => {
                         )}
                       </div>
                     </Card.Body>
+                    <Row className="newfooter">{anime.title}</Row>
+                    <Row style={{ marginTop: "auto" }} className="newfooter">
+                      {anime.start_date
+                        ? `Start date: ${anime.start_date}`
+                        : "Unannounced start date"}
+                    </Row>
                   </Card>
                 </Link>
               ))}
@@ -208,7 +218,7 @@ const AnimeDashboardPage = () => {
               {`>`}
             </Button>
           </Row>
-          <Row className="dash-row" ref={dashrowToday}>
+          <Row className="dash-row__last" ref={dashrowToday}>
             {todayAnime.length > 0 &&
               todayAnime.map((anime) => (
                 <Link to={`/animedetails/${anime.mal_id}`} key={anime.title}>
@@ -232,6 +242,11 @@ const AnimeDashboardPage = () => {
                         )}
                       </div>
                     </Card.Body>
+                    <Row className="newfooter">{anime.title}</Row>
+                    <Row className="newfooter">
+                      <i className="fas fa-star"></i>&nbsp;
+                      {anime.score ? anime.score : "No score available"}
+                    </Row>
                   </Card>
                 </Link>
               ))}
