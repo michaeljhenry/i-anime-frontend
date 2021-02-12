@@ -5,8 +5,8 @@
 
 .usersdashboard--container {
   display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
+  flex-direction: column;
+  align-items: center;
 }
 
 .addanimepage--container {
@@ -21,4 +21,12 @@
   color: white;
   justify-content: center;
   padding: $s-size;
+}
+
+@media (min-width: 600px) {
+  .usersdashboard--container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
 }
