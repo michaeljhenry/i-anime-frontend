@@ -8,7 +8,7 @@ const NewUserCard = (props) => {
       <Card.Img
         className="userslistcard--image"
         variant="top"
-        src={`/images/shikamaru-background.png`}
+        src={`${process.env.REACT_APP_IMAGE_URL}/${props.image}`}
         alt="profile"
       />
       <Card.Body className="anime-card__content">
