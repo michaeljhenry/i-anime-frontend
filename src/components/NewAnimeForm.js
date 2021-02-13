@@ -60,6 +60,7 @@ const NewAnimeForm = (props) => {
   useEffect(() => {
     setChosenAnimeIndex("");
     setChosenAnime("");
+    console.log(props.animeList);
     setAnimeList(props.animeList);
   }, [props.animeList]);
 

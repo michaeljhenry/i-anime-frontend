@@ -5,6 +5,7 @@ import { useHttpClient } from "../hooks/http-hook";
 import useWindowSize from "../hooks/useWindowSize";
 import Message from "../components/Message";
 import LoaderSpinner from "../components/Loader";
+import AnimeCarousel from "../components/AnimeCarousel";
 
 const AnimeDashboardPage = () => {
   const dashrowAiring = useRef(null);
@@ -85,15 +86,14 @@ const AnimeDashboardPage = () => {
   }, []);
 
   return (
-    <>
+    <React.Fragment>
       {error && (
         <Message variant="danger">{error.message ? error.message : ""}</Message>
       )}
       {isLoading && <LoaderSpinner />}
       {!error && !isLoading && (
-        <>
-          <Image id="logo" src="/images/I-A - Copy (2).png" alt="logo" />
-
+        <React.Fragment>
+          <AnimeCarousel />
           <Row className="separator-row">
             <h1>Airing Anime</h1>
             <hr className="separator__black"></hr>
@@ -276,9 +276,9 @@ const AnimeDashboardPage = () => {
                 </Card>
               ))}
           </Row>
-        </>
+        </React.Fragment>
       )}
-    </>
+    </React.Fragment>
   );
 };
 
