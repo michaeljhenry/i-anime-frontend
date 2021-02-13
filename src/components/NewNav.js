@@ -9,7 +9,7 @@ const NewNav = () => {
     auth.logout();
   };
   return (
-    <Navbar variant="dark" expand="sm" collapseOnSelect>
+    <Navbar variant="dark" expand="md" collapseOnSelect>
       <Navbar.Brand href="/">
         <Image id="nav-logo" src="/images/I-Anime-2.PNG" />
       </Navbar.Brand>

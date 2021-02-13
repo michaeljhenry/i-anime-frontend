@@ -31,7 +31,7 @@ const AnimeCarousel = () => {
     },
   ];
   return (
-    <Carousel pause="hover">
+    <Carousel interval={3000} pause="hover">
       {animeArray.map((anime) => (
         <Carousel.Item key={anime.title}>
           <Link to={`/animedetails/${anime.mal_id}`}>
