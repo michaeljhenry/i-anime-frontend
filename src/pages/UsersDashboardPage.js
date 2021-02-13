@@ -40,7 +40,11 @@ const UsersDashboardPage = () => {
       {!isLoading && error && (
         <Message variant="danger">{error.message}</Message>
       )}
-      {!isLoading && activeUsers.length > 0 ? (
+      {!isLoading && activeUsers.length < 0 && (
+        <Message>No Users Registered</Message>
+      )}
+      {!isLoading &&
+        activeUsers.length > 0 &&
         activeUsers.map((user) => (
           <NewUserCard
             key={user.email}
@@ -49,10 +53,7 @@ const UsersDashboardPage = () => {
             image={user.image}
             animes={user.animes}
           />
-        ))
-      ) : (
-        <Message>No Users Registered</Message>
-      )}
+        ))}
     </Container>
   );
 };
