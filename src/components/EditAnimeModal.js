@@ -42,7 +42,7 @@ const EditAnimeModal = (props) => {
   const { isLoading, error, sendRequest } = useHttpClient();
 
   const textareaChangeHandler = (e) => {
-    console.log(e.target.value);
+    // console.log(e.target.value);
     if (e.target.value.length <= 200) {
       setDescription(e.target.value);
       setCharactersRemaining(200 - e.target.value.length);

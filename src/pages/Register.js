@@ -39,7 +39,6 @@ const Register = (props) => {
   };
   const authHandler = async (e) => {
     e.preventDefault();
-    console.log("hi");
     const userInfo = new FormData();
     userInfo.append("name", name);
     userInfo.append("image", image);
@@ -55,7 +54,7 @@ const Register = (props) => {
       setImage("");
       props.history.push("/");
     } catch (err) {
-      console.log(err);
+      //console.log(err);
     }
   };
   const nameChangeHandler = (e) => {

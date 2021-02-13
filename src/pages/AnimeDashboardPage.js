@@ -78,7 +78,7 @@ const AnimeDashboardPage = () => {
     setTopUpcomingAnime(animeResults[1].top);
     setTopAiringAnime(animeResults[2].top);
 
-    console.log(animeResults);
+    //console.log(animeResults);
   }, [sendRequest, day, dayNum, days]);
 
   useEffect(() => {

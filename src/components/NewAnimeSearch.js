@@ -16,7 +16,7 @@ const NewAnimeSearch = (props) => {
   const request = async () => {
     try {
       const response = await sendRequest(`${baseUrl}/search/anime?q=${anime}`);
-      console.log(response);
+      //console.log(response);
       // const response = await sendRequest(`${baseUrl}/search/anime?q=${anime}&page=1&type=tv&order_by=state_date`); // THIS ADDS A FILTER
 
       // await fetch(`${baseUrl}/search/anime?q=${anime}&page=1&type=tv`)
@@ -24,7 +24,7 @@ const NewAnimeSearch = (props) => {
       // console.log(response);
       props.getInfo(response);
     } catch (err) {
-      console.log(err);
+      //console.log(err);
     }
     ////console.log(response.results[0]);
     // .then(res => res.json())
