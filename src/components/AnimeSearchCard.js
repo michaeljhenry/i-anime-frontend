@@ -10,7 +10,11 @@ const AnimeSearchCard = (props) => {
           {props.synopsis}
         </Card.Body>
         <Row className="animesearchcard--contentlink">
-          <a href={props.url} target="_blank" rel="noopener noreferrer">
+          <a
+            href={`/animedetails/${props.mal_id}`}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             Read More Here
           </a>
         </Row>

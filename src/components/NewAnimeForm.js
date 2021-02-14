@@ -124,6 +124,7 @@ const NewAnimeForm = (props) => {
                     score={anime.score}
                     image_url={anime.image_url}
                     url={anime.url}
+                    mal_id={anime.mal_id}
                   />
                 }
                 onClick={() => setChosenAnimeIndex(index)}
