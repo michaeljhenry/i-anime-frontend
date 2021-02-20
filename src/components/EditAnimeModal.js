@@ -125,7 +125,7 @@ const EditAnimeModal = (props) => {
           <Modal.Body className="editmodal--body">
             <h3>{props.title}</h3>
             <Row className="editmodal--row__vert">
-              <h4>* Select A Type</h4>
+              <h4>Select A Type</h4>
               <Row className="editmodal--radiocontainer">
                 <Form.Check
                   className="editmodal--radios"
@@ -186,7 +186,7 @@ const EditAnimeModal = (props) => {
               (newType !== "toWatch" && (
                 <Form.Group>
                   <Row className="editmodal--row__vert">
-                    <h4>* Select a score</h4>
+                    <h4>Select a score</h4>
                     <Row className="editmodal--row__horz">
                       <InputGroup className="mb-3">
                         {numbers.map((number) => (
@@ -234,7 +234,10 @@ const EditAnimeModal = (props) => {
               <Button
                 type="submit"
                 variant="primary"
-                disabled={!newType || (newType !== "toWatch" && !score)}
+                disabled={
+                  !newType ||
+                  (newType !== "toWatch" && newType !== "watching" && !score)
+                }
               >
                 Save Changes
               </Button>
@@ -242,7 +245,10 @@ const EditAnimeModal = (props) => {
               <Button
                 type="submit"
                 variant="primary"
-                disabled={!newType || (newType !== "toWatch" && !score)}
+                disabled={
+                  !newType ||
+                  (newType !== "toWatch" && newType !== "watching" && !score)
+                }
               >
                 Add Anime
               </Button>
