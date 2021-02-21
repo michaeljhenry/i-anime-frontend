@@ -80,6 +80,13 @@ li {
   color: black;
 }
 
+.fas.fa-user-edit {
+  color: white;
+  cursor: pointer;
+  margin-left: $m-size;
+  font-size: 24px;
+}
+
 .alert-small {
   width: 300px;
 }
