@@ -1,13 +1,17 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useParams } from "react-router-dom";
 import { Container, Image, Row, Button } from "react-bootstrap";
+import authContext from "../context/auth-context";
 import NewAnimeCard from "../components/NewAnimeCard";
 import { useHttpClient } from "../hooks/http-hook";
 import Message from "../components/Message";
 import LoaderSpinner from "../components/Loader";
+import EditProfileModal from "../components/EditProfileModal";
 
 const NewUserPage = () => {
   const userId = useParams().id;
+  const auth = useContext(authContext);
+  const id = auth.userId;
   const [animeWatchingList, setAnimeWatchingList] = useState([]);
   const [animeWatchedList, setAnimeWatchedList] = useState([]);
   const [animeToWatchList, setAnimeToWatchList] = useState([]);
@@ -15,6 +19,7 @@ const NewUserPage = () => {
   const [type, setType] = useState("watched");
   const [animesCopy, setAnimesCopy] = useState([]);
   const [userData, setUserData] = useState([]);
+  const [showModal, setShowModal] = useState(false);
   // const [sortType, setSortType] = useState("default");
   const { isLoading, error, sendRequest } = useHttpClient();
 
@@ -32,6 +37,10 @@ const NewUserPage = () => {
 
   const showDroppedHandler = () => {
     setType("dropped");
+  };
+
+  const onCloseHandler = () => {
+    setShowModal(false);
   };
 
   useEffect(() => {
@@ -87,10 +96,19 @@ const NewUserPage = () => {
       {!isLoading && (
         <React.Fragment>
           <Row className="userrow">
-            <Image
-              src={`${process.env.REACT_APP_IMAGE_URL}/${userData.image}`}
-              alt="profile"
-            ></Image>
+            <Row>
+              <Image
+                style={userId === id ? { marginLeft: "4.8rem" } : null}
+                src={`${process.env.REACT_APP_IMAGE_URL}/${userData.image}`}
+                alt="profile"
+              ></Image>
+              {userId === id && (
+                <i
+                  onClick={() => setShowModal(true)}
+                  className="fas fa-user-edit"
+                ></i>
+              )}
+            </Row>
             <Row>
               <h1>{userData.name}</h1>
             </Row>
@@ -200,6 +218,15 @@ const NewUserPage = () => {
               ))}
           </Row>
         </React.Fragment>
+      )}
+      {showModal && (
+        <EditProfileModal
+          onCloseHandler={onCloseHandler}
+          show={showModal}
+          userId={id}
+          oldImage={userData.image}
+          token={auth.token}
+        />
       )}
     </Container>
   );
